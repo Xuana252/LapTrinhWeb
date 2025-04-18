@@ -83,7 +83,7 @@ const Footer = () => {
           </button>
         </ul>
         <span className="font-bold">{process.env.NEXT_PUBLIC_APP_NAME}</span>
-        <div>&copy; MADE BY NHÓM 18 </div>
+        <div>&copy; MADE BY NHÓM 7 </div>
       </div>
     </div>
   );

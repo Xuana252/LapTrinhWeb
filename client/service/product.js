@@ -44,7 +44,7 @@ export const getProducts = async (size) => {
 };
 
 export const getProductDetail = async (id) => {
-  // if(process.env.DEV_ENV!=="production") return generateDummyProductDetailData();
+  if(process.env.DEV_ENV!=="production") return generateDummyProductDetailData();
 
   try {
     const response = await fetch(
