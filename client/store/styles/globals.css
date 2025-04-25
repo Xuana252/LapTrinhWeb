@@ -1,0 +1,175 @@
+@import "tailwindcss/preflight";
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.light {
+  --primary: 255, 255, 255;
+  --primary-variant: 200, 200, 200; /* Example value */
+  --secondary: 34, 34, 34; /* Example value */
+  --secondary-variant: 70, 70, 70; /* Example value */
+  --background: 255, 255, 255;
+  --surface: 240, 240, 240; /* Example value */
+  --error: 255, 0, 0; /* Example value */
+  --on-primary: 0, 0, 0; /* Example value */
+  --on-secondary: 255, 255, 255; /* Example value */
+  --on-background: 0, 0, 0; /* Example value */
+  --on-surface: 0, 0, 0; /* Example value */
+  --on-error: 255, 255, 255; /* Example value */
+}
+
+.dark {
+  --primary: 34, 34, 34; /* Dark grey */
+  --primary-variant: 50, 50, 50; /* Darker grey */
+  --secondary: 10, 10, 10; /* White */
+  --secondary-variant: 200, 200, 200; /* Light grey */
+  --background: 0, 0, 0; /* Black */
+  --surface: 18, 18, 18; /* Very dark grey */
+  --error: 255, 0, 0; /* Red */
+  --on-primary: 255, 255, 255; /* White */
+  --on-secondary: 255, 255, 255; /* Black */
+  --on-background: 255, 255, 255; /* White */
+  --on-surface: 255, 255, 255; /* White */
+  --on-error: 255, 255, 255; /* White */
+}
+
+.background {
+  background: linear-gradient(
+      0deg,
+      rgba(var(--primary), 1),
+      rgba(var(--primary), 1)
+    ),
+    radial-gradient(rgba(var(--on-primary), 0.1), 3px, transparent 5px),
+    linear-gradient(
+      to bottom left,
+      rgba(var(--on-primary), 0.4),
+      transparent,
+      rgba(var(--on-primary), 0.4)
+    ),
+    radial-gradient(rgba(var(--on-primary), 0.15) 3.5px, transparent 0px);
+
+  background-size: 100%, 60px 60px, 100%, 120px 120px;
+  background-blend-mode: overlay;
+  color: rgb(var(--on-background));
+}
+
+html,
+body {
+  background: black;
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: black;
+  }
+  ul {
+    @apply overflow-scroll no-scrollbar;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  * {
+    box-sizing: border-box;
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .button-variant-1 {
+    @apply bg-on-surface font-bold text-surface p-2 rounded-lg hover:scale-105 active:scale-95 transition-transform duration-200 ease-out gap-2 flex items-center justify-center h-fit;
+  }
+
+  .button-variant-2 {
+    @apply shadow-md text-on-primary bg-primary active:bg-primary/80 active:scale-95 transition-all duration-100 px-2 py-1 hover:font-semibold rounded-lg gap-2 flex items-center justify-center h-fit;
+  }
+
+  .order-state {
+    @apply flex items-center justify-center rounded-xl   px-3 py-1 font-semibold text-white;
+  }
+
+  .pending {
+    @apply order-state bg-slate-500;
+  }
+
+  .shipping {
+    @apply order-state bg-blue-500;
+  }
+
+  .delivered {
+    @apply order-state bg-green-500;
+  }
+
+  .confirmed {
+    @apply order-state bg-black;
+  }
+  .cancelled {
+    @apply order-state bg-red-500;
+  }
+
+  .panel-1 {
+    @apply h-fit overflow-hidden rounded-xl border-[2px] border-on-secondary p-4 bg-primary/20 backdrop-blur-sm shadow-xl;
+  }
+
+  .panel-2 {
+    @apply overflow-hidden rounded-md bg-primary shadow-lg text-on-primary p-4;
+  }
+
+  .account-nav-bar-item {
+    @apply grid grid-cols-[auto_1fr] gap-2 items-center hover:bg-secondary hover:text-on-secondary rounded-lg p-2  text-left justify-items-start  w-full min-w-fit;
+  }
+
+  .account-nav-bar-selected-item {
+    @apply grid grid-cols-[auto_1fr] gap-2 items-center bg-secondary text-on-secondary rounded-lg p-2  text-left justify-items-start  w-full min-w-fit;
+  }
+
+  .voucher {
+    padding-right: 10%;
+    z-index: 1;
+  }
+
+  .voucher::after {
+    content: "";
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    width: calc(100% + 8px); /* Expand the border area */
+    height: calc(100% + 8px); /* Expand the border area */
+    background: rgba(var(--surface), 1);
+    clip-path: polygon(
+      0 0,
+      100% 0%,
+      /* Keep top straight */ 90% 15%,
+      100% 30%,
+      90% 45%,
+      100% 60%,
+      90% 75%,
+      100% 90%,
+      90% 100%,
+      0 100% /* Keep bottom straight */
+    ); /* Fewer jagged points on the sides, straight top and bottom */
+    z-index: -1; /* Position the border behind the content */
+  }
+  .message-base {
+    @apply whitespace-normal break-all text-base rounded-3xl  size-fit p-2 px-3 max-w-[80%] font-semibold shadow-md;
+  }
+
+  
+  .my-message {
+    @apply message-base ml-auto bg-on-primary text-primary;
+  }
+
+  .other-message {
+    @apply message-base mr-auto bg-primary text-on-primary;
+  }
+}
