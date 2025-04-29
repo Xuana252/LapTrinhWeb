@@ -1,4 +1,26 @@
-@import "tailwindcss/preflight";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(var(--primary), 0.5);
+  border-radius: 10px;
+}
+
+/* Scrollbar Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(var(--accent), 0.5);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--accent), 1);
+}
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -65,14 +87,12 @@ input[type="number"] {
 html,
 body {
   background: black;
+  height: 100vh;
 }
 
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar {
     display: black;
-  }
-  ul {
-    @apply overflow-scroll no-scrollbar;
   }
 
   .no-scrollbar {
@@ -133,38 +153,28 @@ body {
     @apply grid grid-cols-[auto_1fr] gap-2 items-center bg-secondary text-on-secondary rounded-lg p-2  text-left justify-items-start  w-full min-w-fit;
   }
 
-  .voucher {
-    padding-right: 10%;
-    z-index: 1;
+  .Side_bar_menu {
+    @apply grid grid-rows-[auto_1fr_auto] justify-start bg-on-surface/80 backdrop-blur-sm gap-3 p-2 flex-col z-40;
+  }
+  .Side_bar_path_list {
+    @apply flex flex-col gap-2 overflow-y-auto;
+  }
+  .Side_bar_section {
+    @apply flex flex-col gap-2 bg-surface/50 w-full p-2 rounded-lg  transition-all duration-200 ease-out;
   }
 
-  .voucher::after {
-    content: "";
-    position: absolute;
-    top: -4px;
-    left: -4px;
-    width: calc(100% + 8px); /* Expand the border area */
-    height: calc(100% + 8px); /* Expand the border area */
-    background: rgba(var(--surface), 1);
-    clip-path: polygon(
-      0 0,
-      100% 0%,
-      /* Keep top straight */ 90% 15%,
-      100% 30%,
-      90% 45%,
-      100% 60%,
-      90% 75%,
-      100% 90%,
-      90% 100%,
-      0 100% /* Keep bottom straight */
-    ); /* Fewer jagged points on the sides, straight top and bottom */
-    z-index: -1; /* Position the border behind the content */
+  .Side_bar_item {
+    @apply flex flex-row transition-all text-sm duration-150 ease-in-out origin-bottom-left hover:border-l-4 hover:border-b-4 border-primary active:border-none rounded-lg gap-2 items-center w-full text-left px-4 py-2 text-primary hover:bg-on-primary/50 hover:text-primary active:bg-on-primary active:text-primary font-bold;
   }
+
+  .Side_bar_selected_item {
+    @apply flex flex-row rounded-lg gap-2 border-l-4 border-b-4 border-primary  text-sm items-center w-full text-left px-4 py-2 font-bold bg-on-primary text-primary;
+  }
+
   .message-base {
     @apply whitespace-normal break-all text-base rounded-3xl  size-fit p-2 px-3 max-w-[80%] font-semibold shadow-md;
   }
 
-  
   .my-message {
     @apply message-base ml-auto bg-on-primary text-primary;
   }

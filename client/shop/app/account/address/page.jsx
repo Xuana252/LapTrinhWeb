@@ -11,7 +11,7 @@ import {
 import DropDownButton from "@components/Input/DropDownButton";
 import InputBox from "@components/Input/InputBox";
 import PhoneInput from "@components/Input/PhoneInput";
-import Divider from "@components/UI/Divider";
+import Divider from "@components/UI/Layout/Divider";
 import React, { useEffect, useState } from "react";
 import { useSession } from "@node_modules/next-auth/react";
 import { toastError, toastSuccess, toastWarning } from "@util/toaster";

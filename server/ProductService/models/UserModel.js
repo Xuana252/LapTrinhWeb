@@ -43,10 +43,7 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
-    created_at: {
-      type: Date,
-      default: Date.now,
-    },
+
     username: {
       type: String,
       required: true,
@@ -55,10 +52,6 @@ const userSchema = new mongoose.Schema(
     phone_number: {
       type: String,
       required: true,
-    },
-    date_joined: {
-      type: Date,
-      default: Date.now,
     },
     address: [addressSchema],
     cart: [cartItemSchema],
@@ -69,7 +62,7 @@ const userSchema = new mongoose.Schema(
 const SALT_ROUNDS = 10;
 
 userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next(); 
+  if (!this.isModified("password")) return next();
 
   try {
     const salt = await bcrypt.genSalt(SALT_ROUNDS);

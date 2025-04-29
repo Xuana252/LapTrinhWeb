@@ -1,0 +1,104 @@
+[
+  {
+    "product_name": "iPhone 15 Pro",
+    "description": "The latest iPhone with A17 Pro chip, titanium frame, and USB-C port.",
+    "price": 20000000,
+    "discount": 10,
+    "stock_quantity": 50,
+    "spec": [
+      { "spec_name": "Display", "detail": "6.1-inch Super Retina XDR" },
+      { "spec_name": "Processor", "detail": "A17 Pro chip" },
+      { "spec_name": "Camera", "detail": "48MP Main camera" },
+      { "spec_name": "Battery", "detail": "Up to 23 hours video playback" }
+    ],
+    "image": [
+      "https://toannguyenmobile.com/uploads/source/samsung/s24-ultra/vwh86-sq1-0000000004-black-slf.jpg",
+      "https://images.samsung.com/vn/smartphones/galaxy-s24-ultra/images/galaxy-s24-ultra-highlights-color-titanium-gray-back-mo.jpg?imbypass=true",
+      "https://www.zdnet.com/a/img/2024/02/02/1bfa7d30-112c-4906-83a7-ce12551b7b16/galaxy-s24-ultra.jpg",
+      "https://toannguyenmobile.com/uploads/source/samsung/s24-ultra/vwh86-sq1-0000000004-black-slf.jpg",
+      "https://images.samsung.com/vn/smartphones/galaxy-s24-ultra/images/galaxy-s24-ultra-highlights-color-titanium-gray-back-mo.jpg?imbypass=true",
+      "https://www.zdnet.com/a/img/2024/02/02/1bfa7d30-112c-4906-83a7-ce12551b7b16/galaxy-s24-ultra.jpg",
+      "https://toannguyenmobile.com/uploads/source/samsung/s24-ultra/vwh86-sq1-0000000004-black-slf.jpg",
+      "https://images.samsung.com/vn/smartphones/galaxy-s24-ultra/images/galaxy-s24-ultra-highlights-color-titanium-gray-back-mo.jpg?imbypass=true",
+      "https://www.zdnet.com/a/img/2024/02/02/1bfa7d30-112c-4906-83a7-ce12551b7b16/galaxy-s24-ultra.jpg",
+      "https://toannguyenmobile.com/uploads/source/samsung/s24-ultra/vwh86-sq1-0000000004-black-slf.jpg",
+      "https://images.samsung.com/vn/smartphones/galaxy-s24-ultra/images/galaxy-s24-ultra-highlights-color-titanium-gray-back-mo.jpg?imbypass=true",
+      "https://www.zdnet.com/a/img/2024/02/02/1bfa7d30-112c-4906-83a7-ce12551b7b16/galaxy-s24-ultra.jpg",
+      "https://toannguyenmobile.com/uploads/source/samsung/s24-ultra/vwh86-sq1-0000000004-black-slf.jpg",
+      "https://images.samsung.com/vn/smartphones/galaxy-s24-ultra/images/galaxy-s24-ultra-highlights-color-titanium-gray-back-mo.jpg?imbypass=true",
+      "https://www.zdnet.com/a/img/2024/02/02/1bfa7d30-112c-4906-83a7-ce12551b7b16/galaxy-s24-ultra.jpg",
+      "https://toannguyenmobile.com/uploads/source/samsung/s24-ultra/vwh86-sq1-0000000004-black-slf.jpg",
+      "https://images.samsung.com/vn/smartphones/galaxy-s24-ultra/images/galaxy-s24-ultra-highlights-color-titanium-gray-back-mo.jpg?imbypass=true",
+      "https://www.zdnet.com/a/img/2024/02/02/1bfa7d30-112c-4906-83a7-ce12551b7b16/galaxy-s24-ultra.jpg"
+    ],
+    "category_id": "66301c5d83f0e38f2bd5cf7a"
+  },
+  {
+    "product_name": "Samsung Galaxy S24 Ultra",
+    "description": "The powerhouse Android phone with 200MP camera and S-Pen.",
+    "price": 25000000,
+    "discount": 5,
+    "stock_quantity": 70,
+    "spec": [
+      { "spec_name": "Display", "detail": "6.8-inch QHD+ Dynamic AMOLED" },
+      { "spec_name": "Processor", "detail": "Snapdragon 8 Gen 3" },
+      { "spec_name": "Camera", "detail": "200MP Main camera" },
+      { "spec_name": "Battery", "detail": "5000mAh, 45W fast charging" }
+    ],
+    "image": [
+      "https://toannguyenmobile.com/uploads/source/samsung/s24-ultra/vwh86-sq1-0000000004-black-slf.jpg",
+      "https://images.samsung.com/vn/smartphones/galaxy-s24-ultra/images/galaxy-s24-ultra-highlights-color-titanium-gray-back-mo.jpg?imbypass=true",
+      "https://www.zdnet.com/a/img/2024/02/02/1bfa7d30-112c-4906-83a7-ce12551b7b16/galaxy-s24-ultra.jpg",
+      "https://toannguyenmobile.com/uploads/source/samsung/s24-ultra/vwh86-sq1-0000000004-black-slf.jpg",
+      "https://images.samsung.com/vn/smartphones/galaxy-s24-ultra/images/galaxy-s24-ultra-highlights-color-titanium-gray-back-mo.jpg?imbypass=true",
+      "https://www.zdnet.com/a/img/2024/02/02/1bfa7d30-112c-4906-83a7-ce12551b7b16/galaxy-s24-ultra.jpg",
+      "https://toannguyenmobile.com/uploads/source/samsung/s24-ultra/vwh86-sq1-0000000004-black-slf.jpg",
+      "https://images.samsung.com/vn/smartphones/galaxy-s24-ultra/images/galaxy-s24-ultra-highlights-color-titanium-gray-back-mo.jpg?imbypass=true",
+      "https://www.zdnet.com/a/img/2024/02/02/1bfa7d30-112c-4906-83a7-ce12551b7b16/galaxy-s24-ultra.jpg",
+      "https://toannguyenmobile.com/uploads/source/samsung/s24-ultra/vwh86-sq1-0000000004-black-slf.jpg",
+      "https://images.samsung.com/vn/smartphones/galaxy-s24-ultra/images/galaxy-s24-ultra-highlights-color-titanium-gray-back-mo.jpg?imbypass=true",
+      "https://www.zdnet.com/a/img/2024/02/02/1bfa7d30-112c-4906-83a7-ce12551b7b16/galaxy-s24-ultra.jpg",
+      "https://toannguyenmobile.com/uploads/source/samsung/s24-ultra/vwh86-sq1-0000000004-black-slf.jpg",
+      "https://images.samsung.com/vn/smartphones/galaxy-s24-ultra/images/galaxy-s24-ultra-highlights-color-titanium-gray-back-mo.jpg?imbypass=true",
+      "https://www.zdnet.com/a/img/2024/02/02/1bfa7d30-112c-4906-83a7-ce12551b7b16/galaxy-s24-ultra.jpg",
+      "https://toannguyenmobile.com/uploads/source/samsung/s24-ultra/vwh86-sq1-0000000004-black-slf.jpg",
+      "https://images.samsung.com/vn/smartphones/galaxy-s24-ultra/images/galaxy-s24-ultra-highlights-color-titanium-gray-back-mo.jpg?imbypass=true",
+      "https://www.zdnet.com/a/img/2024/02/02/1bfa7d30-112c-4906-83a7-ce12551b7b16/galaxy-s24-ultra.jpg"
+    ],
+    "category_id": "66301c5d83f0e38f2bd5cf7a"
+  },
+  {
+    "product_name": "MacBook Pro 16-inch (M3 Max)",
+    "description": "Supercharged for pros with M3 Max chip, incredible performance.",
+    "price": 50000000,
+    "discount": 0,
+    "stock_quantity": 20,
+    "spec": [
+      { "spec_name": "Display", "detail": "16.2-inch Liquid Retina XDR" },
+      { "spec_name": "Processor", "detail": "Apple M3 Max" },
+      { "spec_name": "Memory", "detail": "32GB unified memory" },
+      { "spec_name": "Storage", "detail": "1TB SSD" }
+    ],
+    "image": [
+      "https://bichvanstore.com/wp-content/uploads/2022/10/MacBook-Pro-13-inch-M2-2022-Mi_1.png",
+      "https://www.cnet.com/a/img/resize/9624241ec6785ab68e2092e9656bc16c73d75cb1/hub/2023/01/21/ec79d7fc-9235-4830-8fc1-77db12800b97/apple-macbook-pro-16-2023-3214.jpg?auto=webp&fit=crop&height=1200&width=1200",
+      "https://i.ytimg.com/vi/tmGDx9hVWwo/maxresdefault.jpg",
+      "https://bichvanstore.com/wp-content/uploads/2022/10/MacBook-Pro-13-inch-M2-2022-Mi_1.png",
+      "https://www.cnet.com/a/img/resize/9624241ec6785ab68e2092e9656bc16c73d75cb1/hub/2023/01/21/ec79d7fc-9235-4830-8fc1-77db12800b97/apple-macbook-pro-16-2023-3214.jpg?auto=webp&fit=crop&height=1200&width=1200",
+      "https://i.ytimg.com/vi/tmGDx9hVWwo/maxresdefault.jpg",
+      "https://bichvanstore.com/wp-content/uploads/2022/10/MacBook-Pro-13-inch-M2-2022-Mi_1.png",
+      "https://www.cnet.com/a/img/resize/9624241ec6785ab68e2092e9656bc16c73d75cb1/hub/2023/01/21/ec79d7fc-9235-4830-8fc1-77db12800b97/apple-macbook-pro-16-2023-3214.jpg?auto=webp&fit=crop&height=1200&width=1200",
+      "https://i.ytimg.com/vi/tmGDx9hVWwo/maxresdefault.jpg",
+      "https://bichvanstore.com/wp-content/uploads/2022/10/MacBook-Pro-13-inch-M2-2022-Mi_1.png",
+      "https://www.cnet.com/a/img/resize/9624241ec6785ab68e2092e9656bc16c73d75cb1/hub/2023/01/21/ec79d7fc-9235-4830-8fc1-77db12800b97/apple-macbook-pro-16-2023-3214.jpg?auto=webp&fit=crop&height=1200&width=1200",
+      "https://i.ytimg.com/vi/tmGDx9hVWwo/maxresdefault.jpg",
+      "https://bichvanstore.com/wp-content/uploads/2022/10/MacBook-Pro-13-inch-M2-2022-Mi_1.png",
+      "https://www.cnet.com/a/img/resize/9624241ec6785ab68e2092e9656bc16c73d75cb1/hub/2023/01/21/ec79d7fc-9235-4830-8fc1-77db12800b97/apple-macbook-pro-16-2023-3214.jpg?auto=webp&fit=crop&height=1200&width=1200",
+      "https://i.ytimg.com/vi/tmGDx9hVWwo/maxresdefault.jpg",
+      "https://bichvanstore.com/wp-content/uploads/2022/10/MacBook-Pro-13-inch-M2-2022-Mi_1.png",
+      "https://www.cnet.com/a/img/resize/9624241ec6785ab68e2092e9656bc16c73d75cb1/hub/2023/01/21/ec79d7fc-9235-4830-8fc1-77db12800b97/apple-macbook-pro-16-2023-3214.jpg?auto=webp&fit=crop&height=1200&width=1200",
+      "https://i.ytimg.com/vi/tmGDx9hVWwo/maxresdefault.jpg"
+    ],
+    "category_id": "66301c5d83f0e38f2bd5cf7a"
+  }
+]

@@ -1,5 +1,5 @@
 "use client";
-import Divider from "@components/UI/Divider";
+import Divider from "@components/UI/Layout/Divider";
 import OrderItem from "@components/UI/OrderItem";
 import {
   faCheckSquare,

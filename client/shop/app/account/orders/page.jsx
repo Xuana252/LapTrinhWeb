@@ -1,6 +1,6 @@
 "use client";
 import CollapsibleContainer from "@components/UI/CollapsibleBanner";
-import Divider from "@components/UI/Divider";
+import Divider from "@components/UI/Layout/Divider";
 import OrderItem from "@components/UI/OrderItem";
 import { useSession } from "@node_modules/next-auth/react";
 import Link from "@node_modules/next/link";

@@ -1,6 +1,6 @@
 "use client";
 import PasswordInput from "@components/Input/PasswordInput";
-import Divider from "@components/UI/Divider";
+import Divider from "@components/UI/Layout/Divider";
 import { changePassword, patchAccount } from "@service/account";
 import { toastError, toastSuccess, toastWarning } from "@util/toaster";
 import React, { useState } from "react";

@@ -1,0 +1,9 @@
+[
+    { "category_name": "Smartphones", "discount": 5 },
+    { "category_name": "Laptops", "discount": 8 },
+    { "category_name": "Tablets", "discount": 7 },
+    { "category_name": "Televisions", "discount": 6 },
+    { "category_name": "Headphones", "discount": 4 },
+    { "category_name": "Cameras", "discount": 5 }
+  ]
+  

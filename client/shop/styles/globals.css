@@ -73,9 +73,6 @@ body {
   .no-scrollbar::-webkit-scrollbar {
     display: black;
   }
-  ul {
-    @apply overflow-scroll no-scrollbar;
-  }
 
   .no-scrollbar {
     -ms-overflow-style: none; /* IE and Edge */
@@ -135,33 +132,6 @@ body {
     @apply grid grid-cols-[auto_1fr] gap-2 items-center bg-secondary text-on-secondary rounded-lg p-2  text-left justify-items-start  w-full min-w-fit;
   }
 
-  .voucher {
-    padding-right: 10%;
-    z-index: 1;
-  }
-
-  .voucher::after {
-    content: "";
-    position: absolute;
-    top: -4px;
-    left: -4px;
-    width: calc(100% + 8px); /* Expand the border area */
-    height: calc(100% + 8px); /* Expand the border area */
-    background: rgba(var(--surface), 1);
-    clip-path: polygon(
-      0 0,
-      100% 0%,
-      /* Keep top straight */ 90% 15%,
-      100% 30%,
-      90% 45%,
-      100% 60%,
-      90% 75%,
-      100% 90%,
-      90% 100%,
-      0 100% /* Keep bottom straight */
-    ); /* Fewer jagged points on the sides, straight top and bottom */
-    z-index: -1; /* Position the border behind the content */
-  }
   .message-base {
     @apply whitespace-normal break-all text-base rounded-3xl  size-fit p-2 px-3 max-w-[80%] font-semibold shadow-md;
   }

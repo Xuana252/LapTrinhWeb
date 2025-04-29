@@ -1,7 +1,7 @@
 "use client";
 import CheckBox from "@components/Input/CheckBox";
 import CartItem from "@components/UI/CartItem";
-import Divider from "@components/UI/Divider";
+import Divider from "@components/UI/Layout/Divider";
 import { faCheckSquare } from "@fortawesome/free-regular-svg-icons";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

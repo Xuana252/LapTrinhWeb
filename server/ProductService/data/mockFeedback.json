@@ -1,0 +1,5 @@
+{
+  "customer_id": { "$oid": "680efe26c1c33f9f4981e4ce" },
+  "rating": "4",
+  "feedback": "Good product"
+}

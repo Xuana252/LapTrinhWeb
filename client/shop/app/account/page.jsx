@@ -3,7 +3,7 @@ import DatePicker from "@components/Input/DatePicker";
 import InputBox from "@components/Input/InputBox";
 import PhoneInput from "@components/Input/PhoneInput";
 import RadioButton from "@components/Input/RadioButton";
-import Divider from "@components/UI/Divider";
+import Divider from "@components/UI/Layout/Divider";
 import ProfileImageHolder from "@components/UI/ProfileImageHolder";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

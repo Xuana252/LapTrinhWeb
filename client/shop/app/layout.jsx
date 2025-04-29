@@ -1,7 +1,7 @@
 import "@styles/globals.css";
 import { Toaster, toast } from "sonner";
-import Nav from "@components/UI/Nav";
-import Footer from "@components/UI/Footer";
+import Nav from "@components/UI/Layout/Nav";
+import Footer from "@components/UI/Layout/Footer";
 import { config, icon } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import SupportChatBox from "@components/Chat/SupportChatBox";

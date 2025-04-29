@@ -7,7 +7,7 @@ import InputBox from "@components/Input/InputBox";
 import PhoneInput from "@components/Input/PhoneInput";
 import RadioButton from "@components/Input/RadioButton";
 import CartItem from "@components/UI/CartItem";
-import Divider from "@components/UI/Divider";
+import Divider from "@components/UI/Layout/Divider";
 import OrderItem from "@components/UI/OrderItem";
 import {
   faCheckSquare,
