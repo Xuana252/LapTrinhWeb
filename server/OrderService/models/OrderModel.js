@@ -43,7 +43,7 @@ const orderSchema = new mongoose.Schema(
       default: "pending",
     },
     address: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
       trim: true,
     },
