@@ -138,7 +138,7 @@ const Product = () => {
             </div>
             <div className="text-xl sm:text-2xl md:text-3xl font-semibold text-green-600">
               {formattedPrice(
-                product?.price - (product?.price / 100) * product?.discount
+                product?.price - (product?.price / 100) * Math.min((product?.discount + product?.category.discount),100)
               )}
             </div>
             {(product?.discount > 0 || product?.category.discount > 0) && (

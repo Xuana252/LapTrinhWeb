@@ -6,7 +6,7 @@ export const getCart = async (id) => {
   if (process.env.DEV_ENV !== "production")
     return generateDummyCart(Math.round(Math.random() * 10) + 1);
   try {
-    const response = await fetch(`${process.env.APP_URL}/carts/${id}`);
+    const response = await fetch(`${process.env.APP_URL}/product/cart/${id}`);
     if (response.ok) {
       const data = await response.json();
       return data;
@@ -23,7 +23,7 @@ export const addCartItem = async (id,product_id,quantity) => {
    if (process.env.DEV_ENV !== "production") return true;
    try {
     const response = await fetch(
-      `${process.env.APP_URL}/carts/${id}`,
+      `${process.env.APP_URL}/product/cart/${id}`,
       {
         method: "POST",
         headers: {
@@ -47,7 +47,7 @@ export const updateCartItem = async (id, product_id,quantity) => {
   // if (process.env.DEV_ENV !== "production") return true;
   try {
     const response = await fetch(
-      `${process.env.APP_URL}/${id}/${product_id}`,
+      `${process.env.APP_URL}/products/cart/${id}/${product_id}`,
       {
         method: "PATCH",
         headers: {
@@ -71,7 +71,7 @@ export const deleteAllCartItem = async (id) => {
   // if (process.env.DEV_ENV !== "production") return true;
   try {
     const response = await fetch(
-      `${process.env.APP_URL}/carts/${id}`,
+      `${process.env.APP_URL}/products/cart/${id}`,
       {
         method: "DELETE",
       }
@@ -91,7 +91,7 @@ export const deleteCartItem = async (id, product_id) => {
   // if (process.env.DEV_ENV !== "production") return true;
   try {
     const response = await fetch(
-      `${process.env.APP_URL}/carts/${id}/${product_id}`,
+      `${process.env.APP_URL}/products/carts/${id}/${product_id}`,
       {
         method: "DELETE",
       }

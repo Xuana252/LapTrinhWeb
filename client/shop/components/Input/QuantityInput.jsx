@@ -3,7 +3,7 @@ import {
   faPlus,
 } from "@node_modules/@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@node_modules/@fortawesome/react-fontawesome";
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useRef } from "react";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -32,8 +32,10 @@ const QuantityInput = ({ min = 1, max, onChange ,value = 1 }) => {
     if (onChange) onChange(state.quantity);
   }, [state.quantity, onChange]);
 
+  
+
   return (
-    <div className=" shadow rounded border-2 border-on-background/20  w-fit text-on-surface grid grid-cols-3 mt-auto">
+    <div className=" shadow rounded border-2 border-on-background/20  w-fit text-on-surface grid grid-cols-[auto_1fr_auto] mt-auto">
       <button
         className="size-7  shadow flex items-center justify-center hover:scale-105 active:scale-95"
         onClick={() => dispatch({ type: "decrement", max })}
@@ -63,7 +65,7 @@ const QuantityInput = ({ min = 1, max, onChange ,value = 1 }) => {
             dispatch({ type: "change", value: parsed, max });
           }
         }}
-        className="size-7 text-base font-bold flex items-center justify-center bg-transparent outline-none text-center"
+        className="h-7 text-base font-bold flex items-center justify-center bg-transparent outline-none text-center"
       ></input>
       <button
         className="size-7  flex shadow  items-center justify-center hover:scale-105 active:scale-95"

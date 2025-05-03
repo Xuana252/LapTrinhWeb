@@ -28,6 +28,8 @@ export const options = {
         },
       },
       async authorize(credentials, req) {
+
+        
         const { statusCode, data } = await login({
           email: credentials.email,
           password: credentials.password,

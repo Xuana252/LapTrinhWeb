@@ -1,5 +1,6 @@
 import React from "react";
 import CollapsibleContainer from "../CollapsibleBanner";
+import InputArea from "@components/Input/InputArea";
 
 const ProductDescriptionTab = ({ description }) => {
   return (
@@ -7,9 +8,10 @@ const ProductDescriptionTab = ({ description }) => {
       <div className="bg-primary-variant rounded-md text-on-primary md:text-xl font-bold text-center p-2">
         Product details
       </div>
+
       <CollapsibleContainer
         maxHeight={400}
-        content={<div className="font-sans">{description}</div>}
+        content={<InputArea value={description} />}
       />
     </div>
   );

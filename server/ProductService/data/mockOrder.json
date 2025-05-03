@@ -1,19 +1,19 @@
 {
-    "user_id": { "$oid": "680efe26c1c33f9f4981e4ce" },
+    "user_id": { "$oid": "68149573efa55695535541b4" },
     "order_item": [
       {
-        "product_id": { "$oid": "680ef807c1c33f9f4981e4c5" },
-        "quantity": 2,
+        "product_id": { "$oid": "68149933efa55695535541cb" },
+        "quantity": 4,
         "price": 10000000
       },
       {
-        "product_id": { "$oid": "680ef807c1c33f9f4981e4c6" },
-        "quantity": 1,
-        "price": 29000000
+        "product_id": { "$oid": "681494bfa7e83a5c84565bad" },
+        "quantity": 10,
+        "price": 290000000
       }
     ],
     "total_price": 40000000,
-    "order_status": "pending",
+    "order_status": "delivered",
     "address": {
       "province": "Hanoi",
       "district": "Cau Giay",
@@ -23,7 +23,7 @@
       "detailed_address": "123 Ho Tung Mau, Hanoi"
     },
     "payment_method": "cod",
-    "createdAt": "2025-04-28T12:34:56.789Z",
-    "updatedAt": "2025-04-28T12:34:56.789Z"
+    "createdAt": { "$date": "2025-05-01T00:00:00.000Z" },
+    "updatedAt": { "$date": "2025-05-01T00:00:00.000Z" }
   }
   
