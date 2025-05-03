@@ -1,8 +1,8 @@
 "use server";
 
 import {
-  generateDummyOrderData,
-  generateDummyOrdersData,
+  generateMockOrderData,
+  generateMockRevenueData,
 } from "@util/generator/order";
 
 export const getOrder = async (id, order) => {
@@ -23,7 +23,7 @@ export const getOrder = async (id, order) => {
   }
 };
 
-export const getOrders = async (id) => {
+export const getCustomerOrders = async (id) => {
   if (process.env.DEV_ENV !== "production") return generateDummyOrdersData(Math.round(Math.random()*4)+1);
   try {
     const response = await fetch(`${process.env.APP_URL}/orders/${id}`);
@@ -61,77 +61,44 @@ export const cancelOrder = async (customer_id,id) => {
   }
 };
 
-export const payWithZaloPay = async (payload) => {
-  try {
-    const response = await fetch(`${process.env.APP_URL}/zalo-payment/${payload.customer_id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(
-        	payload.order
-      ),
-    });
 
-
-    if (response.ok) {
-      const data = await response.json()
-      return data.order_url
-    } else {
-      return "";
-    }
-  } catch (error) {
-    console.log(error);
-    return "";
-  }
+export const getOrderData  = async () =>  {
+  return generateMockOrderData(6)
+  // if(process.env.DEV_ENV!=="production") return generateDummyOrdersData(10)
+  // try {
+  //   const response = await fetch(
+  //     `${process.env.APP_URL}/orders`
+  //   );
+  //   if(response.ok) {
+  //     const data  = await response.json()
+  //     return data
+  //   } else {
+  //     return []
+  //   }
+  // } catch (error) {
+  //   console.log(error)
+  //   return []
+  // }
 }
 
-export const payWithMoMo = async (payload) => {
-  try {
-    const response = await fetch(`${process.env.APP_URL}/momo-payment/${payload.customer_id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(
-        	payload.order
-      ),
-    });
-
-
-    if (response.ok) {
-      const data = await response.json()
-      return data.shortLink
-    } else {
-      return "";
-    }
-  } catch (error) {
-    console.log(error);
-    return "";
-  }npm 
+export const getRevenueData = async () => {
+  return generateMockRevenueData(6)
+  // if(process.env.DEV_ENV!=="production") return generateDummyOrdersData(10)
+  // try {
+  //   const response = await fetch(
+  //     `${process.env.APP_URL}/orders`
+  //   );
+  //   if(response.ok) {
+  //     const data  = await response.json()
+  //     return data
+  //   } else {
+  //     return []
+  //   }
+  // } catch (error) {
+  //   console.log(error)
+  //   return []
+  // }
 }
 
-export const postOrder = async (payload) => {
-  try {
-    const response = await fetch(`${process.env.APP_URL}/orders/${payload.customer_id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(
-        	payload.order
-      ),
-    });
 
 
-    if (response.ok) {
-      const data = await response.json()
-      return data;
-    } else {
-      return null;
-    }
-  } catch (error) {
-    console.log(error);
-    return null
-  }
-}

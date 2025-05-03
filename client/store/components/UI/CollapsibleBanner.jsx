@@ -4,8 +4,27 @@ const CollapsibleContainer = ({ content, maxHeight }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isExpandable, setIsExpandable] = useState(false);
   const containerRef = useRef(null);
+  
   useEffect(() => {
-    if (containerRef.current.scrollHeight > maxHeight) setIsExpandable(true);
+    const container = containerRef.current;
+
+    const observer = new ResizeObserver(() => {
+      if (container.scrollHeight > maxHeight) {
+        setIsExpandable(true);
+      } else {
+        setIsExpandable(false);
+      }
+    });
+
+    if (container) {
+      observer.observe(container);
+    }
+
+    return () => {
+      if (container) {
+        observer.unobserve(container);
+      }
+    };
   }, [maxHeight]);
   return (
     <div className="w-full h-fit relative">

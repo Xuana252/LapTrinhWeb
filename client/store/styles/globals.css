@@ -110,8 +110,14 @@ body {
     @apply bg-on-surface font-bold text-surface p-2 rounded-lg hover:scale-105 active:scale-95 transition-transform duration-200 ease-out gap-2 flex items-center justify-center h-fit;
   }
 
+
+
   .button-variant-2 {
     @apply shadow-md text-on-primary bg-primary active:bg-primary/80 active:scale-95 transition-all duration-100 px-2 py-1 hover:font-semibold rounded-lg gap-2 flex items-center justify-center h-fit;
+  }
+
+  .button-variant-3 {
+    @apply bg-primary  text-on-primary p-1 rounded-lg active:opacity-80 transition-colors duration-200 ease-out gap-2 flex items-center justify-center h-fit;
   }
 
   .order-state {
@@ -138,11 +144,19 @@ body {
   }
 
   .panel-1 {
-    @apply h-fit overflow-hidden rounded-xl border-[2px] border-on-secondary p-4 bg-primary/20 backdrop-blur-sm shadow-xl;
+    @apply h-fit  rounded-xl border-[2px] border-on-secondary p-4 bg-primary/20 backdrop-blur-sm shadow-xl;
   }
 
   .panel-2 {
-    @apply overflow-hidden rounded-md bg-primary shadow-lg text-on-primary p-4;
+    @apply  rounded-md bg-primary shadow-lg text-on-primary p-4;
+  }
+
+  .panel-3 {
+    @apply shadow-md rounded-md bg-secondary-variant/50 text-on-secondary p-2;
+  }
+  
+  .panel-4 {
+    @apply shadow-md rounded-md bg-surface/80 text-on-surface p-2;
   }
 
   .account-nav-bar-item {
@@ -181,5 +195,51 @@ body {
 
   .other-message {
     @apply message-base mr-auto bg-primary text-on-primary;
+  }
+
+  .title {
+    @apply text-2xl font-bold text-on-primary;
+  }
+
+  .number-scroll-up {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    font-weight: bold;
+    animation: scrollNumbersUp 2s linear infinite;
+  }
+
+  .number-scroll-up span {
+    display: block;
+  }
+
+  @keyframes scrollNumbersUp {
+    0% {
+      transform: translateY(0%);
+    }
+    100% {
+      transform: translateY(-400%);
+    } /* Moves up by 5 numbers */
+  }
+
+  .number-scroll-down {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    font-weight: bold;
+    animation: scrollNumbersDown 2s linear infinite;
+  }
+
+  .number-scroll-down span {
+    display: block;
+  }
+
+  @keyframes scrollNumbersDown {
+    0% {
+      transform: translateY(-400%);
+    }
+    100% {
+      transform: translateY(0%);
+    } /* Moves up by 5 numbers */
   }
 }

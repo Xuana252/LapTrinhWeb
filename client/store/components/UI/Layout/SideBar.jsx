@@ -78,11 +78,12 @@ export default function SideBar({ menu, children }) {
       >
         <div className="flex flex-row items-center justify-between  bg-primary p-2 rounded-md gap-2">
           <div className="flex flex-row gap-2 items-center">
-            <Image
+            <img
               src={process.env.NEXT_PUBLIC_APP_LOGO}
               alt="app logo"
               width={32}
               height={32}
+              className="rounded bg-secondary p-1"
             />
             <div className="font-bold text-md">
               {process.env.NEXT_PUBLIC_APP_NAME}

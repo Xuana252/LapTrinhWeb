@@ -1,6 +1,9 @@
 "use server";
 
+import { generateDummyFeedback } from "@util/generator/feedback";
+
 export const getFeedbacks  = async(product_id) =>  {
+  if(process.env.DEV_ENV!=="production") return generateDummyFeedback ()
   try {
     const response = await fetch(
       `${process.env.APP_URL}/products/feedback/${product_id}`

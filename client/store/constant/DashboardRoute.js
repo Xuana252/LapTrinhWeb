@@ -14,6 +14,8 @@ import {
     faMemory,
     faIdBadge,
     faTruck,
+    faMessage,
+    faTag,
   } from "@fortawesome/free-solid-svg-icons";
   
   export const DashboardRoutes = [
@@ -45,10 +47,17 @@ import {
       section: "Product",
       items: [
         {
-          path: "/products",
+          path: "/product/products",
           name: "Your Products",
           icon: faBox,
-          description: "Change your account password",
+          description: "View your products",
+          subPath:[]
+        },
+        {
+          path: "/product/categories",
+          name: "Product Categories",
+          icon: faTag,
+          description: "View your product categories",
           subPath:[]
         },
       ],
@@ -72,6 +81,18 @@ import {
           path: "/about",
           name: "Your Team",
           icon: faIdBadge,
+          description: "See your team details",
+          subPath:[]
+        },
+      ],
+    },
+    {
+      section: "Customer Support",
+      items: [
+        {
+          path: "/about",
+          name: "Customer Support",
+          icon: faMessage,
           description: "See your team details",
           subPath:[]
         },

@@ -50,3 +50,37 @@ export const generateDummyCustomerData = (id) => {
     },
   };
 };
+
+
+ export const generateMockUserData = (months = 6) => {
+    const now = new Date();
+
+    const monthly = Array.from(
+      { length: months },
+      (_, i) => {
+        const date = new Date(
+          now.getFullYear(),
+          now.getMonth() - (months - i - 1),
+          1
+        );
+        return {
+          _id: {
+            year: date.getFullYear(),
+            month: date.getMonth() + 1,
+          },
+          count: Math.floor(Math.random() * 2000) + 500,
+        };
+      }
+    );
+
+    const total = monthly.reduce((acc, curr) => acc + curr.count, 0);
+    const today = Math.floor(Math.random() * 300) + 200; // daily new users
+    const banned = Math.floor(Math.random() * (total * 0.3)); // up to 30% of total
+
+    return {
+      total,
+      today,
+      banned,
+      monthly,
+    };
+  }
