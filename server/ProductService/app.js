@@ -16,8 +16,8 @@ const API_GATEWAY = process.env.API_GATEWAY || "http://localhost:8000";
 
 app.use(cors({ origin: API_GATEWAY, optionSuccessStatus: 200 }));
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 app.use('/category',categoryRoute)
 app.use('/feedback',feedbackRoute)

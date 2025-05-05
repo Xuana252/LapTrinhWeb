@@ -26,30 +26,65 @@ export const categoriesPreset = [
   },
 ];
 
-const sampleCategories = [
-  { categoryId: "1", name: "Smartphones" },
-  { categoryId: "2", name: "Laptops" },
-  { categoryId: "3", name: "Tablets" },
-  { categoryId: "4", name: "Televisions" },
-  { categoryId: "5", name: "Headphones" },
-  { categoryId: "6", name: "Cameras" },
-];
 
-export const  generateMockCategoryData = () => {
-  const category = sampleCategories.map((cat) => ({
-    categoryId: cat.categoryId,
-    name: cat.name,
-    count: Math.floor(Math.random() * 100000000) + 100000000, // total count
-  }));
-
-  const thisMonth = sampleCategories.map((cat) => ({
-    categoryId: cat.categoryId,
-    name: cat.name,
-    count: Math.floor(Math.random() * 10000000) + 5000000, // current month count
-  }));
+export const generateMockCategoryRevenueData = (months = 6) => {
+  const now = new Date();
+  const monthly = Array.from({ length: months }, (_, i) => {
+    const date = new Date(
+      now.getFullYear(),
+      now.getMonth() - (months - i - 1),
+      1
+    );
+    return {
+      _id: {
+        year: date.getFullYear(),
+        month: date.getMonth() + 1,
+      },
+      count: Math.floor(Math.random() * 200) + 100,
+      revenue: Math.floor(Math.random() * 200000000) + 100000000,
+    };
+  });
 
   return {
-    category,
-    thisMonth,
+    total: monthly.reduce((acc, curr) => acc + curr.revenue, 0),
+    sold: monthly.reduce((acc, curr) => acc + curr.count, 0),
+    monthly,
   };
+};
+
+export const  generateMockCategoryData = (months=6) => {
+  const now = new Date();
+  const alltime = categoriesPreset.map((cat) => ({
+    category: cat,
+    count: Math.floor(Math.random() * 1000) + 200,
+    revenue: Math.floor(Math.random() * 100000000) + 100000000, // total count
+  }));
+
+
+  
+  const monthly = Array.from({ length: months }, (_, i) => {
+    const date = new Date(
+      now.getFullYear(),
+      now.getMonth() - (months - i - 1),
+      1
+    );
+    return {
+      _id: {
+        year: date.getFullYear(),
+        month: date.getMonth() + 1,
+      },
+      categories:categoriesPreset.map((cat) => ({
+        category: cat,
+        count: Math.floor(Math.random() * 200) + 100,
+        revenue: Math.floor(Math.random() * 1000000) + 1000000, // total count
+      }))
+
+    };
+  });
+
+  return {
+    alltime,
+    monthly,
+  };
+ 
 }

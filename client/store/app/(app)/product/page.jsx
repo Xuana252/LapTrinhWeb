@@ -5,6 +5,7 @@ import InputBox from "@components/Input/InputBox";
 import ProductCard from "@components/UI/Product/ProductCard";
 import { text } from "@node_modules/@fortawesome/fontawesome-svg-core";
 import {
+  faAdd,
   faAngleLeft,
   faAngleRight,
   faArrowDownAZ,
@@ -22,6 +23,7 @@ import {
   faTag,
 } from "@node_modules/@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@node_modules/@fortawesome/react-fontawesome";
+import Link from "@node_modules/next/link";
 import { getAllCategory } from "@service/category";
 import { getAllProduct } from "@service/product";
 import React, { useEffect, useState } from "react";
@@ -42,10 +44,14 @@ const Product = () => {
   const [ratingSort, setRatingSort] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState();
 
-  const handleSearch = (e) => {
+  const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      setSearchText(pendingText);
+      handleSearch();
     }
+  };
+
+  const handleSearch = () => {
+    setSearchText(pendingText);
   };
 
   const fetchProducts = async () => {
@@ -120,6 +126,20 @@ const Product = () => {
       <div className="title">
         <FontAwesomeIcon icon={faBox} /> Products
       </div>
+      <div className="flex-wrap-reverse gap-4 flex items-center justify-end h-fit shadow-lg rounded-xl w-full bg-surface py-2 px-4 panel-3">
+        <h2 className="text-lg mr-auto font-bold">
+          {products.length} products
+        </h2>
+        <div className="flex flex-wrap gap-4 panel-3">
+          <Link
+            href={`/product/add`}
+            className="bg-blue-500  text-white p-1 rounded-lg active:opacity-80 transition-colors duration-200 ease-out gap-2 flex items-center justify-center h-fit"
+          >
+            Add
+            <FontAwesomeIcon icon={faAdd} />
+          </Link>
+        </div>
+      </div>
       <ProductSection />
       <div className="panel-3">
         <div className="rounded-full grow bg-primary-variant text-base flex flex-row items-center p-1">
@@ -128,7 +148,7 @@ const Product = () => {
             className="grow h-full bg-transparent  px-2 text-on-primary placeholder:text-on-primary outline-none"
             placeholder="Search product"
             onChange={(e) => setPendingText(e.target.value)}
-            onKeyDown={handleSearch}
+            onKeyDown={handleKeyDown}
           />
           <button
             onClick={handleSearch}

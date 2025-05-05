@@ -6,7 +6,7 @@ const orderRoute=require('./routes/orderRoute')
 const cors = require("cors");
 dotenv.config();
 
-const PORT = process.env.PORT || 8001;
+const PORT = process.env.PORT || 8002;
 const API_GATEWAY = process.env.API_GATEWAY || "http://localhost:8000";
 
 const app = express();

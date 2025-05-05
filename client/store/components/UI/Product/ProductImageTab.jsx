@@ -12,7 +12,6 @@ const ProductImageTab = ({ images, onChange }) => {
 
   const changeImage = ({ name, url }) => {
 
-    console.log("changeImage",url);
     onChange([
       ...images,
       {

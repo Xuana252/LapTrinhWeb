@@ -3,7 +3,7 @@ export const formattedPrice = (price=0) => {
     return new Intl.NumberFormat('vi-VN', {
         style: 'currency',
         currency: 'VND',
-      }).format(price)
+      }).format(Math.max(price,0))
 }
 
 export const formattedDate = (dateString, daysToAdd = 0) => {

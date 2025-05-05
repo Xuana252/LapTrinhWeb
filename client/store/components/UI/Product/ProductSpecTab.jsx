@@ -58,7 +58,7 @@ const ProductSpecTab = ({ specs = [], onChange }) => {
               {specs.map((item, index) => (
                 <li
                   key={index}
-                  className="grid grid-cols-[30%_1fr_auto] gap-2 items-start odd:bg-surface odd:text-on-surface rounded-lg p-2"
+                  className="grid grid-cols-[1fr_1fr_auto] gap-2 items-start odd:bg-surface odd:text-on-surface rounded-lg p-2"
                 >
                   {editingIndex === index ? (
                     <>
@@ -96,8 +96,8 @@ const ProductSpecTab = ({ specs = [], onChange }) => {
                     </>
                   ) : (
                     <>
-                      <div className="font-semibold">{item.spec_name}</div>
-                      <div className="whitespace-pre-line">{item.detail}</div>
+                      <div className="font-semibold p-2">{item.spec_name}</div>
+                      <div className="whitespace-pre-line p-2">{item.detail}</div>
                       <div className="flex flex-col gap-1 text-sm">
                         <button
                           onClick={() => handleEdit(index, item)}

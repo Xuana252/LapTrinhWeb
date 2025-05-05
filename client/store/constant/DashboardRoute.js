@@ -44,17 +44,17 @@ import {
       ],
     },
     {
-      section: "Product",
+      section: "Product & Category",
       items: [
         {
-          path: "/product/products",
+          path: "/product",
           name: "Your Products",
           icon: faBox,
           description: "View your products",
           subPath:[]
         },
         {
-          path: "/product/categories",
+          path: "/category",
           name: "Product Categories",
           icon: faTag,
           description: "View your product categories",

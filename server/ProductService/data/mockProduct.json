@@ -1,5 +1,21 @@
 [
   {
+    "product_name": "PlaceHolder",
+    "description": "Placeholder for deleted product",
+    "price": 0,
+    "discount": 0,
+    "stock_quantity":0,
+    "spec": [
+   
+    ],
+    "image": [
+      "https://hbr.org/resources/images/article_assets/2019/11/Nov19_14_sb10067951dd-001.jpg"
+    ],
+    "category_id": { "$oid": "681871ede975d436de633115" },
+    "createdAt": { "$date": "2024-05-01T00:00:00.000Z" },
+    "updatedAt": { "$date": "2024-05-01T00:00:00.000Z" }
+  },
+  {
     "product_name": "iPhone 15 Pro",
     "description": "The latest iPhone with A17 Pro chip, titanium frame, and USB-C port.",
     "price": 20000000,

@@ -101,3 +101,75 @@ export const getProductDetail = async (id) => {
     return {}
   }
 };
+
+export const updateProduct = async (id, payload) => {
+  if (process.env.DEV_ENV !== "production") return true;
+  try {
+    const response = await fetch(
+      `${process.env.APP_URL}/products/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      }
+    );
+
+    if (response.ok) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+};
+
+export const createProduct = async (payload) => {
+  if (process.env.DEV_ENV !== "production") return true;
+  try {
+    const response = await fetch(
+      `${process.env.APP_URL}/products`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      }
+    );
+
+    if (response.ok) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+};
+
+
+export const deleteProduct = async (id) => {
+  if (process.env.DEV_ENV !== "production") return true;
+  try {
+    const response = await fetch(
+      `${process.env.APP_URL}/products/${id}`,
+      {
+        method: "DELETE",
+      }
+    );
+
+    if (response.ok) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+};

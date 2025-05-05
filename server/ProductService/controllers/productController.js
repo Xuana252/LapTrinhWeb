@@ -1,4 +1,5 @@
 const Product = require("../models/ProductModel");
+const User = require("../models/UserModel");
 const Order = require("../models/OrderModel");
 const asyncHandler = require("express-async-handler");
 const mongoose = require("mongoose");
@@ -245,7 +246,9 @@ const getProductsRevenue = asyncHandler(async (req, res) => {
 
     // Step 2: Collect all unique product IDs from those 2 months
     const allTopProductIds = [
-      ...new Set(latest.flatMap((m) => m.top3.map((id) => id.product_id.toString()))),
+      ...new Set(
+        latest.flatMap((m) => m.top3.map((id) => id.product_id.toString()))
+      ),
     ].map((id) => new mongoose.Types.ObjectId(id));
 
     // Step 3: Fetch product details with rating and category
@@ -461,14 +464,19 @@ const createProduct = asyncHandler(async (req, res) => {
   }
 });
 
+
 const updateProduct = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
 
-    const product = await Product.findByIdAndUpdate(id, req.body, {
-      new: true,
-    });
-    //if found no product with the id
+    const product = await Product.findByIdAndUpdate(
+      id,
+      req.body,
+      {
+        new: true,
+      }
+    );
+    
     if (!product) {
       res
         .status(404)
@@ -487,6 +495,24 @@ const deleteProduct = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
 
+    await Order.updateMany(
+      {},
+      {
+        $pull: {
+          order_item: { product_id: new mongoose.Types.ObjectId(id) },
+        },
+      }
+    );
+
+    await User.updateMany(
+      {},
+      {
+        $pull: {
+          cart: { product_id: new mongoose.Types.ObjectId(id) },
+        },
+      }
+    );
+
     const product = await Product.findByIdAndDelete(id);
     if (!product) {
       res
@@ -501,6 +527,7 @@ const deleteProduct = asyncHandler(async (req, res) => {
     throw new Error(error.message);
   }
 });
+
 module.exports = {
   getProducts,
   getProductRevenue,

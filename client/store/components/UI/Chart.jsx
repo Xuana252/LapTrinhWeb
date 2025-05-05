@@ -23,6 +23,7 @@ export default function Chart({
   data,
   name,
   type,
+  stack,
 }) {
   const flattenedData = data?.map((item) => ({
     id: item.id,
@@ -87,12 +88,13 @@ export default function Chart({
                 data={flattenedData}
                 margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
                 barSize={20}
+              
               >
                 <XAxis dataKey="id" />
                 <Tooltip />
 
                 {keys.map((key, i) => (
-                  <Bar key={key} dataKey={key} fill={colors[i % colors.length]}>
+                  <Bar key={key} dataKey={key} fill={colors[i % colors.length]}  stackId={stack?"yes":""}>
                     <LabelList dataKey={key} position={"top"} />
                   </Bar>
                 ))}

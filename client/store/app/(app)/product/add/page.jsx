@@ -1,11 +1,12 @@
 "use client";
 import { formattedPrice } from "@util/format";
-import { getProductDetail, getAllProduct } from "@service/product";
+import { getProductDetail, getAllProduct, createProduct } from "@service/product";
 
 import ProductCard from "@components/UI/Product/ProductCard";
 import ReviewStar from "@components/UI/ReviewStar";
 
 import {
+  faAdd,
   faCartShopping,
   faMinus,
   faPlus,
@@ -15,11 +16,8 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useParams, useRouter } from "@node_modules/next/navigation";
 
 import React, { useEffect, useReducer, useRef, useState } from "react";
-
-import Link from "@node_modules/next/link";
 
 import ProductRatingTab from "@components/UI/Product/ProductRatingTab";
 import ProductDescriptionTab from "@components/UI/Product/ProductDescriptionTab";
@@ -29,28 +27,62 @@ import QuantityInput from "@components/Input/QuantityInput";
 import PriceInput from "@components/Input/PriceInput";
 import FilterButton from "@components/Input/FilterButton";
 import { getAllCategory } from "@service/category";
-import { toastRequest, toastSuccess } from "@util/toaster";
-import ProductRevenueSection from "@components/UI/Product/ProductRevenueTab";
-const Product = () => {
-  const params = useParams();
+import { toastError, toastRequest, toastSuccess } from "@util/toaster";
+import { upload } from "@util/uploader";
+const AddProduct = () => {
   const [isLoading, setIsLoading] = useState(true);
 
-  const [product, setProduct] = useState(null);
+  const [product, setProduct] = useState({
+    product_name: "",
+    price: 0,
+    discount: 0,
+    image: [],
+    category_id: "",
+    category: null,
+    description: "",
+    spec: [],
+  });
 
   const [categories, setCategories] = useState([]);
 
-  const handleDelete = () => {
-    toastRequest("Are you sure you want to delete this product?");
-  };
+  const handleSave = async () => {
+    setIsLoading(true);
+    try {
+      const imageList = await Promise.all(
+        product.image.map(async (img) => {
+          if (img.name !== "") {
+            return await upload(img.url, img.name);
+          } else {
+            return img.url;
+          }
+        })
+      );
+      const payload = {
+        product_name: product.product_name,
+        price: product.price,
+        discount: product.discount,
+        stock_quantity: product.stock_quantity,
+        spec: product.spec,
+        image: imageList,
+        category_id: product.category_id,
+      };
 
-  const handleSave = () => {
-    toastSuccess("Product updated successfully");
+
+      createProduct(payload).then((res) => {
+        if (res) toastSuccess("Product created successfully");
+        else toastError("Failed to create product");
+      });
+    } catch (error) {
+      toastError("Fail to create product");
+    }
+    setIsLoading(false);
   };
 
   const fetchCategories = async () => {
     getAllCategory()
       .then((res) => {
         setCategories(res);
+        changeProductCategory(res[0]._id);
       })
       .catch((err) => {
         console.log(err);
@@ -68,23 +100,9 @@ const Product = () => {
     product && setProduct((prev) => ({ ...prev, [name]: value }));
   };
 
-  const fetchProductDetails = (id) => {
-    getProductDetail(id).then((data) => {
-      const formattedProduct = {
-        ...data,
-        image: data.image.map((img, index) => ({
-          name: img + index,
-          url: img,
-        })),
-      };
-      setProduct(formattedProduct);
-    });
-  };
-
   useEffect(() => {
     setIsLoading(true);
     fetchCategories();
-    fetchProductDetails(params.id);
     setTimeout(() => setIsLoading(false), 1000);
   }, []);
 
@@ -93,28 +111,14 @@ const Product = () => {
       <div className="panel-3 w-full flex flex-wrap justify-end items-center gap-2">
         <button
           onClick={handleSave}
-          className="bg-green-500  text-white p-1 rounded-lg active:opacity-80 transition-colors duration-200 ease-out gap-2 flex items-center justify-center h-fit"
+          className="bg-blue-500  text-white p-1 rounded-lg active:opacity-80 transition-colors duration-200 ease-out gap-2 flex items-center justify-center h-fit"
         >
           {isLoading ? (
             <FontAwesomeIcon icon={faSpinner} className="animate-spin" />
           ) : (
             <>
-              Save
-              <FontAwesomeIcon icon={faSave} />
-            </>
-          )}
-        </button>
-        <button
-          onClick={handleDelete}
-          className="bg-red-500  text-white p-1 rounded-lg active:opacity-80 transition-colors duration-200 ease-out gap-2 flex items-center justify-center h-fit"
-        >
-          {" "}
-          {isLoading ? (
-            <FontAwesomeIcon icon={faSpinner} className="animate-spin" />
-          ) : (
-            <>
-              Delete
-              <FontAwesomeIcon icon={faTrash} />
+              Add
+              <FontAwesomeIcon icon={faAdd} />
             </>
           )}
         </button>
@@ -143,30 +147,31 @@ const Product = () => {
                   product?.price -
                     (product?.price / 100) *
                       Math.min(
-                        product?.discount + product?.category.discount,
+                        product?.discount ??
+                          0 + product?.category?.discount ??
+                          0,
                         100
                       )
                 )}
               </div>
-              {(product?.discount > 0 || product?.category.discount > 0) && (
-                <div className="  flex flex-wrap gap-1 items-center justify-start">
-                  <span>price: </span>
-                  <PriceInput
-                    value={product.price}
-                    onChange={(d) => updateProduct("price", d)}
-                  />
-                  {product.discount > 0 && (
-                    <span className="rounded px-1 text-white bg-red-500 font-semibold">
-                      -{product.discount}%
-                    </span>
-                  )}
-                  {product.category.discount > 0 && (
-                    <span className="rounded px-1 text-white bg-green-500 font-semibold">
-                      -{product.category.discount}%
-                    </span>
-                  )}
-                </div>
-              )}
+
+              <div className="  flex flex-wrap gap-1 items-center justify-start">
+                <span>price: </span>
+                <PriceInput
+                  value={product?.price}
+                  onChange={(d) => updateProduct("price", d)}
+                />
+                {product?.discount > 0 && (
+                  <span className="rounded px-1 text-white bg-red-500 font-semibold">
+                    -{product.discount}%
+                  </span>
+                )}
+                {product?.category?.discount > 0 && (
+                  <span className="rounded px-1 text-white bg-green-500 font-semibold">
+                    -{product?.category?.discount}%
+                  </span>
+                )}
+              </div>
 
               <div>
                 <FilterButton
@@ -214,12 +219,8 @@ const Product = () => {
           onChange={(s) => updateProduct("spec", s)}
         />
       </div>
-      <ProductRevenueSection id={params.id} />
-      <div className="w-full ">
-        <ProductRatingTab id={params.id} />
-      </div>
     </section>
   );
 };
 
-export default Product;
+export default AddProduct;

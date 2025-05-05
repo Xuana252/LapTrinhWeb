@@ -22,9 +22,8 @@ export default function CategorySection() {
       })
       .catch((err) => {
         console.log(err);
-      }
-      );
-  }
+      });
+  };
 
   useEffect(() => {
     fetchCategoryData();
@@ -34,19 +33,39 @@ export default function CategorySection() {
       <div className="font-bold text-xl panel-3">
         <FontAwesomeIcon icon={faTags} /> Categories
       </div>
-      <div className="grid grid-cols-1 items-center gap-2 md:grid-cols-[60%_auto] ">
+      <div className="grid grid-cols-1 items-center gap-2 ">
+        <Chart
+          type={"Line"}
+          stack={true}
+          name={
+            <div>
+              <FontAwesomeIcon icon={faCalendar} /> Monthly Categories Revenue
+            </div> 
+          }
+          data={
+            data?.monthly?.map((item) => {
+              return {
+                id: `${item._id.year}/${item._id.month}`,
+                value: item.categories.reduce((acc, c) => {
+                  acc[c.category.category_name] = c.revenue;
+                  return acc;
+                }, {}),
+              };
+            }) || null
+          }
+        />
         <Chart
           type={"Pie"}
           name={
             <div>
-              <FontAwesomeIcon icon={faCalendar} /> Monthly Categories
+              <FontAwesomeIcon icon={faCalendar} /> This Month Categories Revenue
             </div>
           }
           data={
-            data?.thisMonth.slice(0, 10)?.map((item) => {
+            data?.monthly?.at(-1)?.categories.map((item) => {
               return {
-                id: `${item.name}`,
-                value: { category: item.count },
+                id: `${item.category.category_name}`,
+                value: { revenue: item.revenue },
               };
             }) || null
           }
@@ -57,22 +76,22 @@ export default function CategorySection() {
               <FontAwesomeIcon icon={faTags} /> All time
             </div>
             <div className=" overflow-y-auto flex flex-wrap gap-2 font-mono">
-              {data?.category.map((item, index) => (
+              {data?.alltime?.map((item, index) => (
                 <div
                   key={index}
                   className="flex flex-col gap-2 bg-primary border-secondary-variant border-2  rounded overflow-hidden max-w-[120px] "
-                  title={item.name}
+                  title={item.category.category_name}
                 >
-                  <span className="p-1">{formatNumber(item.count)}</span>
+                  <span className="p-1">{formatNumber(item.revenue)}</span>
                   <div className="bg-secondary-variant w-full p-1 text-xs text-on-secondary">
-                    {item.name}
+                    {item.category.category_name}
                   </div>
                 </div>
               )) ||
                 Array.from({ length: 10 }).map((item, index) => (
                   <div
                     key={index}
-                    className="border-2 text-transparent animate-pulse border-primary bg-primary px-2 rounded-full"
+                    className="border-2 text-transparent animate-pulse border-primary bg-primary px-2 rounded"
                   >
                     Category
                   </div>
@@ -84,25 +103,25 @@ export default function CategorySection() {
               <FontAwesomeIcon icon={faSortAmountAsc} /> Best selling
             </div>
             <div className=" overflow-y-auto flex flex-wrap gap-2 font-mono">
-              {data?.category
-                ?.sort((a, b) => b.count - a.count)
+              {data?.alltime
+                ?.sort((a, b) => b.revenue - a.revenue)
                 .slice(0, 3)
                 .map((item, index) => (
                   <div
                     key={index}
                     className="flex flex-col gap-2 bg-primary border-2 border-green-400  rounded overflow-hidden max-w-[120px] "
-                    title={item.name}
+                    title={item.category.category_name}
                   >
-                    <span className="p-1">{formatNumber(item.count)}</span>
+                    <span className="p-1">{formatNumber(item.revenue)}</span>
                     <div className="bg-secondary-variant w-full p-1 text-xs text-on-secondary">
-                      {item.name}
+                      {item.category.category_name}
                     </div>
                   </div>
                 )) ||
-                Array.from({ length: 10 }).map((item, index) => (
+                Array.from({ length: 3 }).map((item, index) => (
                   <div
                     key={index}
-                    className="border-2 text-transparent animate-pulse border-primary bg-primary px-2 rounded-full"
+                    className="border-2 text-transparent animate-pulse border-primary bg-primary px-2 rounded"
                   >
                     Category
                   </div>
@@ -114,25 +133,25 @@ export default function CategorySection() {
               <FontAwesomeIcon icon={faSortAmountDesc} /> Worst selling
             </div>
             <div className=" overflow-y-auto flex flex-wrap gap-2 font-mono">
-              {data?.category
+              {data?.alltime
                 ?.sort((a, b) => a.count - b.count)
                 .slice(0, 3)
                 .map((item, index) => (
                   <div
                     key={index}
                     className="flex flex-col gap-2 bg-primary border-yellow-400 border-2  rounded overflow-hidden max-w-[120px] "
-                    title={item.name}
+                    title={item.category.category_name}
                   >
-                    <span className="p-1">{formatNumber(item.count)}</span>
+                    <span className="p-1">{formatNumber(item.revenue)}</span>
                     <div className="bg-secondary-variant w-full p-1 text-xs text-on-secondary">
-                      {item.name}
+                      {item.category.category_name}
                     </div>
                   </div>
                 )) ||
-                Array.from({ length: 10 }).map((item, index) => (
+                Array.from({ length: 3 }).map((item, index) => (
                   <div
                     key={index}
-                    className="border-2 text-transparent animate-pulse border-primary bg-primary px-2 rounded-full"
+                    className="border-2 text-transparent animate-pulse border-primary bg-primary px-2 rounded"
                   >
                     Category
                   </div>
@@ -144,25 +163,26 @@ export default function CategorySection() {
               <FontAwesomeIcon icon={faSortAmountAsc} /> Best selling this month
             </div>
             <div className=" overflow-y-auto flex flex-wrap gap-2 font-mono">
-              {data?.thisMonth
-                ?.sort((a, b) => a.count - b.count)
+              {data?.monthly
+                ?.at(-1)
+                .categories?.sort((a, b) => a.revenue - b.revenue)
                 .slice(0, 3)
                 .map((item, index) => (
                   <div
                     key={index}
                     className="flex flex-col gap-2 bg-primary border-green-400 border-2  rounded overflow-hidden max-w-[120px] "
-                    title={item.name}
+                    title={item.category.category_name}
                   >
-                    <span className="p-1">{formatNumber(item.count)}</span>
+                    <span className="p-1">{formatNumber(item.revenue)}</span>
                     <div className="bg-secondary-variant w-full p-1 text-xs text-on-secondary">
-                      {item.name}
+                      {item.category.category_name}
                     </div>
                   </div>
                 )) ||
-                Array.from({ length: 10 }).map((item, index) => (
+                Array.from({ length: 3 }).map((item, index) => (
                   <div
                     key={index}
-                    className="border-2 text-transparent animate-pulse border-primary bg-primary px-2 rounded-full"
+                    className="border-2 text-transparent animate-pulse border-primary bg-primary px-2 rounded"
                   >
                     Category
                   </div>
@@ -171,28 +191,30 @@ export default function CategorySection() {
           </div>
           <div className="flex flex-col gap-2 max-h-[400px] overflow-y-auto grow    panel-4">
             <div>
-              <FontAwesomeIcon icon={faSortAmountDesc} /> Worst selling this month
+              <FontAwesomeIcon icon={faSortAmountDesc} /> Worst selling this
+              month
             </div>
             <div className=" overflow-y-auto flex flex-wrap gap-2 font-mono">
-              {data?.thisMonth
-                ?.sort((a, b) => a.count - b.count)
+              {data?.monthly
+                ?.at(-1)
+                .categories?.sort((a, b) => a.revenue - b.revenue)
                 .slice(0, 3)
                 .map((item, index) => (
                   <div
                     key={index}
                     className="flex flex-col gap-2 bg-primary border-yellow-400 border-2    rounded overflow-hidden max-w-[120px] "
-                    title={item.name}
+                    title={item.category.category_name}
                   >
-                    <span className="p-1">{formatNumber(item.count)}</span>
+                    <span className="p-1">{formatNumber(item.revenue)}</span>
                     <div className="bg-secondary-variant w-full p-1 text-xs text-on-secondary">
-                      {item.name}
+                      {item.category.category_name}
                     </div>
                   </div>
                 )) ||
-                Array.from({ length: 10 }).map((item, index) => (
+                Array.from({ length: 3 }).map((item, index) => (
                   <div
                     key={index}
-                    className="border-2 text-transparent animate-pulse border-primary bg-primary px-2 rounded-full"
+                    className="border-2 text-transparent animate-pulse border-primary bg-primary px-2 rounded"
                   >
                     Category
                   </div>

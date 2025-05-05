@@ -33,7 +33,7 @@ const ProductCard = ({ product, loading = false }) => {
   if (!product) return null;
   return (
     <Link
-      href={`/product/products/${product._id}`}
+      href={`/product/${product._id}`}
       className="flex flex-row relative min-w-[150px] gap-2 shadow-lg p-2 rounded-lg bg-primary/70 text-on-primary hover:bg-primary cursor-pointer transition-all duration-100 ease-in-out"
     >
       <div className="relative  size-[80px] flex justify-center ">
