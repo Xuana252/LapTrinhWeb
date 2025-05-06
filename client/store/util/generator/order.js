@@ -73,9 +73,9 @@ export const generateDummyOrderData = () => {
     shipping_status: ORDER_STATUS[2], // Example: SHIPPED
     delivery_date: new Date().toISOString(),
     address: {
-      address: "123 Main St",
-      city: "Hometown",
-      state: "CA",
+      name: "John Doe",
+      phone_number: "0987654321",
+      detailed_address: "322 ấp Bình Thuận",
       province: "Thành Phố Hồ Chí Minh",
       district: "Huyện Cần Giờ",
       ward: "Xã Bình Khánh",

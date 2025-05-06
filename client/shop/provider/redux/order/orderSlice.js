@@ -15,33 +15,29 @@ export const setOrderStateAsync = createAsyncThunk(
 const orderSlice = createSlice({
   name: "order",
   initialState: {
-    order_items: [],
-    order_address: null,
-    order_voucher: null,  
-    order_payment_method: "",
+    order_item: [],
+    address: null,
+    payment_method: "",
     order_state:0,
   },
   reducers: {
     setOrderItems(state, action) {
-      state.order_items = action.payload.items;
+      state.order_item = action.payload.item;
     },
     setOrderAddress(state, action) {
-      state.order_address = action.payload.address;
+      state.address = action.payload.address;
     },
     setOrderPaymentMethod(state, action) {
-      state.order_payment_method = action.payload.payment_method;
+      state.payment_method = action.payload.payment_method;
     },
-    setOrderVoucher(state, action) {
-      state.order_voucher = action.payload.voucher;  // Reducer to set the voucher
-    },
+
     setOrderState(state,action) {
         state.order_state = action.payload
     },
     clearOrder(state) {
-      state.order_items = [];
-      state.order_address = {};
-      state.order_voucher = {};  // Clear the voucher
-      state.order_payment_method = "";
+      state.order_item = [];
+      state.address = {};
+      state.payment_method = "";
       state.order_state=0
     },
   },
@@ -64,7 +60,6 @@ export const {
   setOrderItems,
   setOrderAddress,
   setOrderPaymentMethod,
-  setOrderVoucher,  // Export the new setOrderVoucher action
   clearOrder,
   setOrderState,
 } = orderSlice.actions;

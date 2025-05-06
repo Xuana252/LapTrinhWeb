@@ -18,6 +18,7 @@ import { addItem } from "@provider/redux/cart/cartSlice";
 import { FontAwesomeIcon } from "@node_modules/@fortawesome/react-fontawesome";
 import { faMoneyBill } from "@node_modules/@fortawesome/free-solid-svg-icons";
 import Image from "@node_modules/next/image";
+import OrderTag from "@components/UI/OrderTag";
 
 const Orders = () => {
   const router = useRouter();
@@ -39,9 +40,11 @@ const Orders = () => {
   const fetchOrders = () => {
     setIsLoading(true);
     getOrders(session.customer?.customer_id).then((data) => {
-      const sortedOrders = data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-    
-    setOrders(sortedOrders);  // Update orders
+      const sortedOrders = data.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
+
+      setOrders(sortedOrders); // Update orders
       setTimeout(() => setIsLoading(false), 1000);
     });
   };
@@ -103,171 +106,7 @@ const Orders = () => {
     fetchOrders();
   }, [session]);
 
-  const renderActions = (order) => {
-    switch (order.order_status) {
-      case "PENDING":
-        return (
-          <button
-            className="button-variant-2"
-            onClick={() => handleCancelOrder(order.order_id)}
-          >
-            Cancel
-          </button>
-        );
-      case "SHIPPED":
-        return (
-          <Link href={`/tracking?orderId=${order.order_id}`}>
-            <button className="button-variant-2">Track</button>
-          </Link>
-        );
-      case "DELIVERED":
-        return (
-          <button
-            className="button-variant-2"
-            onClick={() => handleReorder(order)}
-          >
-            Reorder
-          </button>
-        );
-      case "CANCELLED":
-        return (
-          <button
-            className="button-variant-2"
-            onClick={() => handleReorder(order)}
-          >
-            Reorder
-          </button>
-        );
-      case "CONFIRMED":
-        return (
-          <Link href={`/tracking?orderId=${order.order_id}`}>
-            <button className="button-variant-2">Track</button>
-          </Link>
-        );
-      default:
-        return null;
-    }
-  };
-
-  const renderPaymentMethod = (order) => {
-    switch (order.payment_method) {
-      case "MOMO":
-        switch (order.payment_status) {
-          case "PENDING":
-            return (
-              <div className="flex flex-row items-center gap-2 rounded-xl bg-gray-500/50  px-2 py-1 text-white">
-                PENDING{" "}
-                <Image
-                  src={"/images/MoMo_Logo.png"}
-                  alt="MOMO"
-                  width={20}
-                  height={20}
-                />
-              </div>
-            );
-          case "PAID":
-            return (
-              <div className="flex flex-row items-center gap-2 rounded-xl bg-green-500/50  px-2 py-1 text-white">
-                PAID{" "}
-                <Image
-                  src={"/images/MoMo_Logo.png"}
-                  alt="MOMO"
-                  width={20}
-                  height={20}
-                />
-              </div>
-            );
-          case "REFUNDED":
-            return (
-              <div className="flex flex-row items-center gap-2 rounded-xl bg-black/50  px-2 py-1 text-white">
-                REFUNDED{" "}
-                <Image
-                  src={"/images/MoMo_Logo.png"}
-                  alt="MOMO"
-                  width={20}
-                  height={20}
-                />
-              </div>
-            );
-        }
-        case "ZALOPAY":
-        switch (order.payment_status) {
-          case "PENDING":
-            return (
-              <div className="flex flex-row items-center gap-2 rounded-xl bg-gray-500/50  px-2 py-1 text-white">
-                PENDING{" "}
-                <Image
-                  src={"/images/ZaloPay_Logo.png"}
-                  alt="MOMO"
-                  width={20}
-                  height={20}
-                />
-              </div>
-            );
-          case "PAID":
-            return (
-              <div className="flex flex-row items-center gap-2 rounded-xl bg-green-500/50  px-2 py-1 text-white">
-                PAID{" "}
-                <Image
-                  src={"/images/ZaloPay_Logo.png"}
-                  alt="MOMO"
-                  width={20}
-                  height={20}
-                />
-              </div>
-            );
-          case "REFUNDED":
-            return (
-              <div className="flex flex-row items-center gap-2 rounded-xl bg-black/50  px-2 py-1 text-white">
-                REFUNDED{" "}
-                <Image
-                  src={"/images/ZaloPay_Logo.png"}
-                  alt="MOMO"
-                  width={20}
-                  height={20}
-                />
-              </div>
-            );
-        }
-      case "COD":
-        switch (order.payment_status) {
-          case "PENDING":
-            return (
-              <div className="flex flex-row items-center gap-2 rounded-xl bg-gray-500/50  px-2 py-1 text-white">
-                PENDING <FontAwesomeIcon icon={faMoneyBill} />
-              </div>
-            );
-          case "PAID":
-            return (
-              <div className="flex flex-row items-center gap-2 rounded-xl bg-green-500/50  px-2 py-1 text-white">
-                PAID <FontAwesomeIcon icon={faMoneyBill} />
-              </div>
-            );
-          case "REFUNDED":
-            return (
-              <div className="flex flex-row items-center gap-2 rounded-xl bg-black/50 px-2 py-1  text-white">
-                REFUNDED <FontAwesomeIcon icon={faMoneyBill} />
-              </div>
-            );
-        }
-      default:
-        return null;
-    }
-  };
-  const renderStatus = (order) => {
-    switch (order.order_status) {
-      case "PENDING":
-        return <div className="pending">{order.order_status}</div>;
-      case "SHIPPED":
-        return <div className="shipping">{order.order_status}</div>;
-      case "DELIVERED":
-        return <div className="delivered">{order.order_status}</div>;
-      case "CANCELLED":
-        return <div className="cancelled">{order.order_status}</div>;
-      case "CONFIRMED":
-        return <div className="confirmed">{order.order_status}</div>;
-    }
-  };
+ 
   return (
     <section className="w-full flex flex-col gap-2">
       <div className="flex flex-col gap-2">
@@ -296,32 +135,7 @@ const Orders = () => {
       <div className="flex flex-col justify-center  gap-4">
         {isLoading
           ? Array.from({ length: 3 }).map((_, index) => (
-              <div
-                key={index}
-                className="flex flex-col bg-on-surface/20 rounded-lg p-2 gap-2"
-              >
-                <div className="rounded-lg bg-primary animate-pulse h-5 w-[200px]"></div>
-                <Divider />
-                <h2 className="h-7 rounded-lg bg-primary animate-pulse w-[200px]"></h2>
-                <CollapsibleContainer
-                  content={
-                    <ul className="flex flex-col gap-4 py-4 w-full">
-                      {Array.from({ length: 2 }).map((_, index) => (
-                        <OrderItem key={index} loading={true} />
-                      ))}
-                    </ul>
-                  }
-                  maxHeight={200}
-                />
-
-                <div className="flex flex-row justify-between items-center">
-                  <div className="h-6 rounded-lg bg-primary animate-pulse w-[80px]"></div>
-                  <div className="flex gap-2 flex-wrap">
-                    <div className="h-6 rounded-lg bg-primary animate-pulse w-[80px]"></div>
-                    <div className="h-6 rounded-lg bg-primary animate-pulse w-[80px]"></div>
-                  </div>
-                </div>
-              </div>
+              <OrderTag key={index} loading={true} />
             ))
           : orders
               ?.filter(
@@ -329,47 +143,7 @@ const Orders = () => {
                   item.order_status.toLowerCase() ===
                     selectedView.toLowerCase() || selectedView === "All"
               )
-              .map((item) => (
-                <div
-                  key={item.order_id}
-                  className=" flex flex-col bg-on-surface/20 shadow-md rounded-lg p-2 gap-2"
-                >
-                  <div className="flex flex-wrap justify-between gap-4">
-                    <h3>OrderID: {item.order_id}</h3>
-                    <h3 className="opacity-70">
-                      {formattedDate(item.created_at)}
-                    </h3>
-                  </div>
-                  <Divider />
-                  <div className="flex justify-between items-center">
-                    <h2 className="text-xl font-bold">
-                      {formattedPrice(item.total_price)}
-                    </h2>
-
-                    {renderPaymentMethod(item)}
-                  </div>
-                  <CollapsibleContainer
-                    content={
-                      <ul className="flex flex-col gap-4 py-4">
-                        {item.order_items?.map((oi) => (
-                          <OrderItem
-                            key={oi.order_id + oi.product_id}
-                            orderItem={oi}
-                          />
-                        ))}
-                      </ul>
-                    }
-                    maxHeight={200}
-                  />
-
-                  <div className="flex flex-row justify-between items-center">
-                    {renderStatus(item)}
-                    <div className="flex gap-2 flex-wrap">
-                      {renderActions(item)}
-                    </div>
-                  </div>
-                </div>
-              ))}
+              .map((item) => <OrderTag order={item} key={item._id} loading={false} onReorder={handleReorder} onCancel={handleCancelOrder} />)}
       </div>
     </section>
   );

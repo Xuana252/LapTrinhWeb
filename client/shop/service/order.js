@@ -61,65 +61,18 @@ export const cancelOrder = async (customer_id,id) => {
   }
 };
 
-export const payWithZaloPay = async (payload) => {
+export const postOrder = async (id,payload) => {
+
+  if(process.env.DEV_ENV!=="production") return {order_id:"123"}
+
   try {
-    const response = await fetch(`${process.env.APP_URL}/zalo-payment/${payload.customer_id}`, {
+    const response = await fetch(`${process.env.APP_URL}/orders/${id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(
-        	payload.order
-      ),
-    });
-
-
-    if (response.ok) {
-      const data = await response.json()
-      return data.order_url
-    } else {
-      return "";
-    }
-  } catch (error) {
-    console.log(error);
-    return "";
-  }
-}
-
-export const payWithMoMo = async (payload) => {
-  try {
-    const response = await fetch(`${process.env.APP_URL}/momo-payment/${payload.customer_id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(
-        	payload.order
-      ),
-    });
-
-
-    if (response.ok) {
-      const data = await response.json()
-      return data.shortLink
-    } else {
-      return "";
-    }
-  } catch (error) {
-    console.log(error);
-    return "";
-  }npm 
-}
-
-export const postOrder = async (payload) => {
-  try {
-    const response = await fetch(`${process.env.APP_URL}/orders/${payload.customer_id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(
-        	payload.order
+        	payload
       ),
     });
 

@@ -53,6 +53,8 @@ function reducer(state, action) {
 const Checkout = () => {
   const session = useSelector((state) => state.session);
   const order = useSelector((state) => state.order);
+
+  console.log(order)
   const router = useRouter();
 
   const [provinces, setProvinces] = useState();
@@ -67,11 +69,10 @@ const Checkout = () => {
   const reduxDispatch = useDispatch();
 
   const [receipt, dispatch] = useReducer(reducer, {
-    subtotal: order?.order_items.reduce(
-      (acc, item) => acc + item.total_price,
+    subtotal: order?.order_item.reduce(
+      (acc, item) => acc + item.price * item.quantity,
       0
     ),
-    discount: 0,
     total: 0,
   });
 
@@ -80,11 +81,10 @@ const Checkout = () => {
   const [ward, setWard] = useState();
 
   const [address, setAddress] = useState({
-    address_id:"0",
-    full_name: "",
+    name: "",
     phone_number: "",
-    address: "",
-    city: "",
+    detailed_address: "",
+    province: "",
     district: "",
     ward: "",
   });
@@ -93,7 +93,6 @@ const Checkout = () => {
     setIsLoading(true);
 
     getCustomerAddresses(session.customer?.customer_id).then((data) => {
-      setSelectedOption(data.findIndex((item) => item.is_primary) + 1);
       setUserAddresses(data.map((a, index) => ({ id: index, ...a })));
     });
 
@@ -105,7 +104,7 @@ const Checkout = () => {
   };
 
   useEffect(() => {
-    setAddress((a) => ({ ...a, city: province?.name ||"" }));
+    setAddress((a) => ({ ...a, province: province?.name ||"" }));
     setDistrict(null);
     getDistricts(province?.id || "");
   }, [province]);
@@ -156,7 +155,7 @@ const Checkout = () => {
 
   useEffect(()=> {
     fetchAddress();
-  },[session])
+  },[])
 
   useEffect(() => {
     const total = receipt.subtotal - receipt.discount;
@@ -179,11 +178,10 @@ const Checkout = () => {
     reduxDispatch(
       setOrderAddress({
         address: {  
-            address_id: checkoutAddress.address_id,
-            full_name: checkoutAddress.full_name,
+            name: checkoutAddress.name,
             phone_number: checkoutAddress.phone_number,
-            address: checkoutAddress.address,
-            city:  checkoutAddress.city,
+            detailed_address: checkoutAddress.detailed_address,
+            province:  checkoutAddress.province,
             district: checkoutAddress.district,
             ward: checkoutAddress.ward,
         },
@@ -312,9 +310,9 @@ const Checkout = () => {
                     </div>
                     <div className="flex flex-col items-start justify-around text-xs">
                       <h4>
-                        {item.full_name} | {item.phone_number}
+                        {item.name} | {item.phone_number}
                       </h4>
-                      <h3 className="opacity-50">{item.address}</h3>
+                      <h3 className="opacity-50">{item.detailed_address}</h3>
                       <h3 className="opacity-50">
                         {[item.ward, item.district, item.city].join(", ")}
                       </h3>
@@ -330,8 +328,8 @@ const Checkout = () => {
           <CollapsibleContainer
             content={
               <ul className="flex flex-col gap-4">
-                {order?.order_items.map((item) => (
-                  <OrderItem key={item.product_id} orderItem={item} />
+                {order?.order_item.map((item) => (
+                  <OrderItem key={item.product_id._id} orderItem={item} />
                 ))}
               </ul>
             }

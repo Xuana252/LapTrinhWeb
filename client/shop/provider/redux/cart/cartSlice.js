@@ -5,13 +5,11 @@ import { generateDummyCart } from "@util/generator/cart";
 const cartSlice = createSlice({
   name: "cart",
   initialState: {
-    customerId:'',
     items: [],
     quantity: 0,
   },
   reducers: {
     setCart(state, action) {
-      state.customerId = action.payload.customerId;
       state.items = action.payload.cart;
       state.quantity = action.payload.cart.length;
     },
@@ -22,12 +20,9 @@ const cartSlice = createSlice({
         (item) => item.product_id === product.product_id
       );
       if (!existingItem) {
-        const {categories,product_feedbacks,attributes,...rest} = product;
         state.items.push({
-          customer_id:state.customerId,
-          product_id:product.product_id,
           quantity:quantity,
-          product:rest,
+          product_id:product,
         });
         state.quantity = state.items.length;
       } else {
@@ -37,12 +32,12 @@ const cartSlice = createSlice({
     removeItem(state, action) {
       const productId = action.payload.id;
       const existingItem = state.items.find(
-        (item) => item.product_id === productId
+        (item) => item.product_id._id === productId
       );
 
       if (existingItem) {
         state.items = state.items.filter(
-          (item) => item.product_id !== productId
+          (item) => item.product_id._id !== productId
         ); // Remove the item
         state.quantity = state.items.length;
       }
