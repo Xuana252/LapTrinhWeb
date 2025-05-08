@@ -1,16 +1,14 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
-const addressSchema = new mongoose.Schema(
-  {
-    province: { type: String, required: true },
-    district: { type: String, required: true },
-    ward: { type: String, required: true },
-    name: { type: String, required: true },
-    phone_number: { type: String, required: true },
-    detailed_address: { type: String, required: true },
-  },
-);
+const addressSchema = new mongoose.Schema({
+  province: { type: String, required: true },
+  district: { type: String, required: true },
+  ward: { type: String, required: true },
+  name: { type: String, required: true },
+  phone_number: { type: String, required: true },
+  detailed_address: { type: String, required: true },
+});
 
 const notificationSchema = new mongoose.Schema({
   message: { type: String, required: true },

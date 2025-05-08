@@ -57,8 +57,8 @@ export const getCustomerAddresses = async (id) => {
   }
 };
 
-export const postCustomerAddress = async (payload) => {
-  if (process.env.DEV_ENV !== "production") return true;
+export const postCustomerAddress = async (id,payload) => {
+  if (process.env.DEV_ENV !== "production") return payload;
   try {
     const response = await fetch(
       `${process.env.APP_URL}/addresses/${payload.user_id}`,
@@ -83,7 +83,7 @@ export const postCustomerAddress = async (payload) => {
   }
 };
 
-export const patchCustomerAddress = async (payload) => {
+export const patchCustomerAddress = async (id,payload) => {
   if (process.env.DEV_ENV !== "production") return true;
   try {
     const response = await fetch(
@@ -108,7 +108,7 @@ export const patchCustomerAddress = async (payload) => {
   }
 };
 
-export const deleteCustomerAddress = async (payload) => {
+export const deleteCustomerAddress = async (id,payload) => {
   if (process.env.DEV_ENV !== "production") return true;
   console.log(payload)
   try {

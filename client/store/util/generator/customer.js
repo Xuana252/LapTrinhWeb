@@ -1,25 +1,15 @@
-
 export const randomImage = () => {
   const images = [
-    'https://www.foto-bern.ch/wp-content/uploads/2022/07/Portrait-357.-vorschau.jpg',
-    'https://franchisematch.com/wp-content/uploads/2015/02/john-doe.jpg',
-    'https://ih1.redbubble.net/image.3150723596.2110/raf,360x360,075,t,fafafa:ca443f4786.jpg'
+    "https://www.foto-bern.ch/wp-content/uploads/2022/07/Portrait-357.-vorschau.jpg",
+    "https://franchisematch.com/wp-content/uploads/2015/02/john-doe.jpg",
+    "https://ih1.redbubble.net/image.3150723596.2110/raf,360x360,075,t,fafafa:ca443f4786.jpg",
   ];
   return images[Math.floor(Math.random() * images.length)];
 };
 
-
 export const generateDummyCustomerData = (id) => {
   const randomUsername = () =>
     `user_${Math.random().toString(36).substr(2, 7)}`;
-  const randomFullName = () => {
-    const firstNames = ["John", "Jane", "Alex", "Taylor", "Chris", "Morgan"];
-    const lastNames = ["Doe", "Smith", "Brown", "Johnson", "Lee", "Taylor"];
-    return `${firstNames[Math.floor(Math.random() * firstNames.length)]} ${
-      lastNames[Math.floor(Math.random() * lastNames.length)]
-    }`;
-  };
-
 
   const randomPhoneNumber = () =>
     `+1${Math.floor(Math.random() * 9000000000 + 1000000000)}`;
@@ -33,54 +23,52 @@ export const generateDummyCustomerData = (id) => {
   birthdate.setFullYear(birthdate.getFullYear() - age);
 
   return {
-    image:randomImage(),
-    customer_id: id || `customer-${Math.floor(Math.random() * 100000)}`,
+    image: randomImage(),
+    _id: id || `customer-${Math.floor(Math.random() * 100000)}`,
+    email: randomEmail(),
     username: randomUsername(),
-    full_name: randomFullName(),
-    male: Math.round(Math.random()),
     phone_number: randomPhoneNumber(),
-    birth_date: new Date(
+    createdAt: new Date(
       new Date().getTime() - Math.floor(Math.random() * 3.154e10)
     ).toISOString(), // Random date within the last year
-    date_joined: new Date(
-      new Date().getTime() - Math.floor(Math.random() * 3.154e10)
-    ).toISOString(), // Random date within the last year
-    account: {
-      email: randomEmail(),
-    },
   };
 };
 
+export const generateDummyCustomersData = (num = 10) => {
+  let users = [];
 
- export const generateMockUserData = (months = 6) => {
-    const now = new Date();
-
-    const monthly = Array.from(
-      { length: months },
-      (_, i) => {
-        const date = new Date(
-          now.getFullYear(),
-          now.getMonth() - (months - i - 1),
-          1
-        );
-        return {
-          _id: {
-            year: date.getFullYear(),
-            month: date.getMonth() + 1,
-          },
-          count: Math.floor(Math.random() * 2000) + 500,
-        };
-      }
-    );
-
-    const total = monthly.reduce((acc, curr) => acc + curr.count, 0);
-    const today = Math.floor(Math.random() * 300) + 200; // daily new users
-    const banned = Math.floor(Math.random() * (total * 0.3)); // up to 30% of total
-
-    return {
-      total,
-      today,
-      banned,
-      monthly,
-    };
+  for (let i = 0; i < num; i++) {
+    users.push(generateDummyCustomerData(i.toString()))
   }
+  return users;
+};
+
+export const generateMockUserData = (months = 6) => {
+  const now = new Date();
+
+  const monthly = Array.from({ length: months }, (_, i) => {
+    const date = new Date(
+      now.getFullYear(),
+      now.getMonth() - (months - i - 1),
+      1
+    );
+    return {
+      _id: {
+        year: date.getFullYear(),
+        month: date.getMonth() + 1,
+      },
+      count: Math.floor(Math.random() * 2000) + 500,
+    };
+  });
+
+  const total = monthly.reduce((acc, curr) => acc + curr.count, 0);
+  const today = Math.floor(Math.random() * 300) + 200; // daily new users
+  const banned = Math.floor(Math.random() * (total * 0.3)); // up to 30% of total
+
+  return {
+    total,
+    today,
+    banned,
+    monthly,
+  };
+};

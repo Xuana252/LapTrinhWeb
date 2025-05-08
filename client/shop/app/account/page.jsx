@@ -25,7 +25,6 @@ const Account = () => {
   const session = useSelector((state) => state.session);
   const [customer, setCustomer] = useState();
   const [image, setImage] = useState({ name: "", url: "" });
-  const [gender, setGender] = useState("Male");
   const imagePicker = useRef(null);
   const handleRadioSelectionChange = (value) => {
     setGender(value);
@@ -45,22 +44,14 @@ const Account = () => {
   };
 
   const handleEditCustomer = async () => {
-    console.log(image)
+    console.log(image);
     if (checkEmptyInput()) return;
     const payload = {
-      user_id: session?.customer?.customer_id,
-      new_customer: {
-        username: customer.username,
-        full_name: customer.full_name,
-        phone_number: customer.phone_number,
-        birth_date: new Date(
-          customer.birth_date.split("-").reverse().join("-")
-        ).toISOString(),
-        male: gender === "Male",
-        image: {
-          name: image.name,
-          url: image.url,
-        },
+      username: customer.username,
+      phone_number: customer.phone_number,
+      image: {
+        name: image.name,
+        url: image.url,
       },
     };
     patchCustomer(payload).then((data) => {
@@ -80,29 +71,12 @@ const Account = () => {
 
   const fetchUser = () => {
     setImage({ name: "user", url: session.customer?.image });
-    setCustomer({
-      ...session.customer,
-      birth_date: formattedDate(session.customer?.birth_date),
-    });
-    setGender(session.customer?.male ? "Male" : "Female");
+    setCustomer(session.customer);
   };
+
   useEffect(() => {
     fetchUser();
   }, []);
-
-  const handleFirstNameChange = (firstName) => {
-    setCustomer((c) => ({
-      ...c,
-      full_name: `${firstName} ${c.full_name.split(" ").slice(1).join(" ")}`,
-    }));
-  };
-
-  const handleLastNameChange = (lastName) => {
-    setCustomer((c) => ({
-      ...c,
-      full_name: `${c.full_name.split(" ")[0]} ${lastName}`,
-    }));
-  };
 
   const changeImage = ({ name, url }) => {
     setImage({
@@ -131,7 +105,7 @@ const Account = () => {
         </div>
       </div>
       <Divider />
-      <div className="flex flex-col md:flex-row">
+      <div className="flex flex-col">
         <div className="flex flex-col gap-4 items-center p-4">
           <ProfileImageHolder url={image.url} />
           <button className="button-variant-1" onClick={handleOpenImage}>
@@ -146,67 +120,19 @@ const Account = () => {
           />
         </div>
         <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-4 md:flex-row">
-            <span className="grid grid-cols-1 md:grid-cols-[100px_1fr] whitespace-nowrap items-start md:items-center md:justify-items-end md:gap-x-10 gap-y-4 ">
-              <span>Last name</span>
-              <InputBox
-                value={
-                  customer?.full_name
-                    ?.split(" ")
-                    .filter((_, index) => index !== 0)
-                    .join(" ") || ""
-                }
-                onChange={handleLastNameChange}
-              />
-            </span>
-            <span className="grid grid-cols-1 md:grid-cols-[100px_1fr] whitespace-nowrap items-start md:items-center md:justify-items-end md:gap-x-10 gap-y-4 ">
-              <span>First name</span>
-              <InputBox
-                value={customer?.full_name?.split(" ")[0] || ""}
-                onChange={handleFirstNameChange}
-              />
-            </span>
-          </div>
           <span className="grid grid-cols-1 md:grid-cols-[100px_1fr] whitespace-nowrap items-start md:items-center md:justify-items-end md:gap-x-10 gap-y-4 ">
             <span>Username</span>
             <InputBox
               value={customer?.username || ""}
               onChange={(s) => setCustomer((c) => ({ ...c, username: s }))}
             />
-            <span>Phone</span>
+            <span>Phone number</span>
             <PhoneInput
               value={customer?.phone_number || ""}
               onChange={(s) => setCustomer((c) => ({ ...c, phone_number: s }))}
             />
-            <span>Gender</span>
-            <div className="flex flex-row gap-4">
-              <label className="flex gap-2 items-center" htmlFor="Male">
-                <RadioButton
-                  name={"gender"}
-                  value={"Male"}
-                  checked={gender === "Male"}
-                  onChange={handleRadioSelectionChange}
-                />
-                <span>Male</span>
-              </label>
-              <label className="flex gap-2 items-center" htmlFor="Female">
-                <RadioButton
-                  name={"gender"}
-                  value={"Female"}
-                  checked={gender === "Female"}
-                  onChange={handleRadioSelectionChange}
-                />
-                <span>Female</span>
-              </label>
-            </div>
           </span>
-          <span className="grid grid-rows-[auto_1fr] md:grid-cols-[100px_1fr] md:grid-rows-1 whitespace-nowrap items-start md:items-center md:justify-items-end md:gap-10 ">
-            <span>Birth date</span>
-            <DatePicker
-              value={customer?.birth_date}
-              onChange={(s) => setCustomer((c) => ({ ...c, birth_date: s }))}
-            />
-          </span>
+
           <div>
             <button
               className="button-variant-1 ml-auto"

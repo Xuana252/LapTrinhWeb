@@ -225,9 +225,9 @@ const Checkout = () => {
               <FontAwesomeIcon icon={faLocationDot} />
             </div>
             <InputBox
-              value={address.full_name}
+              value={address.name}
               name={"Full name *"}
-              onChange={(s) => setAddress((a) => ({ ...a, full_name: s }))}
+              onChange={(s) => setAddress((a) => ({ ...a, name: s }))}
             />
             <PhoneInput
               value={address.phone_number}
@@ -258,9 +258,9 @@ const Checkout = () => {
               />
             </div>
             <InputBox
-              value={address.address}
+              value={address.detailed_address}
               name={"Specific address *"}
-              onChange={(s) => setAddress((a) => ({ ...a, address: s }))}
+              onChange={(s) => setAddress((a) => ({ ...a, detailed_address: s }))}
             />
           </div>
 

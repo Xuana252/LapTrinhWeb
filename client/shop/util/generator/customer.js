@@ -12,13 +12,6 @@ export const randomImage = () => {
 export const generateDummyCustomerData = (id) => {
   const randomUsername = () =>
     `user_${Math.random().toString(36).substr(2, 7)}`;
-  const randomFullName = () => {
-    const firstNames = ["John", "Jane", "Alex", "Taylor", "Chris", "Morgan"];
-    const lastNames = ["Doe", "Smith", "Brown", "Johnson", "Lee", "Taylor"];
-    return `${firstNames[Math.floor(Math.random() * firstNames.length)]} ${
-      lastNames[Math.floor(Math.random() * lastNames.length)]
-    }`;
-  };
 
 
   const randomPhoneNumber = () =>
@@ -34,19 +27,12 @@ export const generateDummyCustomerData = (id) => {
 
   return {
     image:randomImage(),
-    customer_id: id || `customer-${Math.floor(Math.random() * 100000)}`,
+    _id: id || `customer-${Math.floor(Math.random() * 100000)}`,
+    email: randomEmail(),
     username: randomUsername(),
-    full_name: randomFullName(),
-    male: Math.round(Math.random()),
     phone_number: randomPhoneNumber(),
-    birth_date: new Date(
+    createdAt: new Date(
       new Date().getTime() - Math.floor(Math.random() * 3.154e10)
     ).toISOString(), // Random date within the last year
-    date_joined: new Date(
-      new Date().getTime() - Math.floor(Math.random() * 3.154e10)
-    ).toISOString(), // Random date within the last year
-    account: {
-      email: randomEmail(),
-    },
   };
 };

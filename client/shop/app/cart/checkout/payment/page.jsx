@@ -209,8 +209,7 @@ const Payment = () => {
             </h4>
             <h3 className="opacity-50">{order?.address?.detailed_address}</h3>
             <h3 className="opacity-50 whitespace-pre-line">
-              {(order?.address.detailed_address ?? "") +
-                ", " +
+              {
                 (order?.address.ward ?? "") +
                 ", " +
                 (order?.address.district ?? "") +

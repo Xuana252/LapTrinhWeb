@@ -77,8 +77,8 @@ export default function ProductSection() {
               <FontAwesomeIcon icon={faCalendar} /> This month revenue
               <span className="ml-2 text-sm font-bold ">
                 {(() => {
-                  const latest = data?.monthly.at(-1)?.total ?? 0;
-                  const previous = data?.monthly.at(-2)?.total ?? 0;
+                  const latest = data?.monthly?.at(-1)?.total ?? 0;
+                  const previous = data?.monthly?.at(-2)?.total ?? 0;
                   const diff = latest - previous;
                   return (
                     <span
@@ -107,7 +107,7 @@ export default function ProductSection() {
             </span>
 
             <span className="font-mono text-2xl font-bold">
-              {formatNumber(data?.monthly.at(-1).total ?? null) ?? (
+              {formatNumber(data?.monthly?.at(-1).total ?? null) ?? (
                 <NumberLoader />
               )}
             </span>
@@ -138,7 +138,7 @@ export default function ProductSection() {
             <FontAwesomeIcon icon={faBoxesPacking} /> Best selling this month
           </span>
           <ul className="flex flex-wrap gap-2">
-            {data?.monthly.at(-1).top3?.map((item) => {
+            {data?.monthly?.at(-1).top3?.map((item) => {
               return (
                 <li key={item._id} className="flex flex-col gap-2 panel-3">
                   <ProductCard product={item} loading={false} />

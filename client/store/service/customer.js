@@ -1,6 +1,6 @@
 "use server";
 
-import { generateDummyCustomerData, generateMockUserData } from "@util/generator/customer";
+import { generateDummyCustomerData,generateDummyCustomersData, generateMockUserData } from "@util/generator/customer";
 
 export const getCustomer = async (id) => {
   if (process.env.DEV_ENV !== "production") return generateDummyCustomerData();
@@ -17,6 +17,22 @@ export const getCustomer = async (id) => {
     return {};
   }
 };
+
+export const getAllCustomers = async () => {
+  if (process.env.DEV_ENV !== "production") return generateDummyCustomersData();
+  try {
+    const response = await fetch(`${process.env.APP_URL}/customers/${id}`);
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      return [];
+    }
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+}
 
 export const getCustomerData = async () => {
   return generateMockUserData()
