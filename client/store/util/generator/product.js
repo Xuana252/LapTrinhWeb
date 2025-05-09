@@ -87,6 +87,8 @@ export const generateDummyProductDetailData = () => {
   const randomPrice = Math.floor(Math.random() * 50000000) + 500;
   const randomDiscount = Math.floor(Math.random() * 30);
   const randomStock = Math.floor(Math.random() * 100) + 1;
+  const randomRating = Math.random() * 5;
+
 
   // Select a random set for the single product
   const selectedSet = imageSets[Math.floor(Math.random() * imageSets.length)];
@@ -105,17 +107,7 @@ export const generateDummyProductDetailData = () => {
     createdAt,
     category_id: category,
     category: category,
-    product_feedbacks: Array.from(
-      { length: Math.floor(Math.random() * 5) + 1 },
-      () => ({
-        feedback_id: `cm${Math.random().toString(36).substr(2, 12)}`,
-        product_id: productId,
-        customer_id: `cm${Math.random().toString(36).substr(2, 12)}`,
-        feedback: "This is a random feedback message.",
-        rating: Math.floor(Math.random() * 5) + 1,
-        created_at: createdAt,
-      })
-    ),
+    average_rating: randomRating,
     spec: Array.from({ length: Math.floor(Math.random() * 3) + 1 }, () => ({
       spec_name: `Specification`,
       detail: `Details for ${selectedSet.productName}`,

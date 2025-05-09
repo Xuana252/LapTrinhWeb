@@ -91,14 +91,6 @@ body {
 }
 
 @layer utilities {
-  .no-scrollbar::-webkit-scrollbar {
-    display: black;
-  }
-
-  .no-scrollbar {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-  }
   * {
     box-sizing: border-box;
   }
@@ -125,14 +117,14 @@ body {
   }
 
   .order-state {
-    @apply flex items-center justify-center rounded-xl   px-3 py-1 font-semibold text-white;
+    @apply flex items-center justify-center rounded  px-3 py-1 font-semibold text-white;
   }
 
   .pending {
     @apply order-state bg-slate-500;
   }
 
-  .shipping {
+  .shipped {
     @apply order-state bg-blue-500;
   }
 

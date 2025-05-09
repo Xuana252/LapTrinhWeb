@@ -30,7 +30,7 @@ import { getAllCustomers } from "@service/customer";
 import React, { useEffect, useState } from "react";
 
 const User = () => {
-  const USER_LIMIT = 24;
+  const USER_LIMIT = 18;
   const [isLoading, setIsLoading] = useState(true);
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
@@ -54,9 +54,10 @@ const User = () => {
 
   const fetchUsers = async () => {
     setIsLoading(true);
-    getAllCustomers()
+    getAllCustomers(USER_LIMIT,page,searchText,revenueSort,dateSort)
       .then((res) => {
-        setUsers(res);
+        setUsers(res.data);
+        setCount(res.count)
       })
       .catch((err) => {
         console.log(err);
@@ -66,7 +67,7 @@ const User = () => {
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [dateSort,revenueSort,searchText,page]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -77,15 +78,6 @@ const User = () => {
         <h2 className="text-lg mr-auto font-bold">
           {users.length} users
         </h2>
-        <div className="flex flex-wrap gap-4 panel-3">
-          <Link
-            href={`/product/add`}
-            className="bg-blue-500  text-white p-1 rounded-lg active:opacity-80 transition-colors duration-200 ease-out gap-2 flex items-center justify-center h-fit"
-          >
-            Add
-            <FontAwesomeIcon icon={faAdd} />
-          </Link>
-        </div>
       </div>
       <UsersSection />
       <div className="panel-3">

@@ -1,12 +1,13 @@
 "use server";
 
 import {
+  generateDummyOrdersData,
   generateMockOrderData,
   generateMockRevenueData,
 } from "@util/generator/order";
 
 export const getOrder = async (id, order) => {
-  if (process.env.DEV_ENV !== "production") return generateDummyOrderData();
+  if (process.env.DEV_ENV !== "production") return generateDummyOrdersData();
   try {
     const response = await fetch(
       `${process.env.APP_URL}/orders/${id}/${order}`

@@ -34,13 +34,10 @@ export const generateDummyFeedback = () => {
 };
 
 export const generateDummyCustomerFeedbacks = () => {
-  const feedbacks = generateDummyFeedback();
+  const feedbacks = generateDummyFeedback()
 
-  const populatedFeedbacks = feedbacks.map(fb => ({
-    ...fb,
-    product_id: generateDummyProductDetailData()
-  }));
-
-  return populatedFeedbacks;
-};
-
+  feedbacks.forEach(fb => ({
+    ...fb,product_id: generateDummyProductDetailData()
+  }))
+  return feedbacks;
+}

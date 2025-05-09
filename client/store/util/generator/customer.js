@@ -1,3 +1,5 @@
+import { categoriesPreset } from "./category";
+
 export const randomImage = () => {
   const images = [
     "https://www.foto-bern.ch/wp-content/uploads/2022/07/Portrait-357.-vorschau.jpg",
@@ -38,9 +40,12 @@ export const generateDummyCustomersData = (num = 10) => {
   let users = [];
 
   for (let i = 0; i < num; i++) {
-    users.push(generateDummyCustomerData(i.toString()))
+    users.push({
+      ...generateDummyCustomerData(i.toString()),
+      revenue: Math.floor(Math.random() * 30000000 + 10000000),
+    });
   }
-  return users;
+  return { data: users, count: Math.floor(Math.random() * 30 + 20) };
 };
 
 export const generateMockUserData = (months = 6) => {
@@ -70,5 +75,32 @@ export const generateMockUserData = (months = 6) => {
     today,
     banned,
     monthly,
+  };
+};
+
+export const generateDummyCustomerRevenueData = (months = 6) => {
+  const now = new Date();
+  const monthly = Array.from({ length: months }, (_, i) => {
+    const date = new Date(
+      now.getFullYear(),
+      now.getMonth() - (months - i - 1),
+      1
+    );
+    return {
+      _id: {
+        year: date.getFullYear(),
+        month: date.getMonth() + 1,
+      },
+      revenue: Math.floor(Math.random() * 2000000) + 1000000,
+    };
+  });
+
+  const shuffled = categoriesPreset.sort(() => 0.5 - Math.random());
+  const categories = shuffled.slice(0, 3);
+
+  return {
+    monthly,
+    total: monthly.reduce((acc, curr) => acc + curr.revenue, 0),
+    categories,
   };
 };

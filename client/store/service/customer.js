@@ -1,6 +1,6 @@
 "use server";
 
-import { generateDummyCustomerData,generateDummyCustomersData, generateMockUserData } from "@util/generator/customer";
+import { generateDummyCustomerData,generateDummyCustomerRevenueData,generateDummyCustomersData, generateMockUserData } from "@util/generator/customer";
 
 export const getCustomer = async (id) => {
   if (process.env.DEV_ENV !== "production") return generateDummyCustomerData();
@@ -18,8 +18,8 @@ export const getCustomer = async (id) => {
   }
 };
 
-export const getAllCustomers = async () => {
-  if (process.env.DEV_ENV !== "production") return generateDummyCustomersData();
+export const getAllCustomers = async (limit,page,searchtext,datesort,revenuesort) => {
+  if (process.env.DEV_ENV !== "production") return generateDummyCustomersData(20);
   try {
     const response = await fetch(`${process.env.APP_URL}/customers/${id}`);
     if (response.ok) {
@@ -31,6 +31,22 @@ export const getAllCustomers = async () => {
   } catch (error) {
     console.log(error);
     return [];
+  }
+}
+
+export const getCustomerRevenue = async (id) => {
+  if (process.env.DEV_ENV !== "production") return generateDummyCustomerRevenueData();
+  try {
+    const response = await fetch(`${process.env.APP_URL}/customers/${id}`);
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.log(error);
+    return null;
   }
 }
 

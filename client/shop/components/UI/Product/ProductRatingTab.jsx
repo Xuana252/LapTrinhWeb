@@ -204,7 +204,7 @@ const ProductRatingTab = ({ id }) => {
                   item.rating === feedbackFilter || feedbackFilter === -1
               )
               .map((feedback) => (
-                <FeedbackTag key={feedback.feedback_id} feedback={feedback} />
+                <FeedbackTag key={feedback._id} feedback={feedback} />
               ))}
       </ul>
     </div>
