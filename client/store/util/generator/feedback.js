@@ -1,3 +1,4 @@
+import { generateDummyCustomerData } from "./customer";
 import { generateDummyProductDetailData } from "./product";
 
 export const generateDummyFeedback = () => {
@@ -10,18 +11,7 @@ export const generateDummyFeedback = () => {
     const feedback = {
       _id: i,
       product_id: 1,
-      user_id: {
-        _id: "68149573efa55695535541b4",
-        email: "john.doe@example.com",
-        password: "$2b$10$abcdefghijklmnopqrstuv",
-        is_active: true,
-        username: "johndoe",
-        phone_number: "1234567890",
-        address: [],
-        cart: [],
-        createdAt: "2024-05-01T00:00:00.000Z",
-        updatedAt: "2024-05-01T00:00:00.000Z",
-      },
+      user_id: generateDummyCustomerData(),
       feedback: "Good product",
       rating: rating,
       createdAt: "2025-05-02T10:38:04.511Z",

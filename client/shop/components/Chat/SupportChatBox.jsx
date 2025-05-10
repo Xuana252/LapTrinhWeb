@@ -53,7 +53,7 @@ const SupportChatBox = () => {
   const messageLogRef = useRef(null);
   const inputRef = useRef(null);
 
-  const socket = useSocket(session.customer?.customer_id);
+  const socket = useSocket(session.customer?._id);
 
   const fetchMessageLog = async () => {
     if (isLoading || !isMore) return;
@@ -70,6 +70,7 @@ const SupportChatBox = () => {
   };
 
   useEffect(() => {
+    console.log(socket)
     if (!socket) return;
   
     socket.on("connect", () => {

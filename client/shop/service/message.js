@@ -22,7 +22,7 @@ export const getMessages = async (id) => {
 };
 
 export const sendMessage = async (payload) => {
-  if (process.env.DEV_ENV !== "production") return true
+  if (process.env.DEV_ENV !== "production") return payload
   try {
     const response = await fetch(`${process.env.APP_URL}/customer-inbox/${payload.customer_id}`,{
       method:'POST',

@@ -29,7 +29,7 @@ const useSocket = (customerId) => {
   useEffect(() => {
     if (!customerId) return;
 
-    const socketInstance = io(`https://se100-techstore.onrender.com`);
+    const socketInstance = io(`${process.env.APP_URL}/realtime`);
     setSocket(socketInstance);
 
     socketInstance.emit(SOCKET_JOIN_CHANNEL.CUSTOMER_JOIN, {
