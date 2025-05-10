@@ -3,6 +3,8 @@ const http = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
 const connectToDB = require("./utils/database");
+const messageRoute = require('./routes/messageRoute')
+const notificationRoute = require('./routes/notificationRoute')
 
 require("dotenv").config();
 
@@ -41,6 +43,9 @@ const io = new Server(server, {
 });
 
 app.use(cors({ origin: API_GATEWAY, optionSuccessStatus: 200 }));
+
+app.use('/message',messageRoute)
+app.use('/notification',notificationRoute)
 
 // Socket.IO connection
 io.of("/realtime").on("connection", (socket) => {

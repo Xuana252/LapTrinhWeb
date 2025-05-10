@@ -1,0 +1,14 @@
+const express = require("express");
+const { addNotification, getNotification, deleteNotification, deleteAllNotification } = require("../controller/notificationController");
+const router = express.Router()
+
+router.get('/:id',getNotification)
+
+router.post('/:id',addNotification)
+
+router.delete('/:id/:notificationId',deleteNotification)
+
+router.delete('/:id',deleteAllNotification)
+
+
+module.exports = router
