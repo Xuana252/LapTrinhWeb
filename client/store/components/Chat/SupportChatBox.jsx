@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useRef, useState } from "react";
 import InputBox from "../Input/InputBox";
 import { useSelector } from "@node_modules/react-redux/dist/react-redux";
-import { getMessageLog, getMessages, sendMessage } from "@service/message";
+import {sendMessage } from "@service/message";
 import SupportButton from "./SupportButton";
 import { toastError } from "@util/toaster";
 import useSocket from "@components/socket/useSocket";

@@ -4,7 +4,7 @@ const router = express.Router()
 
 router.get('/:id',getMessage)
 
-router.post('/:id',addMessage)
+router.patch('/:id',addMessage)
 
 
 module.exports = router

@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useRef, useState } from "react";
 import InputBox from "../Input/InputBox";
 import { useSelector } from "@node_modules/react-redux/dist/react-redux";
-import { getMessageLog, getMessages, sendMessage } from "@service/message";
+import { sendMessage } from "@service/message";
 import SupportButton from "./SupportButton";
 import { toastError } from "@util/toaster";
 import useSocket from "@components/socket/useSocket";
@@ -42,7 +42,7 @@ const SupportChatBox = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [unreadMessage, setUnreadMessage] = useState(0);
+  const [unreadMessage, setUnreadMessage] = useState(false);
   const [messageLog, setMessageLog] = useState([]);
 
   const [isMore, setIsMore] = useState(true);
@@ -60,9 +60,10 @@ const SupportChatBox = () => {
     setIsLoading(true);
     try {
       const payload = {
-        room_id: session.customer.customer_id,
+        room_id: session.customer._id,
         skip: skip,
       };
+      console.log(payload);
       socket.emit(SOCKET_INBOX_CHANNEL.GET_MORE_MESSAGES, payload);
     } catch (error) {
       console.error("Failed to fetch older messages:", error);
@@ -70,53 +71,39 @@ const SupportChatBox = () => {
   };
 
   useEffect(() => {
-    console.log(socket)
     if (!socket) return;
-  
-    socket.on("connect", () => {
-      console.log("connected for chat");
 
-      fetchMessageLog()
-  
-      socket.on(SOCKET_INBOX_CHANNEL.GET_MESSAGES, (data) => {
-        console.log("new message received", data);
-        setMessageLog((prev) => [
-          {
-            ...data.message,
-            is_customer: data.message.sender.sender_id === session.customer?.customer_id,
-            is_seen:isOpen,
-          },
-          ...prev,
-        ]);
-      });
-  
-      socket.on(SOCKET_INBOX_CHANNEL.GET_MORE_MESSAGES, (data) => {
-        console.log("old message received", data);
-        if (data?.messages?.length > 0) {
-          setMessageLog((prev) => [
-            ...prev,
-            ...data.messages.map((msg) => ({
-              ...msg,
-              is_customer: msg.sender.sender_id === session.customer?.customer_id,
-            })),
-          ]);
-          setIsMore(data.messages.length >= 20);
-          setSkip((prev) => prev + (data.messages.length > 0 ? 1 : 0));
-        }
-        
-        setIsLoading(false);
-      });
+    socket.on(SOCKET_INBOX_CHANNEL.GET_MESSAGES, (data) => {
+      setMessageLog((prev) => [
+        {
+          ...data.message,
+        },
+        ...prev,
+      ]);
+      setUnreadMessage(isOpen);
     });
-  
+
+    socket.on(SOCKET_INBOX_CHANNEL.GET_MORE_MESSAGES, (data) => {
+      if (data?.message_log?.length > 0) {
+        setMessageLog((prev) => [...prev, ...data.message_log]);
+        setIsMore(data.message_log.length >= 20);
+        setSkip((prev) => prev + (data.message_log.length > 0 ? 1 : 0));
+      }
+
+      setUnreadMessage(data.read);
+      setIsLoading(false);
+    });
+
+    fetchMessageLog();
+
     return () => {
       socket.off(SOCKET_INBOX_CHANNEL.GET_MESSAGES);
       socket.off(SOCKET_INBOX_CHANNEL.GET_MORE_MESSAGES);
     };
   }, [socket]);
-  
 
   const handleSend = async () => {
-    if(!session.isAuthenticated) {
+    if (!session.isAuthenticated) {
       toastError("Please login to chat with us");
       inputRef.current.value = "";
       return;
@@ -129,29 +116,23 @@ const SupportChatBox = () => {
     ) {
       const message = inputRef.current.value.trim();
       const payload = {
-        customer_id: session.customer?.customer_id,
-        content: {
-          sender: {
-            sender_id: session.customer?.customer_id,
-            sender_name: session.customer?.username,
-          },
-          message: message,
-        },
+        message: message,
+        sender: true,
+        customerRead: true,
+        adminRead: false,
       };
-      await sendMessage(payload).then((data) => {
+
+      console.log(payload)
+      await sendMessage(session.customer?._id, payload).then((data) => {
         if (data) {
           const msgData = {
-            room_id: session.customer?.customer_id,
+            room_id: session.customer?._id,
             customer: session.customer,
             message: data,
           };
 
-          console.log(socket);
           socket.emit(SOCKET_INBOX_CHANNEL.ADD_MESSAGE, msgData);
-          setMessageLog((prevMessages) => [
-            { ...data, is_customer: true, is_seen:true},
-            ...prevMessages,
-          ]);
+          setMessageLog((prevMessages) => [{ ...data }, ...prevMessages]);
           inputRef.current.value = "";
         } else {
           toastError("Failed to send message");
@@ -187,18 +168,6 @@ const SupportChatBox = () => {
     }
   };
 
-  useEffect(() => {
-    if (isOpen) {
-      setMessageLog((ml) => ml.map((item) => ({ ...item, is_seen: true })));
-    }
-  }, [isOpen]);
-
-  useEffect(() => {
-    setUnreadMessage(
-      messageLog.reduce((acc, item) => acc + (item.is_seen ? 0 : 1), 0)
-    );
-  }, [messageLog, isOpen]);
-
   return (
     <>
       {isOpen ? (
@@ -220,9 +189,9 @@ const SupportChatBox = () => {
           >
             {messageLog?.slice(0).map((item) => (
               <li
-                key={item.message_id}
+                key={item._id}
                 className={`${
-                  item.is_customer ? "my-message" : "other-message"
+                  item.sender ? "my-message" : "other-message"
                 }`}
               >
                 {item.message}

@@ -34,7 +34,7 @@ export const options = {
           email: credentials.email,
           password: credentials.password,
         });
-        console.log(statusCode,data)
+    
     
         // Handle specific status codes for user-friendly messages
         if (statusCode) {

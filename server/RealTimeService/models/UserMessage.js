@@ -10,7 +10,8 @@ const messageSchema = new mongoose.Schema(
 
 const userMessageSchema = new mongoose.Schema(
   {
-    read: { type: Boolean, required: true },
+    adminRead: { type: Boolean, required: true },
+    customerRead: { type: Boolean, required: true },
     message_log: [messageSchema],
   },
   { timestamps: true }

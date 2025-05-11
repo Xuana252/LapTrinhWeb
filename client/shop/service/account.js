@@ -13,7 +13,7 @@ const accessToken = jwt.sign(mockTokenPayload, "mock-secret", {
 
 const data = {
   access_token: accessToken,
-  expires_in: 3600, // seconds
+  expires_in: 3600*24*30, // seconds
 };
 
 
