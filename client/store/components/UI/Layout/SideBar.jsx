@@ -118,15 +118,13 @@ export default function SideBar({ menu, children }) {
           ))}
         </div>
         <div className="mt-auto flex flex-col gap-2 items-center justify-end w-full ">
-          <div className="flex flex-row gap-2 items-center justify-between w-full">
-            <div className="rounded-full size-9 bg-on-surface text-secondary p-1 text-xl items-center justify-center flex">
-              <FontAwesomeIcon icon={faUserTie} />
-            </div>
+          <button
+            onClick={() => signOut()}
+            className="text-red-500 font-bold underline w-fit text-sm"
+          >
+            Sign out
+          </button>
 
-            <button onClick={() => signOut()} className="text-red-500 font-bold underline w-fit text-sm">
-              Sign out
-            </button>
-          </div>
           <button
             className="w-full rounded-lg bg-surface/50 text-on-surface hover:bg-secondary-1 sm:hidden"
             onClick={() => setIsMinimize(true)}

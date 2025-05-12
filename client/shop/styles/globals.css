@@ -133,7 +133,7 @@ body {
   }
 
   .message-base {
-    @apply whitespace-normal break-all text-base rounded-3xl  size-fit p-2 px-3 max-w-[80%] font-semibold shadow-md;
+    @apply whitespace-pre-line break-all text-sm rounded-lg  size-fit p-1 px-2 max-w-[80%]  shadow-md;
   }
 
   

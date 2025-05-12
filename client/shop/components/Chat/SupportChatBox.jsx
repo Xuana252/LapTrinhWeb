@@ -1,6 +1,8 @@
 "use client";
 import {
   faAngleDown,
+  faCheck,
+  faClose,
   faHeadset,
   faPaperPlane,
   faPhone,
@@ -15,6 +17,7 @@ import SupportButton from "./SupportButton";
 import { toastError } from "@util/toaster";
 import useSocket from "@components/socket/useSocket";
 import { io } from "@node_modules/socket.io-client/build/esm";
+import { formattedDateTime } from "@util/format";
 
 export const SOCKET_JOIN_CHANNEL = {
   STAFF_JOIN: "STAFF_JOIN",
@@ -31,6 +34,8 @@ export const SOCKET_INBOX_CHANNEL = {
   GET_MORE_MESSAGES: "GET_MORE_MESSAGES",
   ADD_MESSAGE: "ADD_MESSAGE",
   GET_MESSAGES: "GET_MESSAGES",
+
+  SEEN_MESSAGE: "SEEN_MESSAGE",
   DELETE_MESSAGE: "DELETE_MESSAGE",
 
   GET_CONVERSATIONS: "GET_CONVERSATIONS",
@@ -40,13 +45,16 @@ export const SOCKET_INBOX_CHANNEL = {
 const SupportChatBox = () => {
   const session = useSelector((state) => state.session);
 
+  const MESSAGE_LIMIT = 20;
+
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isSeen, setIsSeen] = useState(false);
   const [unreadMessage, setUnreadMessage] = useState(false);
   const [messageLog, setMessageLog] = useState([]);
 
-  const [isMore, setIsMore] = useState(true);
-  const [skip, setSkip] = useState(0);
+  const isMore = useRef(true);
+  const skip = useRef("");
 
   const [isScrolledUp, setIsScrolledUp] = useState(false);
 
@@ -56,12 +64,13 @@ const SupportChatBox = () => {
   const socket = useSocket(session.customer?._id);
 
   const fetchMessageLog = async () => {
-    if (isLoading || !isMore) return;
+    if (isLoading || !isMore.current) return;
     setIsLoading(true);
     try {
       const payload = {
         room_id: session.customer._id,
-        skip: skip,
+        skip: skip.current,
+        limit: MESSAGE_LIMIT,
       };
       console.log(payload);
       socket.emit(SOCKET_INBOX_CHANNEL.GET_MORE_MESSAGES, payload);
@@ -73,6 +82,10 @@ const SupportChatBox = () => {
   useEffect(() => {
     if (!socket) return;
 
+    socket.on(SOCKET_INBOX_CHANNEL.SEEN_MESSAGE, ({ isCustomer }) => {
+      !isCustomer && setIsSeen(true);
+    });
+
     socket.on(SOCKET_INBOX_CHANNEL.GET_MESSAGES, (data) => {
       setMessageLog((prev) => [
         {
@@ -80,27 +93,46 @@ const SupportChatBox = () => {
         },
         ...prev,
       ]);
-      setUnreadMessage(isOpen);
+      isOpen &&
+        socket.emit(SOCKET_INBOX_CHANNEL.SEEN_MESSAGE, {
+          room_id: session.customer?._id,
+          isCustomer: true,
+        });
+      setUnreadMessage(!isOpen);
     });
 
     socket.on(SOCKET_INBOX_CHANNEL.GET_MORE_MESSAGES, (data) => {
       if (data?.message_log?.length > 0) {
+        setIsSeen(data.adminRead);
+        setUnreadMessage(!data.customerRead);
         setMessageLog((prev) => [...prev, ...data.message_log]);
-        setIsMore(data.message_log.length >= 20);
-        setSkip((prev) => prev + (data.message_log.length > 0 ? 1 : 0));
+        isMore.current = data.message_log.length >= MESSAGE_LIMIT;
+        skip.current = data.message_log.at(-1)._id || "";
       }
 
-      setUnreadMessage(data.read);
+      setUnreadMessage(!data.customerRead);
       setIsLoading(false);
     });
 
     fetchMessageLog();
 
     return () => {
+      socket.off(SOCKET_INBOX_CHANNEL.SEEN_MESSAGE);
       socket.off(SOCKET_INBOX_CHANNEL.GET_MESSAGES);
       socket.off(SOCKET_INBOX_CHANNEL.GET_MORE_MESSAGES);
     };
   }, [socket]);
+
+  useEffect(() => {
+    if (isOpen) {
+      setUnreadMessage(false);
+      if (!socket) return;
+      socket.emit(SOCKET_INBOX_CHANNEL.SEEN_MESSAGE, {
+        room_id: session.customer?._id,
+        isCustomer: true,
+      });
+    }
+  }, [isOpen]);
 
   const handleSend = async () => {
     if (!session.isAuthenticated) {
@@ -122,7 +154,6 @@ const SupportChatBox = () => {
         adminRead: false,
       };
 
-      console.log(payload)
       await sendMessage(session.customer?._id, payload).then((data) => {
         if (data) {
           const msgData = {
@@ -133,6 +164,7 @@ const SupportChatBox = () => {
 
           socket.emit(SOCKET_INBOX_CHANNEL.ADD_MESSAGE, msgData);
           setMessageLog((prevMessages) => [{ ...data }, ...prevMessages]);
+          setIsSeen(false);
           inputRef.current.value = "";
         } else {
           toastError("Failed to send message");
@@ -171,32 +203,39 @@ const SupportChatBox = () => {
   return (
     <>
       {isOpen ? (
-        <div className="fixed bottom-0 right-0 w-full sm:w-[400px] h-[500px] grid grid-rows-[auto_1fr_auto] shadow-xl z-50">
-          <div className="size-full grid grid-cols-[1fr_auto] items-center bg-primary-variant text-on-primary p-2 rounded-t-xl">
+        <div className="fixed bottom-0 right-0 w-full sm:w-[400px] h-[500px] grid grid-rows-[auto_1fr_auto] overflow-auto shadow-xl z-50">
+          <div className="size-full grid grid-cols-[1fr_auto] items-center bg-primary-variant text-on-primary p-1 rounded-t">
             <div className="flex flex-row items-center justify-start p-2 gap-2">
-              <FontAwesomeIcon icon={faHeadset} className="text-2xl" />
+              <FontAwesomeIcon icon={faHeadset} className="text-xl" />
               <h2 className="font-bold text-xl ">Electro Support</h2>
             </div>
             <button className="p-2 text-xl" onClick={() => setIsOpen(false)}>
-              <FontAwesomeIcon icon={faX} />
+              <FontAwesomeIcon icon={faClose} />
             </button>
           </div>
 
           <ul
             ref={messageLogRef}
             onScroll={handleScroll}
-            className="bg-primary/70 backdrop-blur-sm flex flex-col-reverse w-full h-[380px]  justify-items-end gap-4 overflow-y-scroll no-scrollbar py-4 px-2"
+            className="bg-primary/70 backdrop-blur-sm flex flex-col-reverse w-full justify-items-end gap-1 overflow-y-scroll no-scrollbar py-4 px-2"
           >
+            <div
+              className={`${
+                messageLog?.at(0)?.sender ? "flex-row-reverse" : "flex-row"
+              } text-xs opacity-50 flex flex-row items-center gap-1`}
+            >
+              {isSeen && <FontAwesomeIcon icon={faCheck} />}
+              {formattedDateTime(messageLog?.at(0)?.createdAt)}
+            </div>
             {messageLog?.slice(0).map((item) => (
               <li
                 key={item._id}
-                className={`${
-                  item.sender ? "my-message" : "other-message"
-                }`}
+                className={`${item.sender ? "my-message" : "other-message"}`}
               >
                 {item.message}
               </li>
             ))}
+
             {isLoading && (
               <div className="animate-pulse text-lg text-on-primary font-bold w-full text-center">
                 Loading...
@@ -215,16 +254,16 @@ const SupportChatBox = () => {
             </div>
           )}
 
-          <div className="bg-primary-variant text-on-primary flex p-2">
-            <div className="rounded-full bg-surface size-full p-1 flex flex-row items-center justify-between">
+          <div className="bg-primary-variant text-on-primary flex p-1">
+            <div className="rounded-full bg-surface size-full p-1 flex flex-row items-center justify-between text-sm">
               <input
                 ref={inputRef}
                 type="text"
                 placeholder="Ask us something..."
-                className="grow bg-transparent select-none outline-none px-2"
+                className="grow bg-transparent select-none outline-none px-2 "
               />
               <button
-                className="p-1 size-9 rounded-full bg-on-surface text-lg text-surface hover:scale-105 active:scale-95 transition-all duration-200"
+                className="p-1 size-7 rounded-full bg-on-surface text-surface hover:scale-105 active:scale-95 transition-all duration-200"
                 onClick={handleSend}
               >
                 <FontAwesomeIcon icon={faPaperPlane} />
