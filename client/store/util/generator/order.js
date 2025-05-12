@@ -74,7 +74,7 @@ export const generateDummyOrderData = () => {
   return dummyOrder;
 };
 
-export const generateDummyOrdersData = (num = 1) => {
+export const generateDummyOrdersData = (num = 10) => {
   const orders_list = [];
 
   for (let i = 0; i < num; i++) {
