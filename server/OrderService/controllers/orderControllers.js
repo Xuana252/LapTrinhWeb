@@ -48,10 +48,51 @@ const deleteOrder=asyncHandler(async(req,res)=>{
   res.status(200).json({message:"xóa order thành công"})
 })
 
+const getMonthlyRevenue =asyncHandler(async (req,res)=>{
+  const {year}=req.query
+  const {month}=req.query
+  const start = new Date(year,month-1,1)
+  const end= new Date(year,month)
+
+  const orders=await Order.find({
+    createdAt:{$gte:start,$lt:end},
+    order_status:"delivered"
+  }).select("total_price");
+
+  const revenue=orders.reduce((sum,order)=>sum+order.total_price,0)
+  res.status(200).json({ revenue });
+})
+
+const getYearlyRevenue=asyncHandler(async (req,res)=>{
+  const {year}=req.query
+  const start=new Date(year)
+  const end=new Date(year+1)
+
+  const orders=await Order.find({
+    createdAt:{$gte:start,$lt:end},
+    order_status:"delivered"
+  }).select("total_price");
+
+  const revenue=orders.reduce((sum,order)=>sum+order.total_price,0)
+  res.status(200).json({ revenue });
+})
+
+const getRevenue=asyncHandler(async (req,res)=>{
+  const orders= await Order.find({
+    order_status:"delivered"
+  }).select("total_price")
+
+  const revenue= orders.reduce((sum,order)=>sum+order.total_price,0)
+  res.status(200).json({revenue})
+})
+
 module.exports = {
   getOrder,
   getUserOrder,
   changeOrderStatus,
   addOrder,
-  deleteOrder
+  deleteOrder,
+  getMonthlyRevenue,
+  getYearlyRevenue,
+  getRevenue
 };

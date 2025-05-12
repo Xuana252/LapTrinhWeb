@@ -6,14 +6,16 @@ const orderRoute=require('./routes/orderRoute')
 const cors = require("cors");
 dotenv.config();
 
-const PORT = process.env.PORT || 8002;
+const PORT = process.env.PORT || 8003;
 const API_GATEWAY = process.env.API_GATEWAY || "http://localhost:8000";
 
 const app = express();
 app.use(express.json());
 app.use(cors({ origin: API_GATEWAY, optionSuccessStatus: 200 }));
+app.get('/favicon.ico', (req, res) => res.status(204));
 app.use(errorMiddleware);
 app.use('/',orderRoute);
+
 
 connectToDB().then(() => {
   app.listen(PORT, () => {
