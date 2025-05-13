@@ -1,8 +1,9 @@
+import { randomImage } from "./customer";
 import { generateDummyProductData } from "./product";
 
 const ORDER_STATUS = [
   "pending",
-  "confirmed",
+  "processing",
   "shipped",
   "delivered",
   "cancelled",
@@ -11,7 +12,9 @@ const ORDER_STATUS = [
 const PAYMENT_METHOD = ["cod", "momo", "zalo"];
 
 export const generateDummyOrderData = () => {
+  
   const dummyCustomer = {
+    image: randomImage(),
     customer_id: "cust_12345",
     full_name: "John Doe",
     username: "john_doe",
