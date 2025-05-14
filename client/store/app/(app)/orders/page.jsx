@@ -1,6 +1,7 @@
 "use client";
 import OrderSection from "@components/dashboardSection/OrderSection";
 import FilterButton from "@components/Input/FilterButton";
+import Pagination from "@components/UI/Layout/Pagination";
 import OrderCard from "@components/UI/Order/OrderCard";
 import {
   faBox,
@@ -29,13 +30,14 @@ const OrderInfo = () => {
   const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
+  const [count, setCount] = useState(0);
 
   const fetchOrders = async () => {
     setIsLoading(true);
     getAllOrder()
       .then((res) => {
-        setOrders(res);
-        console.log(res)
+        setOrders(res.data);
+        setCount(res.count);
       })
       .catch((err) => {
         console.log(err);
@@ -106,15 +108,21 @@ const OrderInfo = () => {
           />
         </div>
       </div>
-        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 overflow-visible">
-          {isLoading
-            ? Array.from({ length: ORDER_LIMIT }).map((_, index) => (
-                <OrderCard key={index} loading={true} />
-              ))
-            : orders
-                .slice((page - 1) * ORDER_LIMIT, page * ORDER_LIMIT)
-                .map((item) => <OrderCard key={item._id} order={item} />)}
-        </ul>
+      <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 overflow-visible">
+        {isLoading
+          ? Array.from({ length: ORDER_LIMIT }).map((_, index) => (
+              <OrderCard key={index} loading={true} />
+            ))
+          : orders
+              .slice((page - 1) * ORDER_LIMIT, page * ORDER_LIMIT)
+              .map((item) => <OrderCard key={item._id} order={item} />)}
+      </ul>
+      <Pagination
+        limit={ORDER_LIMIT}
+        current={page}
+        count={count}
+        onPageChange={setPage}
+      />
     </div>
   );
 };

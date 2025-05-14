@@ -78,13 +78,13 @@ export const generateDummyOrderData = () => {
 };
 
 export const generateDummyOrdersData = (num = 10) => {
-  const orders_list = [];
+  let orders_list = [];
 
   for (let i = 0; i < num; i++) {
     orders_list.push(generateDummyOrderData());
   }
 
-  return orders_list;
+  return {data:orders_list,count: Math.floor(Math.random() * 30 + 20)};
 };
 
 

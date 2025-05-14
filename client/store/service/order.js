@@ -10,7 +10,7 @@ export const getOrder = async (id, order) => {
   if (process.env.DEV_ENV !== "production") return generateDummyOrdersData(10);
   try {
     const response = await fetch(
-      `${process.env.APP_URL}/orders/${id}/${order}`
+      `${process.env.APP_URL}/orders/${id}/${order}?page${page}&status=${status}&created`
     );
     if (response.ok) {
       const data = await response.json();
