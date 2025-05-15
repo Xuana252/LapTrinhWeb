@@ -25,7 +25,7 @@ import { FontAwesomeIcon } from "@node_modules/@fortawesome/react-fontawesome";
 import { getAllOrder } from "@service/order";
 import { useEffect, useState } from "react";
 
-const OrderInfo = () => {
+const Order = () => {
   const ORDER_LIMIT = 18;
   const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -127,4 +127,4 @@ const OrderInfo = () => {
   );
 };
 
-export default OrderInfo;
+export default Order;

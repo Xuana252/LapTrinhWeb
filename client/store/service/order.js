@@ -2,15 +2,16 @@
 
 import {
   generateDummyOrdersData,
+  generateDummyOrderData,
   generateMockOrderData,
   generateMockRevenueData,
 } from "@util/generator/order";
 
-export const getOrder = async (id, order) => {
-  if (process.env.DEV_ENV !== "production") return generateDummyOrdersData(10);
+export const getOrder = async (id) => {
+  if (process.env.DEV_ENV !== "production") return generateDummyOrderData();
   try {
     const response = await fetch(
-      `${process.env.APP_URL}/orders/${id}/${order}?page${page}&status=${status}&created`
+      `${process.env.APP_URL}/orders/${id}?page${page}&status=${status}&created`
     );
     if (response.ok) {
       const data = await response.json();

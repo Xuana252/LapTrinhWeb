@@ -15,7 +15,7 @@ import {
 import { formattedDate, formattedPrice } from "@util/format";
 
 const OrderCard = ({ order, loading }) => {
-  const getStatusColor = (status) => {
+   const getStatusColor = (status) => {
     switch (status.toLowerCase()) {
       case "pending":
         return "text-yellow-500 bg-yellow-100";
@@ -62,7 +62,7 @@ const OrderCard = ({ order, loading }) => {
     );
   return (
     <Link
-      href={"/"}
+      href={`orders/${order._id}`}
       className="flex flex-col rounded bg-surface/60 hover:bg-surface shadow-md p-2 gap-4"
     >
       <div className="flex gap-2 items-center">
