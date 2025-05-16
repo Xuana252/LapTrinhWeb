@@ -124,6 +124,14 @@ body {
     @apply overflow-hidden rounded-md bg-primary shadow-lg text-on-primary p-4;
   }
 
+  .panel-3 {
+    @apply shadow-md rounded-md bg-secondary-variant/50 text-on-secondary p-2;
+  }
+
+  .panel-4 {
+    @apply shadow-md rounded-md bg-surface/80 text-on-surface p-2;
+  }
+
   .account-nav-bar-item {
     @apply grid grid-cols-[auto_1fr] gap-2 items-center hover:bg-secondary hover:text-on-secondary rounded-lg p-2  text-left justify-items-start  w-full min-w-fit;
   }
@@ -133,10 +141,9 @@ body {
   }
 
   .message-base {
-    @apply whitespace-pre-line break-all text-sm rounded-lg  size-fit p-1 px-2 max-w-[80%]  shadow-md;
+    @apply whitespace-pre-line break-all text-sm rounded-lg size-fit p-1 px-2 max-w-[80%]  shadow-md;
   }
 
-  
   .my-message {
     @apply message-base ml-auto bg-on-primary text-primary;
   }

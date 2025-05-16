@@ -83,7 +83,9 @@ const SupportButton = ({ onClick, unreadMsg }) => {
       }}
     >
       {unreadMsg && (
-        <div className="absolute top-0 right-0 translate-x-1/4 -translate-y-1/4 size-4 rounded-full bg-primary"></div>
+        <div className="absolute top-0 right-0 translate-x-1/4 -translate-y-1/4 size-4 rounded-full bg-primary">
+          {" "}
+        </div>
       )}
       <FontAwesomeIcon icon={faPhone} size="lg" />
     </button>

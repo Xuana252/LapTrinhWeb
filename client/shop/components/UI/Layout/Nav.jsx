@@ -15,6 +15,7 @@ import ProfileImageHolder from "../ProfileImageHolder";
 import { useSelector } from "@node_modules/react-redux/dist/react-redux";
 
 import { useTransition, animated, useSpring } from "react-spring";
+import Notification from "@components/Notification/Notification";
 
 const Nav = () => {
   const session = useSelector((state) => state.session);
@@ -167,6 +168,8 @@ const Nav = () => {
               </div>
             )}
           </button>
+
+          <Notification />
           <button>
             <Link href="/account">
               <ProfileImageHolder url={session?.customer?.image} size={40} />
@@ -223,6 +226,8 @@ const Nav = () => {
               </div>
             )}
           </button>
+
+          <Notification />
           <button>
             <Link href="/account">
               <ProfileImageHolder url={session?.customer?.image} size={40} />

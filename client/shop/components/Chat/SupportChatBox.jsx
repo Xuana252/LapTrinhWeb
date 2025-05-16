@@ -18,29 +18,7 @@ import { toastError } from "@util/toaster";
 import useSocket from "@components/socket/useSocket";
 import { io } from "@node_modules/socket.io-client/build/esm";
 import { formattedDateTime } from "@util/format";
-
-export const SOCKET_JOIN_CHANNEL = {
-  STAFF_JOIN: "STAFF_JOIN",
-  STAFF_LEAVE: "STAFF_LEAVE",
-
-  CUSTOMER_JOIN: "CUSTOMER_JOIN",
-  CUSTOMER_LEAVE: "CUSTOMER_LEAVE",
-};
-
-export const SOCKET_INBOX_CHANNEL = {
-  JOIN_ROOM: "JOIN_ROOM",
-  LEAVE_ROOM: "LEAVE_ROOM",
-
-  GET_MORE_MESSAGES: "GET_MORE_MESSAGES",
-  ADD_MESSAGE: "ADD_MESSAGE",
-  GET_MESSAGES: "GET_MESSAGES",
-
-  SEEN_MESSAGE: "SEEN_MESSAGE",
-  DELETE_MESSAGE: "DELETE_MESSAGE",
-
-  GET_CONVERSATIONS: "GET_CONVERSATIONS",
-  DELETE_CONVERSATION: "DELETE_CONVERSATION",
-};
+import { SOCKET_INBOX_CHANNEL } from "@components/socket/socket";
 
 const SupportChatBox = () => {
   const session = useSelector((state) => state.session);

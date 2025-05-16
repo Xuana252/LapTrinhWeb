@@ -67,6 +67,13 @@ const connectedRooms = [];
 
 // Socket.IO connection
 io.of("/realtime").on("connection", (socket) => {
+  socket.emit(SOCKET_NOTIFICATION_CHANNEL.GET_NOTIFICATIONS, {
+    _id: "helu",
+    message: "Hi customer",
+    read: false,
+    createdAt: new Date(),
+  });
+
   socket.on("disconnect", () => {
     console.log("User disconnected:", socket.id);
 
