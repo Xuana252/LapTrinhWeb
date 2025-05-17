@@ -1,6 +1,10 @@
 "use client";
+import dynamic from 'next/dynamic';
+
+const Map = dynamic(() => import('@/components/UI/Map'), {
+  ssr: false,
+});
 import InputBox from "@components/Input/InputBox";
-import Map from "@components/UI/GoogleMap";
 import OrderItem from "@components/UI/OrderItem";
 import {
   faCircleCheck,
@@ -32,7 +36,7 @@ export default function Tracking() {
   const [orderIdPending, setOrderIdPending] = useState("");
   const [order, setOrder] = useState();
   const searchParams = useSearchParams();
-  const orderId = searchParams.get("orderId");
+  const orderId = searchParams.get("orderId") || "";
 
   const fetchOrder = async (id = "") => {
     if (!id) {
@@ -41,7 +45,7 @@ export default function Tracking() {
     }
     setIsLoading(true);
     try {
-      const data = await getOrder(session?.customer?.customer_id, id);
+      const data = await getOrder(session?.customer?._id, id);
       setOrder(data);
     } catch (error) {
       console.error("Failed to fetch order:", error);
@@ -114,16 +118,16 @@ export default function Tracking() {
 
         {order?.address && (
           <Map
-            from={"Hàn Thuyên, khu phố 6 P, Thủ Đức, Hồ Chí Minh, Vietnam"}
+            key={order?._id}
             to={
-              (order?.address.detailed_address ?? "") +
-              ", " +
               (order?.address.ward ?? "") +
               ", " +
               (order?.address.district ?? "") +
               ", " +
               (order?.address.province ?? "")
             }
+
+            status={order.order_status}
           />
         )}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 ">
@@ -202,7 +206,7 @@ export default function Tracking() {
                     <OrderItem key={index} loading={true} />
                   ))
                 : order?.order_item?.map((item) => (
-                    <OrderItem key={item.product_id} orderItem={item} />
+                    <OrderItem key={item.product_id._id} orderItem={item} />
                   ))}
             </ul>
           </div>

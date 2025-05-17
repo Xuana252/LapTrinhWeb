@@ -9,6 +9,15 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+.transparent-icon {
+  background: transparent !important;
+  border: none !important;
+}
+
+.leaflet-control-container .leaflet-routing-container-hide {
+  display: none;
+}
+
 /* Firefox */
 input[type="number"] {
   -moz-appearance: textfield;
