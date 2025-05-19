@@ -146,7 +146,7 @@ export default function Home() {
           : products
               .slice(0, 8)
               .map((item) => (
-                <ProductCard key={item.product_id} product={item} />
+                <ProductCard key={item._id} product={item} />
               ))}
       </ul>
 

@@ -4,6 +4,9 @@ import Nav from "@components/UI/Layout/Nav";
 import Footer from "@components/UI/Layout/Footer";
 import { config, icon } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
+import "leaflet/dist/leaflet.css";
+import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
+
 import SupportChatBox from "@components/Chat/SupportChatBox";
 import ThemeProvider from "@components/theme/ThemeProvider";
 import Providers from "@provider/ReduxProvider";
@@ -20,7 +23,6 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-
   return (
     <html lang="en">
       <body>

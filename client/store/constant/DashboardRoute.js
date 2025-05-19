@@ -90,7 +90,7 @@ import {
       section: "Customer Support",
       items: [
         {
-          path: "/about",
+          path: "/inbox",
           name: "Customer Support",
           icon: faMessage,
           description: "See your team details",

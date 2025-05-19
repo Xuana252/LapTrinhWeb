@@ -14,12 +14,12 @@
 
 /* Scrollbar Handle */
 ::-webkit-scrollbar-thumb {
-  background: rgba(var(--accent), 0.5);
+  background: rgba(var(--on-primary), 0.5);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(var(--accent), 1);
+  background: rgba(var(--on-primary), 1);
 }
 
 /* Chrome, Safari, Edge, Opera */
@@ -181,8 +181,8 @@ body {
     @apply flex flex-row rounded-lg gap-2 border-l-4 border-b-4 border-primary  text-sm items-center w-full text-left px-4 py-2 font-bold bg-on-primary text-primary;
   }
 
-  .message-base {
-    @apply whitespace-normal break-all text-base rounded-3xl  size-fit p-2 px-3 max-w-[80%] font-semibold shadow-md;
+   .message-base {
+    @apply whitespace-pre-line break-all text-sm rounded-lg size-fit p-1 px-2 max-w-[80%]  shadow-md;
   }
 
   .my-message {

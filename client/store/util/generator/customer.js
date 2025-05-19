@@ -30,6 +30,7 @@ export const generateDummyCustomerData = (id) => {
     email: randomEmail(),
     username: randomUsername(),
     phone_number: randomPhoneNumber(),
+    is_active: Math.random() >= 0.5,
     createdAt: new Date(
       new Date().getTime() - Math.floor(Math.random() * 3.154e10)
     ).toISOString(), // Random date within the last year

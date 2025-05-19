@@ -10,10 +10,13 @@ const addressSchema = new mongoose.Schema({
   detailed_address: { type: String, required: true },
 });
 
-const notificationSchema = new mongoose.Schema({
-  message: { type: String, required: true },
-  read: { type: Boolean, required: true },
-});
+const notificationSchema = new mongoose.Schema(
+  {
+    message: { type: String, required: true },
+    read: { type: Boolean, required: true },
+  },
+  { timestamps: true }
+);
 
 const cartItemSchema = new mongoose.Schema(
   {

@@ -2,6 +2,7 @@
   "email": "john.doe@example.com",
   "password": "$2b$10$abcdefghijklmnopqrstuv",
   "is_active": true,
+  "image": "https://www.foto-bern.ch/wp-content/uploads/2022/07/Portrait-357.-vorschau.jpg",
   "username": "johndoe",
   "phone_number": "1234567890",
   "address": [],
@@ -9,3 +10,4 @@
   "createdAt": { "$date": "2024-05-01T00:00:00.000Z" },
   "updatedAt": { "$date": "2024-05-01T00:00:00.000Z" }
 }
+  

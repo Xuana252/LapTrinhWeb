@@ -23,7 +23,7 @@ import { getProductRevenue } from "@service/product";
 import { formatNumber } from "@util/format";
 import React, { useEffect, useState } from "react";
 
-const ProductRevenueSection = ({ id }) => {
+const ProductRevenueTab = ({ id }) => {
   const [data, setData] = useState(null);
 
   const fetchRevenueData = async () => {
@@ -180,4 +180,4 @@ const ProductRevenueSection = ({ id }) => {
   );
 };
 
-export default ProductRevenueSection;
+export default ProductRevenueTab;

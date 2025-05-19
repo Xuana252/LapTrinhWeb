@@ -14,8 +14,9 @@ import {
 } from "@node_modules/@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@node_modules/@fortawesome/react-fontawesome";
 import { useParams } from "@node_modules/next/navigation";
-import { getCustomer } from "@service/customer";
+import { banCustomer, getCustomer } from "@service/customer";
 import { formattedDate } from "@util/format";
+import { toastError, toastRequest, toastSuccess } from "@util/toaster";
 import { useEffect, useState } from "react";
 
 const UserInfo = () => {
@@ -23,7 +24,26 @@ const UserInfo = () => {
   const [customer, setUser] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
-  const handleBan = async () => {};
+  const handleBan = async () => {
+    const result = await toastRequest(
+      `Do you want to ${customer?.is_active ? "ban" : "unban"} this customer`
+    );
+    if (result) {
+      setIsLoading(true);
+      banCustomer(customer._id).then((res) => {
+        if (res) {
+          toastSuccess(`Customer ${customer?.is_active ? "ban" : "unban"}ned`);
+          setUser((prev) => ({ ...prev, is_active: false }));
+        } else {
+          toastError(
+            `Failed to  ${customer?.is_active ? "ban" : "unban"} customer`
+          );
+          setUser((prev) => ({ ...prev, is_active: true }));
+        }
+      });
+      setTimeout(() => setIsLoading(false), 1000);
+    }
+  };
 
   const fetchUser = () => {
     setIsLoading(true);
@@ -52,7 +72,7 @@ const UserInfo = () => {
             <FontAwesomeIcon icon={faSpinner} className="animate-spin" />
           ) : (
             <>
-              Ban
+              {customer?.is_active ? "Ban" : "Unban"}
               <FontAwesomeIcon icon={faBan} />
             </>
           )}

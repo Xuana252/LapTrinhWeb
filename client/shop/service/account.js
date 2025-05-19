@@ -1,21 +1,35 @@
 "use server";
 import jwt from "jsonwebtoken";
 
-const mockTokenPayload = {
+const mockTokenPayload1 = {
   id: "68149573efa55695535541b4",
   email: "john.doe@gmail.com",
   name: "John Doe",
 };
 
-const accessToken = jwt.sign(mockTokenPayload, "mock-secret", {
-  expiresIn: "1h",
-});
-
-const data = {
-  access_token: accessToken,
-  expires_in: 3600, // seconds
+const mockTokenPayload2 = {
+  id: "6821a22f8ce982d1e5e8e2d2",
+  email: "john.moe@gmail.com",
+  name: "John Moe",
 };
 
+const accessToken1 = jwt.sign(mockTokenPayload1, process.env.NEXTAUTH_SECRET, {
+  expiresIn: "30d",
+});
+
+const accessToken2 = jwt.sign(mockTokenPayload2, process.env.NEXTAUTH_SECRET, {
+  expiresIn: "30d",
+});
+
+const data1 = {
+  access_token: accessToken1,
+  expires_in: 3600 * 24 * 30, // seconds
+};
+
+const data2 = {
+  access_token: accessToken2,
+  expires_in: 3600 * 24 * 30, // seconds
+};
 
 export const changePassword = async (payload) => {
   const { currentPassword, newPassword, account_id } = payload;
@@ -75,9 +89,11 @@ export const login = async (payload) => {
   const { email, password } = payload;
 
   if (email === "john.doe@gmail.com" && password === "11111111") {
-    return { statusCode: 200, data };
+    return { statusCode: 200, data: data1 };
+  } else if (email === "john.moe@gmail.com" && password === "11111111") {
+    return { statusCode: 200, data: data2 };
   } else {
-    return {statusCode:401,data:null};
+    return { statusCode: 401, data: null };
   }
   // try {
   //     const response = await fetch(`${process.env.APP_URL}/auth/login/store`, {

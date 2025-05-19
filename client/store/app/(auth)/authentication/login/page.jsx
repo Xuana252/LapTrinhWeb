@@ -1,4 +1,5 @@
-"use client";
+"use client"
+
 import InputBox from "@components/Input/InputBox";
 import PasswordInput from "@components/Input/PasswordInput";
 import {

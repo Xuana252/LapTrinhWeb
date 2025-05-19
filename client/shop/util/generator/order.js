@@ -1,3 +1,4 @@
+import { generateDummyCustomerData } from "./customer";
 import { generateDummyProductData } from "./product";
 
 const ORDER_STATUS = [
@@ -11,16 +12,7 @@ const ORDER_STATUS = [
 const PAYMENT_METHOD = ["cod", "momo", "zalo"];
 
 export const generateDummyOrderData = () => {
-  const dummyCustomer = {
-    customer_id: "cust_12345",
-    full_name: "John Doe",
-    username: "john_doe",
-    phone_number: "123-456-7890",
-    date_joined: new Date().toISOString(),
-    account: {
-      email: "john.doe@example.com",
-    },
-  };
+  const dummyCustomer = generateDummyCustomerData();
 
   const generateRandomOrderItems = () => {
     const numberOfItems = Math.floor(Math.random() * 5) + 1; // 1 to 5 items
