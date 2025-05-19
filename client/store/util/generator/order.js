@@ -1,8 +1,9 @@
+import { randomImage } from "./customer";
 import { generateDummyProductData } from "./product";
 
 const ORDER_STATUS = [
   "pending",
-  "confirmed",
+  "processing",
   "shipped",
   "delivered",
   "cancelled",
@@ -11,7 +12,9 @@ const ORDER_STATUS = [
 const PAYMENT_METHOD = ["cod", "momo", "zalo"];
 
 export const generateDummyOrderData = () => {
+  
   const dummyCustomer = {
+    image: randomImage(),
     customer_id: "cust_12345",
     full_name: "John Doe",
     username: "john_doe",
@@ -74,14 +77,14 @@ export const generateDummyOrderData = () => {
   return dummyOrder;
 };
 
-export const generateDummyOrdersData = (num = 1) => {
-  const orders_list = [];
+export const generateDummyOrdersData = (num = 10) => {
+  let orders_list = [];
 
   for (let i = 0; i < num; i++) {
     orders_list.push(generateDummyOrderData());
   }
 
-  return orders_list;
+  return {data:orders_list,count: Math.floor(Math.random() * 30 + 20)};
 };
 
 

@@ -34,7 +34,7 @@ const User = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
-  const [count,setCount] =useState(0)
+  const [count, setCount] = useState(0);
 
   const [pendingText, setPendingText] = useState("");
   const [searchText, setSearchText] = useState("");
@@ -54,10 +54,10 @@ const User = () => {
 
   const fetchUsers = async () => {
     setIsLoading(true);
-    getAllCustomers(USER_LIMIT,page,searchText,revenueSort,dateSort)
+    getAllCustomers(USER_LIMIT, page, searchText, revenueSort, dateSort)
       .then((res) => {
         setUsers(res.data);
-        setCount(res.count)
+        setCount(res.count);
       })
       .catch((err) => {
         console.log(err);
@@ -67,7 +67,7 @@ const User = () => {
 
   useEffect(() => {
     fetchUsers();
-  }, [dateSort,revenueSort,searchText,page]);
+  }, [dateSort, revenueSort, searchText, page]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -75,9 +75,7 @@ const User = () => {
         <FontAwesomeIcon icon={faBox} /> Users
       </div>
       <div className="flex-wrap-reverse gap-4 flex items-center justify-end h-fit shadow-lg rounded-xl w-full bg-surface py-2 px-4 panel-3">
-        <h2 className="text-lg mr-auto font-bold">
-          {users.length} users
-        </h2>
+        <h2 className="text-lg mr-auto font-bold">{users.length} users</h2>
       </div>
       <UsersSection />
       <div className="panel-3">
@@ -99,9 +97,7 @@ const User = () => {
       </div>
       {/* filter */}
       <div className="flex-wrap-reverse gap-4 flex items-center justify-end h-fit shadow-lg rounded-xl w-full bg-surface py-2 px-4 panel-3">
-        <h2 className="text-lg mr-auto font-bold">
-          {users.length} results
-        </h2>
+        <h2 className="text-lg mr-auto font-bold">{users.length} results</h2>
         <div className="flex flex-wrap gap-4 panel-3">
           <FilterButton
             name={"join date"}
@@ -136,7 +132,12 @@ const User = () => {
               .map((item) => <CustomerCard key={item._id} customer={item} />)}
       </ul>
       {/* page selector */}
-      <Pagination limit={USER_LIMIT} count={count} current={page} onPageChange={setPage}/>
+      <Pagination
+        limit={USER_LIMIT}
+        count={count}
+        current={page}
+        onPageChange={setPage}
+      />
     </div>
   );
 };
