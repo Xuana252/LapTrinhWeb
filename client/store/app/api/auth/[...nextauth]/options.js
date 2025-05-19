@@ -2,6 +2,7 @@ import { NextAuthOptions, Session } from "next-auth";
 import CredentialsProvider, {
   CredentialInput,
 } from "next-auth/providers/credentials";
+// import jwt from "jsonwebtoken";
 
 export const options = {
   providers: [
@@ -29,6 +30,14 @@ export const options = {
             id: "1", // or any unique identifier
             name: "Admin User",
             email: "admin@gmail.com",
+            // accessToken: jwt.sign(
+            //   mockTokenPayload1,
+            //   process.env.NEXTAUTH_SECRET,
+            //   {
+            //     expiresIn: "30d",
+            //   }
+            // ),
+            // expires_in: 3600 * 24 * 30,
           };
         }
 
@@ -89,8 +98,6 @@ export const options = {
         token.id = user.id;
         token.name = user.name;
         token.email = user.email;
-        token.accessToken = user.accessToken; // ✅ critical for JWT decryption
-        token.expiresIn = user.expiresIn; // (optional)
       }
       return token;
     },
@@ -98,8 +105,7 @@ export const options = {
       session.user.id = token.id;
       session.user.name = token.name;
       session.user.email = token.email;
-      session.accessToken = token.accessToken; // ✅ available in client-side session
-      session.expiresIn = token.expiresIn; // (optional)
+
       return session;
     },
   },

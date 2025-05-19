@@ -10,6 +10,7 @@ import {
 } from "@constant/SocketChannel";
 
 const ChatList = ({ selected, onSelect }) => {
+  const selectedRoomRef = useRef(selected);
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState("");
@@ -18,6 +19,10 @@ const ChatList = ({ selected, onSelect }) => {
   const socket = useSocket();
 
   const inputRef = useRef(null);
+
+  useEffect(() => {
+    selectedRoomRef.current = selected;
+  }, [selected]);
 
   const ROOM_LIMIT = 20;
 
@@ -37,7 +42,7 @@ const ChatList = ({ selected, onSelect }) => {
 
   useEffect(() => {
     fetchRooms();
-  }, [searchText, page]);
+  }, [page]);
 
   useEffect(() => {
     setRooms([]);
@@ -89,7 +94,7 @@ const ChatList = ({ selected, onSelect }) => {
       })
     );
     if (socket) {
-      if (selected)
+      if (selected?._id)
         socket.emit(SOCKET_INBOX_CHANNEL.LEAVE_ROOM, { room_id: selected._id });
       socket.emit(SOCKET_INBOX_CHANNEL.JOIN_ROOM, { room_id: room._id });
     }
@@ -97,16 +102,19 @@ const ChatList = ({ selected, onSelect }) => {
   };
 
   const handleOnlineState = (customer_id, state) => {
-    if (selected?._id === customer_id) {
-      const newRoom = { ...selected, online: state };
+    const currentRoom = selectedRoomRef.current;
+
+    console.log("Current selectedRoom from ref:", currentRoom, customer_id);
+
+    if (currentRoom?._id === customer_id) {
+      const newRoom = { ...currentRoom, online: state };
       onSelect(newRoom);
     }
 
     setRooms((prev) =>
       prev.map((room) => {
         if (room._id === customer_id) {
-          const newRoom = { ...room, online: state };
-          return newRoom;
+          return { ...room, online: state };
         }
         return room;
       })
@@ -115,6 +123,11 @@ const ChatList = ({ selected, onSelect }) => {
 
   useEffect(() => {
     if (!socket) return;
+
+    socket.off(SOCKET_JOIN_CHANNEL.CUSTOMER_JOIN);
+    socket.off(SOCKET_JOIN_CHANNEL.CUSTOMER_LEAVE);
+    socket.off(SOCKET_INBOX_CHANNEL.GET_CONVERSATIONS);
+    socket.off(SOCKET_INBOX_CHANNEL.GET_MORE_CONVERSATIONS);
 
     socket.on(SOCKET_JOIN_CHANNEL.CUSTOMER_JOIN, ({ customer_id }) =>
       handleOnlineState(customer_id, true)

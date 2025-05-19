@@ -7,12 +7,12 @@ const NotificationItem = ({ notification, onRead, onDelete }) => {
   return (
     <div
       className="grid grid-rows-[1fr_auto] rounded-md gap-1  text-sm bg-surface/70 hover:bg-surface p-1 border-2 border-on-surface text-on-surface cursor-pointer"
-      onClick={() => onRead(notification._id)}
+      onClick={() => {
+        !notification.read && onRead(notification._id);
+      }}
     >
       <div className="grid grid-cols-[1fr_auto] gap-1">
-        <div className="whitespace-pre-line">
-          {notification.message} your new notification is ready
-        </div>
+        <div className="whitespace-pre-line">{notification.message}</div>
         <div className="w-2">
           {!notification.read && (
             <div className="size-2 rounded-full bg-red-500"></div>
@@ -23,7 +23,12 @@ const NotificationItem = ({ notification, onRead, onDelete }) => {
         <div className="text-right text-xs opacity-50">
           {formattedDateTime(notification.createdAt)}
         </div>
-        <button onClick={() => onDelete(notification._id)}>
+        <button
+          onClick={(e) => {
+            e.stopPropagation(); 
+            onDelete(notification._id);
+          }}
+        >
           <FontAwesomeIcon icon={faTrash} size="xs" />
         </button>
       </div>

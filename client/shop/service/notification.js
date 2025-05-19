@@ -21,6 +21,7 @@ export const fetchNotification = async (customer_id, skip, limit) => {
 };
 
 export const readNotification = async (customer_id, notification_id) => {
+  // if(process.env.DEV_ENV!=="production") return true
   try {
     const response = await fetch(
       `${process.env.APP_URL}/realtime/notification/${customer_id}`,
@@ -29,7 +30,7 @@ export const readNotification = async (customer_id, notification_id) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(notification_id),
+        body: JSON.stringify({notification_id}),
       }
     );
     if (response.ok) {
@@ -44,6 +45,7 @@ export const readNotification = async (customer_id, notification_id) => {
 };
 
 export const deleteNotification = async (customer_id, notification_id) => {
+  // if(process.env.DEV_ENV!=="production") return true
   try {
     const response = await fetch(
       `${process.env.APP_URL}/realtime/notification/${customer_id}/${notification_id}`,
@@ -66,6 +68,7 @@ export const deleteNotification = async (customer_id, notification_id) => {
 };
 
 export const clearNotification = async (customer_id) => {
+  if(process.env.DEV_ENV!=="production") return true
   try {
     const response = await fetch(
       `${process.env.APP_URL}/realtime/notification/${customer_id}`,

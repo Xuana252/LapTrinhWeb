@@ -38,7 +38,6 @@ export const SOCKET_NOTIFICATION_CHANNEL = {
 };
 
 export const getSocket = (customerId) => {
-  if (!customerId) return null;
   if (!socket) {
     socket = io(`${process.env.NEXT_PUBLIC_APP_URL}/realtime`, {
       transports: ["websocket"],
@@ -49,6 +48,10 @@ export const getSocket = (customerId) => {
       socket.emit(SOCKET_JOIN_CHANNEL.CUSTOMER_JOIN, {
         socket_id: socket.id,
         user_id: customerId,
+      });
+
+      socket.emit(SOCKET_INBOX_CHANNEL.JOIN_ROOM, {
+        room_id: customerId,
       });
     });
 
@@ -61,6 +64,10 @@ export const getSocket = (customerId) => {
       socket.emit(SOCKET_JOIN_CHANNEL.CUSTOMER_JOIN, {
         socket_id: socket.id,
         user_id: customerId,
+      });
+
+      socket.emit(SOCKET_INBOX_CHANNEL.JOIN_ROOM, {
+        room_id: customerId,
       });
     });
 

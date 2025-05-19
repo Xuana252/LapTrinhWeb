@@ -8,6 +8,7 @@ const useSocket = (customerId) => {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
+    if (!customerId) return;
     const socketInstance = getSocket(customerId);
     setSocket(socketInstance);
   }, [customerId]);

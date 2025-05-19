@@ -1,7 +1,7 @@
 "use client";
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 
-const Map = dynamic(() => import('@/components/UI/Map'), {
+const Map = dynamic(() => import("@/components/UI/Map"), {
   ssr: false,
 });
 import InputBox from "@components/Input/InputBox";
@@ -116,20 +116,18 @@ export default function Tracking() {
           </ul>
         </div>
 
-        {order?.address && (
-          <Map
-            key={order?._id}
-            to={
-              (order?.address.ward ?? "") +
-              ", " +
-              (order?.address.district ?? "") +
-              ", " +
-              (order?.address.province ?? "")
-            }
+        <Map
+          key={order?._id}
+          to={
+            (order?.address.ward ?? "") +
+            ", " +
+            (order?.address.district ?? "") +
+            ", " +
+            (order?.address.province ?? "")
+          }
+          status={order?.order_status}
+        />
 
-            status={order.order_status}
-          />
-        )}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 ">
           <div className="panel-1">
             <div className="flex flex-col md:flex-row gap-2 items-starts justify-between">

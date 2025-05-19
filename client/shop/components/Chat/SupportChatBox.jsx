@@ -50,7 +50,6 @@ const SupportChatBox = () => {
         skip: skip.current,
         limit: MESSAGE_LIMIT,
       };
-      console.log(payload);
       socket.emit(SOCKET_INBOX_CHANNEL.GET_MORE_MESSAGES, payload);
     } catch (error) {
       console.error("Failed to fetch older messages:", error);
@@ -59,6 +58,10 @@ const SupportChatBox = () => {
 
   useEffect(() => {
     if (!socket) return;
+
+    socket.off(SOCKET_INBOX_CHANNEL.SEEN_MESSAGE);
+    socket.off(SOCKET_INBOX_CHANNEL.GET_MESSAGES);
+    socket.off(SOCKET_INBOX_CHANNEL.GET_MORE_MESSAGES);
 
     socket.on(SOCKET_INBOX_CHANNEL.SEEN_MESSAGE, ({ isCustomer }) => {
       !isCustomer && setIsSeen(true);
@@ -71,11 +74,13 @@ const SupportChatBox = () => {
         },
         ...prev,
       ]);
-      isOpen &&
+      if (isOpen) {
         socket.emit(SOCKET_INBOX_CHANNEL.SEEN_MESSAGE, {
           room_id: session.customer?._id,
           isCustomer: true,
         });
+      }
+
       setUnreadMessage(!isOpen);
     });
 

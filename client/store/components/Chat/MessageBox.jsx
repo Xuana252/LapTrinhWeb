@@ -35,7 +35,7 @@ const MessageBox = ({ room, onSelect }) => {
   const socket = useSocket();
 
   const fetchMessageLog = async () => {
-    if (isLoading || !isMore.current || !room) return;
+    if (isLoading || !isMore.current || !room?._id) return;
     setIsLoading(true);
 
     try {
@@ -85,13 +85,17 @@ const MessageBox = ({ room, onSelect }) => {
   useEffect(() => {
     if (!socket) return;
 
+    socket.off(SOCKET_INBOX_CHANNEL.SEEN_MESSAGE);
+    socket.off(SOCKET_INBOX_CHANNEL.GET_MESSAGES);
+    socket.off(SOCKET_INBOX_CHANNEL.GET_MORE_MESSAGES);
+
     socket.on(SOCKET_INBOX_CHANNEL.SEEN_MESSAGE, ({ isCustomer }) => {
       isCustomer && setIsSeen(true);
     });
 
     socket.on(SOCKET_INBOX_CHANNEL.GET_MESSAGES, (data) => {
       socket.emit(SOCKET_INBOX_CHANNEL.SEEN_MESSAGE, {
-        room_id: room._id,
+        room_id: room?._id,
         isCustomer: false,
       });
       setMessageLog((prev) => [
@@ -118,14 +122,14 @@ const MessageBox = ({ room, onSelect }) => {
       socket.off(SOCKET_INBOX_CHANNEL.GET_MESSAGES);
       socket.off(SOCKET_INBOX_CHANNEL.GET_MORE_MESSAGES);
     };
-  }, [socket]);
+  }, [socket, room?._id]);
 
   useEffect(() => {
     setMessageLog([]);
     isMore.current = true;
     skip.current = "";
 
-    if (!room) return;
+    if (!room?._id) return;
 
     fetchMessageLog();
 
@@ -152,12 +156,12 @@ const MessageBox = ({ room, onSelect }) => {
         adminRead: true,
       };
 
-      await sendMessage(room.customer?._id, payload)
+      await sendMessage(room?.customer?._id, payload)
         .then((data) => {
           if (data) {
             const msgData = {
-              room_id: room.customer?._id,
-              customer: room.customer,
+              room_id: room?.customer?._id,
+              customer: room?.customer,
               message: data,
             };
 
@@ -231,7 +235,7 @@ const MessageBox = ({ room, onSelect }) => {
           {isSeen && <FontAwesomeIcon icon={faCheck} />}
           {formattedDateTime(messageLog?.at(0)?.createdAt)}
         </div>
-        {messageLog?.map((item) => (
+        {room&&messageLog?.map((item) => (
           <li
             key={item._id}
             className={`${!item.sender ? "my-message" : "other-message"}`}

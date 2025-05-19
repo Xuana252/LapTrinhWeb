@@ -1,11 +1,13 @@
 const asyncHandler = require("express-async-handler");
 const mongoose = require("mongoose");
 const User = require("../models/UserModel");
+const { getIO, connectedCustomers } = require("../socket/socket");
+const { SOCKET_NOTIFICATION_CHANNEL } = require("../constant/channel");
 
 const getNotification = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
-    const skip = parseInt(req.query.skip) || "";
+    const skip = req.query.skip || "";
     const limit = parseInt(req.query.limit) || 20;
     const objectId = new mongoose.Types.ObjectId(id);
 
@@ -79,28 +81,37 @@ const readNotification = asyncHandler(async (req, res) => {
 const addNotification = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
-    const { message, sender } = req.body;
+    const { message } = req.body;
 
     const objectId = new mongoose.Types.ObjectId(id);
     const user = await User.findById(objectId);
 
     if (!user) {
-      res.status(404);
       throw new Error("User not found");
     }
 
     // Create new notification
     const newNotification = {
       message,
-      sender,
+      read: false,
     };
 
     // Add to the beginning of the array
     user.notification.unshift(newNotification);
     await user.save();
 
-    // Return the first notification (the one just added)
     const added = user.notification[0];
+
+    const customer = connectedCustomers.find((c) => c.user_id === id);
+
+    if (customer) {
+      const io = getIO();
+      io.of("/realtime")
+        .to(customer.socket_id)
+        .emit(SOCKET_NOTIFICATION_CHANNEL.GET_NOTIFICATIONS, added);
+    }
+
+    // Return the first notification (the one just added)
 
     res.status(200).json(added);
   } catch (error) {

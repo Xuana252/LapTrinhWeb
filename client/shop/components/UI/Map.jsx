@@ -90,6 +90,8 @@ const RoutingMachine = ({ toCoords, status }) => {
 
       const mid = coords[midIndex];
 
+      map.setView([mid.lat, mid.lng], map.getZoom());
+
       truckMarker = L.marker([mid.lat, mid.lng], { icon: truckIcon }).addTo(
         map
       );
@@ -164,7 +166,7 @@ const Map = ({ to, status }) => {
           <RoutingMachine toCoords={toCoords} status={status} />
         ) : (
           <>
-            <Marker position={shopCoords} icon={warehouseIcon}>
+            <Marker position={shopCoords} icon={storeIcon}>
               <Popup>Start</Popup>
             </Marker>
           </>

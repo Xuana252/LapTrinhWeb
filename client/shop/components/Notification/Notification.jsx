@@ -3,8 +3,8 @@ import useSocket from "@components/socket/useSocket";
 import { faBell } from "@node_modules/@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@node_modules/@fortawesome/react-fontawesome";
 import { useSelector } from "@node_modules/react-redux/dist/react-redux";
-import { toastRequest, toastSuccess } from "@util/toaster";
-import React, { useEffect, useState } from "react";
+import { toastNotification, toastRequest, toastSuccess } from "@util/toaster";
+import React, { useEffect, useRef, useState } from "react";
 import NotificationItem from "./NotificationItem";
 import {
   clearNotification,
@@ -17,7 +17,7 @@ const Notification = () => {
   const session = useSelector((state) => state.session);
 
   const NOTIFICATION_LIMIT = 20;
-  const [skip, setSkip] = useState("");
+  const skip = useRef("");
   const [isMore, setIsMore] = useState(true);
   const [unreadCount, setUnreadCount] = useState(0);
 
@@ -27,7 +27,7 @@ const Notification = () => {
 
   const fetchMoreNotification = () => {
     if (!session.customer?._id || !isMore) return;
-    fetchNotification(session.customer?._id, skip, NOTIFICATION_LIMIT)
+    fetchNotification(session.customer?._id, skip.current, NOTIFICATION_LIMIT)
       .then((data) => {
         const newNotifs = data.notifications || [];
 
@@ -38,7 +38,7 @@ const Notification = () => {
 
         // Set skip to the _id of the last (oldest) notification we received
         if (newNotifs.length > 0) {
-          setSkip(newNotifs.at(-1)._id);
+          skip.current = newNotifs.at(-1)._id;
         }
 
         // Update unread count
@@ -51,12 +51,21 @@ const Notification = () => {
     setNotification((prev) =>
       prev.map((noti) => (noti._id === id ? { ...noti, read: true } : noti))
     );
+
+    const target = notification.find((noti) => noti._id === id);
+    if (target && !target.read) {
+      setUnreadCount((prev) => Math.max(prev - 1, 0));
+    }
     readNotification(session.customer?._id, id).catch((error) =>
       console.log(error)
     );
   };
 
   const handleDelete = (id) => {
+    const target = notification.find((noti) => noti._id === id);
+    if (target && !target.read) {
+      setUnreadCount((prev) => Math.max(prev - 1, 0));
+    }
     setNotification((prev) => prev.filter((noti) => noti._id !== id));
 
     deleteNotification(session.customer?._id, id).catch((error) =>
@@ -86,37 +95,24 @@ const Notification = () => {
   };
 
   useEffect(() => {
-    fetchMoreNotification();
-  }, []);
+    session.customer?._id && fetchMoreNotification();
+  }, [session.customer?._id]);
+
   useEffect(() => {
     if (!socket) return;
 
+    socket.off(SOCKET_NOTIFICATION_CHANNEL.GET_NOTIFICATIONS);
     socket.on(SOCKET_NOTIFICATION_CHANNEL.GET_NOTIFICATIONS, (data) => {
-      toastSuccess(data.message);
+      console.log("toast fired for:", data);
+      // toastSuccess("hello")
+      toastNotification(data);
 
       setUnreadCount((prev) => prev + 1);
       setNotification((prev) => [data, ...prev]);
     });
 
-    // socket.on(SOCKET_INBOX_CHANNEL.GET_MORE_MESSAGES, (data) => {
-    //   if (data?.message_log?.length > 0) {
-    //     setIsSeen(data.adminRead);
-    //     setUnreadMessage(!data.customerRead);
-    //     setMessageLog((prev) => [...prev, ...data.message_log]);
-    //     isMore.current = data.message_log.length >= MESSAGE_LIMIT;
-    //     skip.current = data.message_log.at(-1)._id || "";
-    //   }
-
-    //   setUnreadMessage(!data.customerRead);
-    //   setIsLoading(false);
-    // });
-
-    // fetchMessageLog();
-
     return () => {
       socket.off(SOCKET_NOTIFICATION_CHANNEL.GET_NOTIFICATIONS);
-      //   socket.off(SOCKET_INBOX_CHANNEL.GET_MESSAGES);
-      //   socket.off(SOCKET_INBOX_CHANNEL.GET_MORE_MESSAGES);
     };
   }, [socket]);
 
@@ -140,7 +136,7 @@ const Notification = () => {
               Clear
             </button>
           </div>
-          <ul className="max-w-[400px] w-full flex flex-col gap-1 min-w-[300px] bg-secondary rounded p-1">
+          <ul className="max-w-[400px] max-h-[300px] overflow-y-auto w-full flex flex-col gap-1 min-w-[300px] bg-secondary rounded p-1">
             {notification.map((noti) => (
               <NotificationItem
                 key={noti._id}
