@@ -3,12 +3,12 @@ export const addresses = [
     province: "Thành phố Đà Nẵng",
     districts: [
       {
-        district: "Huyện Hòa Vang",
-        wards: ["Xã Hòa Bắc"],
+        district: " Hòa Vang",
+        wards: ["Hòa Bắc"],
       },
       {
-        district: "Quận Hải Châu",
-        wards: ["Phường Bình Hiên", "Phường Thạch Thang"],
+        district: "Hải Châu",
+        wards: ["Bình Hiên", "Thạch Thang"],
       },
     ],
   },
@@ -17,11 +17,11 @@ export const addresses = [
     districts: [
       {
         district: "Quận 1",
-        wards: ["Phường Bến Nghé", "Phường Nguyễn Thái Bình"],
+        wards: ["Bến Nghé", "Nguyễn Thái Bình"],
       },
       {
         district: "Quận 2",
-        wards: ["Phường Thủ Thiêm", "Phường An Khánh"],
+        wards: ["Thủ Thiêm", "An Khánh"],
       },
     ],
   },
@@ -29,12 +29,12 @@ export const addresses = [
     province: "Thành phố Hà Nội",
     districts: [
       {
-        district: "Quận Hoàn Kiếm",
-        wards: ["Phường Hàng Bạc", "Phường Tràng Tiền"],
+        district: "Hoàn Kiếm",
+        wards: ["Hàng Bạc", "Tràng Tiền"],
       },
       {
         district: "Quận Đống Đa",
-        wards: ["Phường Văn Chương", "Phường Thịnh Quang"],
+        wards: ["Văn Chương", "Thịnh Quang"],
       },
     ],
   },

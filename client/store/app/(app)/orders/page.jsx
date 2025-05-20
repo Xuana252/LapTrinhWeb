@@ -27,20 +27,33 @@ import { useEffect, useState } from "react";
 
 const Order = () => {
   const ORDER_LIMIT = 18;
+
   const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
-  const [dateSort,setDateSort]=useState(0);
-  const [revenueSort,setRevenueSort]=useState(0)
-  const [orderStatus,setOrderStatus]=useState("")
+  const [dateSort, setDateSort] = useState(0);
+  const [revenueSort, setRevenueSort] = useState(0);
+  const [orderStatus, setOrderStatus] = useState("");
 
+  const [pendingText, setPendingText] = useState("");
+  const [searchText, setSearchText] = useState("");
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
+
+  const handleSearch = () => {
+    setSearchText(pendingText);
+  };
 
   const fetchOrders = async () => {
     setIsLoading(true);
-    getAllOrder()
+    getAllOrder(page, ORDER_LIMIT, searchText, dateSort, revenueSort,orderStatus)
       .then((res) => {
-        setOrders(res.data);
+        setOrders(res.orders);
         setCount(res.count);
       })
       .catch((err) => {
@@ -51,15 +64,16 @@ const Order = () => {
 
   useEffect(() => {
     fetchOrders();
-  }, [dateSort,revenueSort,orderStatus,page]);
+  }, [dateSort, revenueSort, page,orderStatus,searchText]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [searchText,orderStatus]);
 
   return (
     <div className="gap-4 flex flex-col">
       <div className="title">
         <FontAwesomeIcon icon={faBox} /> Orders
-      </div>
-      <div className="bg-surface bg-opacity-50 py-2 px-4 rounded-xl gap-4 panel-3">
-        <h2 className="text-white font-bold text-lg">{orders.length} orders</h2>
       </div>
       <OrderSection />
       {/* search */}
@@ -67,24 +81,28 @@ const Order = () => {
         <div className="w-full rounded-full grow bg-primary-variant p-1 flex">
           <input
             type="text"
-            id=""
             className="w-full rounded-full px-2 bg-transparent text-on-primary placeholder:text-on-primary outline-none"
-            placeholder="Search Order"
+            placeholder="Search username, email"
+            onChange={(e) => setPendingText(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
-          <button className="text-xl text-surface rounded-full bg-on-surface h-full aspect-square flex items-center justify-center p-1">
+          <button
+            onClick={handleSearch}
+            className="text-xl text-surface rounded-full bg-on-surface h-full aspect-square flex items-center justify-center p-1"
+          >
             <FontAwesomeIcon icon={faSearch} />
           </button>
         </div>
       </div>
       {/* filter */}
       <div className="flex bg-surface bg-opacity-50 py-2 px-4 rounded-xl gap-4 panel-3 items-center">
-        <h2 className="text-white font-bold text-lg">{orders.length} orders</h2>
+        <h2 className="text-white font-bold text-lg">{count} orders</h2>
         <div className="flex justify-center ml-auto gap-4 panel-3">
           <FilterButton
             name={"Order Status"}
             icon={faSort}
             option={[
-              { text: "All", value: "all", icon: faList },
+              { text: "All", value: "", icon: faList },
               { text: "Pending", value: "pending", icon: faClock },
               { text: "Processing", value: "processing", icon: faSpinner },
               { text: "Shipped", value: "shipped", icon: faTruck },
@@ -98,8 +116,8 @@ const Order = () => {
             icon={faSort}
             option={[
               { text: "All", value: 0, icon: faCalendar },
-              { text: "Oldest", value: 1, icon: faArrowDownAZ },
-              { text: "Latest", value: -1, icon: faArrowUpAZ },
+              { text: "Oldest", value: -1, icon: faArrowDownAZ },
+              { text: "Latest", value: 1, icon: faArrowUpAZ },
             ]}
             onChange={setDateSort}
           />
@@ -108,8 +126,8 @@ const Order = () => {
             icon={faSort}
             option={[
               { text: "All", value: 0, icon: faMoneyBill },
-              { text: "Desc", value: -1, icon: faSortNumericDesc },
-              { text: "Asc", value: 1, icon: faSortNumericAsc },
+              { text: "Desc", value: 1, icon: faSortNumericDesc },
+              { text: "Asc", value: -1, icon: faSortNumericAsc },
             ]}
             onChange={setRevenueSort}
           />
@@ -122,7 +140,7 @@ const Order = () => {
             ))
           : orders
               .slice((page - 1) * ORDER_LIMIT, page * ORDER_LIMIT)
-              .map((item) => <OrderCard key={item._id} order={item} />)}
+              ?.map((item) => <OrderCard key={item._id} order={item} />)}
       </ul>
       <Pagination
         limit={ORDER_LIMIT}

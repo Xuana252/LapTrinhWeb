@@ -11,12 +11,25 @@ const getUserCart = asyncHandler(async (req, res) => {
       },
     });
 
+
     if (!user) {
       res.status(404).json({ message: `Could not find any user with ID ${id}` });
       return 
     }
 
-    res.status(200).json(user.cart);
+     const transformedCart = user.cart.map((item) => {
+      const product = item.product_id;
+      return {
+        ...item.toObject(), // Convert Mongoose doc to plain object
+        product_id: {
+          ...product.toObject(),
+          category: product.category_id, // Copy category_id to category
+        },
+      };
+    });
+
+    res.status(200).json(transformedCart);
+
   } catch (error) {
     res.status(500);
     throw new Error(error.message);

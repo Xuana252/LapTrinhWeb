@@ -55,8 +55,6 @@ const RoutingMachine = ({ toCoords, status }) => {
         L.latLng(toCoords[0], toCoords[1]),
       ],
       routeWhileDragging: false,
-      draggableWaypoints: false, 
-      addWaypoints: false,
       lineOptions: {
         styles: [
           { color: "green", weight: 6, opacity: 0.8 }, // Green route

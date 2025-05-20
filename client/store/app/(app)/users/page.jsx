@@ -67,7 +67,11 @@ const User = () => {
 
   useEffect(() => {
     fetchUsers();
-  }, [dateSort, revenueSort, searchText, page]);
+  }, [dateSort, revenueSort, page,searchText]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [searchText]);
 
   return (
     <div className="flex flex-col gap-4">

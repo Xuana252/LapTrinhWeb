@@ -9,7 +9,7 @@ const ORDER_STATUS = [
   "cancelled",
 ];
 
-const PAYMENT_METHOD = ["cod", "momo", "zalo"];
+const PAYMENT_METHOD = ["cod", "momo", "zalopay"];
 
 export const generateDummyOrderData = () => {
   const dummyCustomer = generateDummyCustomerData();

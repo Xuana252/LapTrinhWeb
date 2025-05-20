@@ -95,7 +95,7 @@ const Product = () => {
     sortedProducts.sort(
       (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
     ); // Newest first
-  }
+  } 
 
   if (priceSort === 1) {
     sortedProducts.sort((a, b) => a.price - b.price);

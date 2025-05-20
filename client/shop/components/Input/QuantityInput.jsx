@@ -24,7 +24,7 @@ function reducer(state, action) {
   }
 }
 
-const QuantityInput = ({ min = 1, max, onChange ,value = 1 }) => {
+const QuantityInput = ({ min = 1, max, onChange, value = 1 }) => {
   const [state, dispatch] = useReducer(reducer, {
     quantity: value,
   });
@@ -32,8 +32,6 @@ const QuantityInput = ({ min = 1, max, onChange ,value = 1 }) => {
   useEffect(() => {
     if (onChange) onChange(state.quantity);
   }, [state.quantity]);
-
-  
 
   return (
     <div className="text-xs  md:text-base shadow rounded border-2 border-on-background/20  w-fit text-on-surface grid grid-cols-[auto_1fr_auto] mt-auto">
@@ -45,7 +43,7 @@ const QuantityInput = ({ min = 1, max, onChange ,value = 1 }) => {
       </button>
       <input
         type="number"
-        value={value}
+        value={Math.min(value, max)}
         style={{
           appearance: "textfield",
           MozAppearance: "textfield",

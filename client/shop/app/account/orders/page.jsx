@@ -39,7 +39,7 @@ const Orders = () => {
 
   const fetchOrders = () => {
     setIsLoading(true);
-    getOrders(session.customer?.customer_id).then((data) => {
+    getOrders(session.customer?._id).then((data) => {
       const sortedOrders = data.sort(
         (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
       );
@@ -52,17 +52,21 @@ const Orders = () => {
   const handleCancelOrder = async (id) => {
     const result = await toastRequest("Do you want to cancel this order?");
     if (result) {
-      cancelOrder(session.customer?.customer_id, id);
-      toastSuccess("Order cancelled successfully");
-
-      setOrders(
-        orders.map((order) => {
-          if (order.order_id === id) {
-            return { ...order, order_status: "CANCELLED" };
-          }
-          return order;
-        })
-      );
+      cancelOrder(id).then((data) => {
+        if (data) {
+          toastSuccess("Order cancelled successfully");
+          setOrders(
+            orders.map((order) => {
+              if (order._id === id) {
+                return { ...order, order_status: "cancelled" };
+              }
+              return order;
+            })
+          );
+        } else {
+          toastError("Failed to cancel order");
+        }
+      });
     }
   };
 
@@ -73,22 +77,22 @@ const Orders = () => {
     try {
       // Add items to the cart in parallel
       await Promise.all(
-        order.order_items.map(async (item) => {
+        order.order_item.map(async (item) => {
           const data = await addCartItem(
-            session.customer?.customer_id,
-            item.product_id,
+            session.customer?._id,
+            item.product_id._id,
             item.quantity
           );
           if (data) {
             dispatch(
               addItem({
-                product: item.product,
+                product: item.product_id,
                 quantity: item.quantity,
               })
             );
-            toastSuccess(`${item.product.product_name} added to cart`);
+            toastSuccess(`${item.product_id.product_name} added to cart`);
           } else {
-            toastError(`Failed to add ${item.product.product_name} to cart`);
+            toastError(`Failed to add ${item.product_id.product_name} to cart`);
           }
         })
       );
@@ -104,9 +108,8 @@ const Orders = () => {
   useEffect(() => {
     if (!session.isAuthenticated) return;
     fetchOrders();
-  }, [session]);
+  }, [session?.customer?._id]);
 
- 
   return (
     <section className="w-full flex flex-col gap-2">
       <div className="flex flex-col gap-2">
@@ -143,7 +146,15 @@ const Orders = () => {
                   item.order_status.toLowerCase() ===
                     selectedView.toLowerCase() || selectedView === "All"
               )
-              .map((item) => <OrderTag order={item} key={item._id} loading={false} onReorder={handleReorder} onCancel={handleCancelOrder} />)}
+              .map((item) => (
+                <OrderTag
+                  order={item}
+                  key={item._id}
+                  loading={false}
+                  onReorder={handleReorder}
+                  onCancel={handleCancelOrder}
+                />
+              ))}
       </div>
     </section>
   );

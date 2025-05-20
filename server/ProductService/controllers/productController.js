@@ -47,7 +47,7 @@ const getProducts = asyncHandler(async (req, res) => {
         },
       },
       {
-        $sort: { createdAt: 1 }, // Sorting by createdAt to show products in ascending order
+        $sort: { createdAt: -1 }, // Sorting by createdAt to show products in ascending order
       },
     ]);
 

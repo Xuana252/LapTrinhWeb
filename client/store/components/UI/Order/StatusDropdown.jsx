@@ -51,7 +51,7 @@ export default function CustomStatusDropdown({ value, onChange }) {
       <Listbox value={value} onChange={onChange} >
         <div className="relative">
           <Listbox.Button
-            className={`w-full flex items-center justify-between rounded px-6 py-2 ${selectedStatus.color} rounded-full caret-transparent`}
+            className={`w-full flex items-center justify-between rounded px-6 py-2 ${selectedStatus.color} rounded caret-transparent`}
           >
             <span className="flex items-center gap-2">
               <FontAwesomeIcon icon={selectedStatus.icon} />
@@ -59,18 +59,18 @@ export default function CustomStatusDropdown({ value, onChange }) {
             </span>
           </Listbox.Button>
 
-          <Listbox.Options className="absolute mt-1 w-full rounded bg-white border shadow-lg z-10">
+          <Listbox.Options className="absolute mt-1 w-full rounded bg-surface/90 overflow-hidden shadow-lg z-10">
             {statuses.map((status) => (
               <Listbox.Option
                 key={status.value}
                 value={status.value}
                 className={({ active }) =>
-                  `px-4 py-2 flex items-center gap-2 cursor-pointer caret-transparent ${
-                    active ? "bg-gray-100" : ""
+                  `px-4 py-2 flex items-center gap-2 cursor-pointer caret-transparent ${status.color}  ${
+                    active ? " opacity-100" : "opacity-70"
                   }`
                 }
               >
-                <FontAwesomeIcon icon={status.icon} className={status.color} />
+                <FontAwesomeIcon icon={status.icon}/>
                 <span className="font-medium">{status.label}</span>
               </Listbox.Option>
             ))}

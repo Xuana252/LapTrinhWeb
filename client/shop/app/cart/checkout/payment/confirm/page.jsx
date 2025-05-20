@@ -76,15 +76,17 @@ const Payment = () => {
     setIsLoading(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
     const payload = {
+        user_id:session.customer._id,
         total_price: receipt.total + 30000,
         order_item: order.order_item.map((item) => ({
           product_id: item.product_id._id,
           quantity: item.quantity,
           price: item.price,
         })),
-        payment_method: order.order_payment_method,
+        order_status: "pending",
+        payment_method: order.payment_method,
         address: {
-          detailed_address: order.address.address,
+          detailed_address: order.address.detailed_address,
           province: order.address.province,
           district: order.address.district,
           ward: order.address.ward,
@@ -93,12 +95,12 @@ const Payment = () => {
         },
     };
 
-    postOrder(session.customer.customer_id,payload).then((data) => {
-      if (data) {
+    postOrder(payload).then((data) => {
+      if (data.success) {
         toastSuccess("Order created! Thank you for using our services");
-        router.push(`/receipt?orderId=${data.order_id}`);
+        router.push(`/receipt?orderId=${data.order._id}`);
       } else {
-        toastError("Failed to create order");
+        toastError(data.message);
       }
       setIsLoading(false);
     });

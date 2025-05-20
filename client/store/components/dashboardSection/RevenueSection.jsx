@@ -54,7 +54,7 @@ const RevenueSection = () => {
             data?.monthly?.map((item) => {
               return {
                 id: `${item._id.year}/${item._id.month}`,
-                value: { revenue: item.count },
+                value: { revenue: item.revenue },
               };
             }) || null
           }
@@ -73,8 +73,8 @@ const RevenueSection = () => {
               <FontAwesomeIcon icon={faCalendar} /> This month
               <span className="ml-2 text-sm font-bold ">
                 {(() => {
-                  const latest = data?.monthly.at(-1)?.count ?? 0;
-                  const previous = data?.monthly.at(-2)?.count ?? 0;
+                  const latest = data?.monthly.at(-1)?.revenue ?? 0;
+                  const previous = data?.monthly.at(-2)?.revenue ?? 0;
                   const diff = latest - previous;
                   return (
                     <span
@@ -103,7 +103,7 @@ const RevenueSection = () => {
             </span>
 
             <span className="font-mono text-2xl font-bold">
-              {formatNumber(data?.monthly.at(-1).count ?? null) ?? (
+              {formatNumber(data?.monthly.at(-1).revenue ?? null) ?? (
                 <NumberLoader />
               )}
             </span>

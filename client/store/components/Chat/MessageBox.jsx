@@ -85,9 +85,6 @@ const MessageBox = ({ room, onSelect }) => {
   useEffect(() => {
     if (!socket) return;
 
-    socket.off(SOCKET_INBOX_CHANNEL.SEEN_MESSAGE);
-    socket.off(SOCKET_INBOX_CHANNEL.GET_MESSAGES);
-    socket.off(SOCKET_INBOX_CHANNEL.GET_MORE_MESSAGES);
 
     socket.on(SOCKET_INBOX_CHANNEL.SEEN_MESSAGE, ({ isCustomer }) => {
       isCustomer && setIsSeen(true);

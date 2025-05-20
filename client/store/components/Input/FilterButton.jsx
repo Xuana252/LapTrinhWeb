@@ -26,7 +26,7 @@ export default function FilterButton({
       onBlur={() => setIsSelecting(false)}
       className="relative font-mono"
     >
-      <div className="grid grid-cols-[auto_1fr] gap-1 items-center p-1 rounded-md bg-on-primary/20 border-secondary-1 border-2 w-auto">
+      <div className="grid grid-cols-[auto_1fr] gap-1 items-center p-1 rounded-md bg-on-primary/20 border-secondary-1 border-2 w-fit">
         {name && (
           <>
             <div

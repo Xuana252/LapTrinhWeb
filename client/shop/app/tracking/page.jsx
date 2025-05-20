@@ -25,7 +25,11 @@ import { useSession } from "@node_modules/next-auth/react";
 import { useSearchParams } from "@node_modules/next/navigation";
 import { useSelector } from "@node_modules/react-redux/dist/react-redux";
 import { getOrder } from "@service/order";
-import { formattedPrice, formattedDate } from "@util/format";
+import {
+  formattedPrice,
+  formattedDate,
+  normalizeVietnameseAddressNoMark,
+} from "@util/format";
 import { renderPaymentMethod, renderStatus } from "@util/render";
 import { toastError, toastWarning } from "@util/toaster";
 import Image from "next/image";
@@ -47,7 +51,7 @@ export default function Tracking() {
     }
     setIsLoading(true);
     try {
-      const data = await getOrder(session?.customer?._id, id);
+      const data = await getOrder(id);
       setOrder(data);
     } catch (error) {
       console.error("Failed to fetch order:", error);
@@ -75,7 +79,7 @@ export default function Tracking() {
 
   return (
     <section className="size-full flex justify-center">
-      <div className="flex flex-col gap-10 w-full">
+      <div className="flex flex-col gap-4 w-full">
         <div className="relative  w-full flex flex-col gap-2">
           <ul className="flex flex-row items-center justify-between ">
             <li className="relative flex items-center justify-center rounded-full size-4 md:size-6 bg-on-background">
@@ -83,7 +87,7 @@ export default function Tracking() {
                 <span className="bg-background rounded-full size-2 md:size-3 absolute"></span>
               )}
             </li>
-              <li className="grow border-t-4 border-on-background"></li>
+            <li className="grow border-t-4 border-on-background"></li>
             <li className="relative flex items-center justify-center rounded-full size-4 md:size-6 bg-on-background">
               {order?.order_status === "pending" && (
                 <span className="bg-background rounded-full size-2 md:size-3 absolute"></span>
@@ -129,17 +133,15 @@ export default function Tracking() {
 
         <Map
           key={order?._id}
-          to={
-            (order?.address.ward ?? "") +
-            ", " +
-            (order?.address.district ?? "") +
-            ", " +
-            (order?.address.province ?? "")
-          }
+          to={normalizeVietnameseAddressNoMark(
+            order?.address.ward ?? "",
+            order?.address.district ?? "",
+            order?.address.province ?? ""
+          )}
           status={order?.order_status}
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 ">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
           <div className="panel-1">
             <div className="flex flex-col md:flex-row gap-2 items-starts justify-between">
               <div className="flex flex-row gap-2 grow items-center">
@@ -197,15 +199,11 @@ export default function Tracking() {
           </div>
           <div className="panel-1">
             <div className="flex flex-col md:flex-row gap-2 items-start justify-between">
-              <div className="flex flex-row gap-2 grow items-center">
-                <h3 className="font-bold text-lg">Order id:</h3>
-                <h3 className="font-bold ">{order?.order_id}</h3>
-              </div>
               <div className="text-xl">
                 <span className="font-bold">
                   {formattedPrice(order?.total_price)}{" "}
                 </span>{" "}
-                ({order?.order_items?.length} items)
+                ({order?.order_item?.length} items)
               </div>
             </div>
             <div className=" w-full border-t-2 border-on-secondary my-4"></div>

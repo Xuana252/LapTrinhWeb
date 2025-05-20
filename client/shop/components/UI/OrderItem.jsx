@@ -7,7 +7,7 @@ const OrderItem = ({ orderItem, loading }) => {
   if (loading)
     return (
       <div className="w-full max-h-[90px]  bg-surface text-on-surface rounded-xl grid grid-cols-[auto_1fr_auto] gap-2 p-2">
-        <div className="size-full aspect-square bg-primary animate-pulse rounded-lg"></div>
+        <div className="size-[50px] h-full  aspect-square bg-primary animate-pulse rounded-lg"></div>
 
         <div className="flex flex-col justify-between items-start">
           <div className=" h-6 md:h-7 bg-primary animate-pulse w-[100px] rounded-lg"></div>
@@ -46,7 +46,7 @@ const OrderItem = ({ orderItem, loading }) => {
         <h1 className=" text-sm md:text-lg">
           {orderItem?.product_id.product_name}
         </h1>
-        <h2 className="text-sm md:text-lg">x{orderItem?.quantity}</h2>
+        <h2 className="text-sm md:text-base">x{orderItem?.quantity}</h2>
       </div>
 
       <div className="flex flex-col justify-between items-end">

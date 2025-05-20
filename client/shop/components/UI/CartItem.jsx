@@ -53,7 +53,7 @@ const CartItem = ({ reCalculate, cartItem, removeItem }) => {
           <div className="md:flex flex-col gap-2 items-center justify-center hidden">
             <QuantityInput
               min={1}
-              max={9999}
+              max={cartItem?.product_id.stock_quantity || 100}
               value={quantity}
               onChange={setQuantity}
             />
@@ -91,9 +91,11 @@ const CartItem = ({ reCalculate, cartItem, removeItem }) => {
                 {formattedPrice(
                   cartItem.product_id.price -
                     (cartItem.product_id.price / 100) *
-                     ( cartItem.product_id.discount + cartItem.product_id.category.discount)
+                      (cartItem.product_id.discount +
+                        cartItem.product_id.category.discount)
                 )}
               </div>
+              <div className="opacity-70 ">{cartItem?.product_id.stock_quantity} in-stock</div>
             </div>
           </div>
         </div>

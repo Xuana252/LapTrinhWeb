@@ -14,7 +14,7 @@ export const renderPaymentMethod = (method) => {
           className="rounded"
         />
       );
-    case "zalo":
+    case "zalopay":
       return (
         <Image
           src={"/images/ZaloPay_Logo.png"}

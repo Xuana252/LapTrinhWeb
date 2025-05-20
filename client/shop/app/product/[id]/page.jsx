@@ -52,11 +52,7 @@ const Product = () => {
       return;
     }
 
-    addCartItem(
-      session.customer.customer_id,
-      product.product_id,
-      state.quantity
-    ).then((data) => {
+    addCartItem(session.customer._id, product._id, quantity).then((data) => {
       if (data) {
         dispatch(
           addItem({
@@ -80,21 +76,19 @@ const Product = () => {
 
     const orderItems = [
       {
-        order_id: "",
-        product_id: product.product_id,
-        product: product,
+        product_id: product,
         quantity: quantity,
-        unit_price: product.price - (product.price / 100) * product.discount,
-        total_price:
-          (product.price - (product.price / 100) * product.discount) *
-          state.quantity,
+        price:
+          product.price -
+          (product.price / 100) *
+            Math.max(product.discount + product.category.discount, 0),
       },
     ];
 
     // Dispatching the order items to Redux
-    dispatch(setOrderItems({ items: orderItems }));
+    dispatch(setOrderItems({ item: orderItems }));
     await dispatch(setOrderStateAsync(1));
-    router.replace("/cart/checkout");
+    router.push("/cart/checkout");
   };
 
   const fetchProducts = () => {
@@ -138,7 +132,12 @@ const Product = () => {
             </div>
             <div className="text-xl sm:text-2xl md:text-3xl font-semibold text-green-600">
               {formattedPrice(
-                product?.price - (product?.price / 100) * Math.min((product?.discount + product?.category.discount),100)
+                product?.price -
+                  (product?.price / 100) *
+                    Math.min(
+                      product?.discount + product?.category.discount,
+                      100
+                    )
               )}
             </div>
             {(product?.discount > 0 || product?.category.discount > 0) && (

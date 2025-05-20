@@ -12,7 +12,7 @@ import {
   updateCartItem,
 } from "@service/cart";
 import { formattedPrice } from "@util/format";
-import { toastSuccess, toastWarning } from "@util/toaster";
+import { toastError, toastSuccess, toastWarning } from "@util/toaster";
 import { useRouter } from "next/navigation";
 import React, { useReducer, useState, useEffect, useContext } from "react";
 
@@ -53,14 +53,6 @@ const Cart = () => {
     total: 0,
   });
 
-  const deleteItem = (id) => {
-    deleteCartItem(session.customer.customer_id, id);
-    reduxDispatch(
-      removeItem({
-        id: id,
-      })
-    );
-  };
   useEffect(() => {
     session && setCartItems(cart.map((item) => ({ checked: false, ...item })));
   }, [session]);
@@ -96,8 +88,12 @@ const Cart = () => {
         product_id: item.product_id,
         quantity: item.quantity,
         price:
-          (item.product_id.price -
-            (item.product_id.price / 100) * Math.max((item.product_id.discount + item.product_id.category.discount),0) ) 
+          item.product_id.price -
+          (item.product_id.price / 100) *
+            Math.max(
+              item.product_id.discount + item.product_id.category.discount,
+              0
+            ),
       }));
 
     // Dispatching the order items to Redux
@@ -107,17 +103,34 @@ const Cart = () => {
   };
 
   const handleRemoveItem = async (id) => {
-    const newCart = cartItems.filter((item) => item.product_id._id !== id);
-    deleteItem(id);
-    setCartItems(newCart);
-    toastSuccess("item deleted");
+    console.log(session.customer._id, id)
+    deleteCartItem(session.customer._id, id).then((result) => {
+      if (result) {
+        const newCart = cartItems.filter((item) => item.product_id._id !== id);
+        setCartItems(newCart);
+        reduxDispatch(
+          removeItem({
+            id: id,
+          })
+        );
+        toastSuccess("Item removed");
+      } else {
+        toastError("Failed to remove item");
+      }
+    });
+
   };
 
   const handleRemoveAllItems = async () => {
-    reduxDispatch(removeAllItem());
-    deleteAllCartItem(session.customer.customer_id);
-    setCartItems([]);
-    toastSuccess("items deleted");
+    deleteAllCartItem(session.customer._id).then((result) => {
+      if (result) {
+        setCartItems([]);
+        reduxDispatch(removeAllItem());
+        toastSuccess("Item removed");
+      } else {
+        toastError("Failed to remove item");
+      }
+    });
   };
 
   const setAllCheckState = (checked) => {

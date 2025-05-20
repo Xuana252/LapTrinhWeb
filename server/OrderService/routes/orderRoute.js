@@ -2,25 +2,25 @@ const express = require("express");
 const router = express.Router();
 const {
   getOrder,
-  getUserOrder,
+  getAllOrder,
+  getUserOrders,
   changeOrderStatus,
   addOrder,
   deleteOrder,
   getRevenue,
-  getMonthlyRevenue,
-  getYearlyRevenue,
+  getUserRevenue,
   getMonthlyOrder,
 } = require("../controllers/orderControllers");
 
 // 1. Route cụ thể nên đặt trước
-router.get("/revenue/total", getRevenue);
-router.get("/revenue/month", getMonthlyRevenue);
-router.get("/revenue/year", getYearlyRevenue);
+router.get("/:id/revenue", getUserRevenue);
+router.get("/revenue", getRevenue);
 router.get("/monthlyOrder", getMonthlyOrder);
 
 // 2. Route không cụ thể
-router.get("/", getOrder);
-router.get("/:userId", getUserOrder);
+router.get("/customer/:userId", getUserOrders);
+router.get("/:id", getOrder);
+router.get("/", getAllOrder);
 router.post("/", addOrder);
 router.patch("/:orderId", changeOrderStatus);
 router.delete("/:orderId", deleteOrder);

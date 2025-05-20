@@ -10,25 +10,24 @@ import {
 export const getOrder = async (id) => {
   if (process.env.DEV_ENV !== "production") return generateDummyOrderData();
   try {
-    const response = await fetch(
-      `${process.env.APP_URL}/orders/${id}?page${page}&status=${status}&created`
-    );
+    const response = await fetch(`${process.env.APP_URL}/orders/${id}`);
     if (response.ok) {
       const data = await response.json();
       return data;
     } else {
-      return {};
+      return null;
     }
   } catch (error) {
     console.log(error);
-    return {};
+    return null;
   }
 };
 
 export const getCustomerOrders = async (id) => {
-  if (process.env.DEV_ENV !== "production") return generateDummyOrdersData(Math.round(Math.random()*4)+1);
+  if (process.env.DEV_ENV !== "production")
+    return generateDummyOrdersData(Math.round(Math.random() * 4) + 1);
   try {
-    const response = await fetch(`${process.env.APP_URL}/orders/${id}`);
+    const response = await fetch(`${process.env.APP_URL}/orders/customer/${id}`);
     if (response.ok) {
       const data = await response.json();
       return data;
@@ -41,35 +40,40 @@ export const getCustomerOrders = async (id) => {
   }
 };
 
-export const getAllOrder= async ()=>{
-  if(process.env.DEV_ENV!=="production") return generateDummyOrdersData(20)
+export const getAllOrder = async (
+  page,
+  limit,
+  searchText,
+  dateSort,
+  revenueSort,
+  orderStatus
+) => {
+  if (process.env.DEV_ENV !== "production") return generateDummyOrdersData(20);
   try {
-    const response =await fetch(
-      `${process.env.APP_URL}/orders/`
-    )
-    if(response.ok)
-    {
-      const data=await response.json()
-      return data
-    }
-    else{
-      return {}
+    const response = await fetch(
+      `${process.env.APP_URL}/orders?page=${page}&limit=${limit}&searchText=${searchText}&dateSort=${dateSort}&revenueSort=${revenueSort}&orderStatus=${orderStatus}`
+    );
+    if (response.ok) {
+      const data = await response.json();
+      return { orders: data.orders, count: data.count };
+    } else {
+      return { orders: [], count: 0 };
     }
   } catch (error) {
-    console.log(error)
-    return{}
+    console.log(error);
+    return { orders: [], count: 0 };
   }
-}
+};
 
-export const cancelOrder = async (customer_id,id) => {
+export const changeOrderState = async (id, status) => {
   try {
-    const response = await fetch(`${process.env.APP_URL}/orders/${customer_id}/${id}`, {
+    const response = await fetch(`${process.env.APP_URL}/orders/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        	"order_status": "CANCELLED"
+        status,
       }),
     });
     if (response.ok) {
@@ -83,46 +87,34 @@ export const cancelOrder = async (customer_id,id) => {
   }
 };
 
-
-
-
-export const getOrderData  = async () =>  {
-  return generateMockOrderData()
-  // if(process.env.DEV_ENV!=="production") return generateDummyOrdersData(10)
-  // try {
-  //   const response = await fetch(
-  //     `${process.env.APP_URL}/orders`
-  //   );
-  //   if(response.ok) {
-  //     const data  = await response.json()
-  //     return data
-  //   } else {
-  //     return []
-  //   }
-  // } catch (error) {
-  //   console.log(error)
-  //   return []
-  // }
-}
+export const getOrderData = async () => {
+  if (process.env.DEV_ENV !== "production") return generateMockOrderData();
+  try {
+    const response = await fetch(`${process.env.APP_URL}/orders/monthlyOrder`);
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
 
 export const getRevenueData = async () => {
-  return generateMockRevenueData(6)
-  // if(process.env.DEV_ENV!=="production") return generateDummyOrdersData(10)
-  // try {
-  //   const response = await fetch(
-  //     `${process.env.APP_URL}/orders`
-  //   );
-  //   if(response.ok) {
-  //     const data  = await response.json()
-  //     return data
-  //   } else {
-  //     return []
-  //   }
-  // } catch (error) {
-  //   console.log(error)
-  //   return []
-  // }
-}
-
-
-
+  if (process.env.DEV_ENV !== "production") return generateMockRevenueData(6);
+  try {
+    const response = await fetch(`${process.env.APP_URL}/orders/revenue`);
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};

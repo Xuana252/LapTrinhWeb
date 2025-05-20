@@ -34,6 +34,7 @@ export const fetchWards = async (id) => {
 };
 
 export const getCustomerAddresses = async (id) => {
+  return generateDummyCustomerAddresses(Math.floor(Math.random() * 4) + 1);
   if (process.env.DEV_ENV !== "production")
     return generateDummyCustomerAddresses(Math.floor(Math.random() * 4) + 1);
   try {

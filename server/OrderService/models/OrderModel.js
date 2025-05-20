@@ -1,13 +1,16 @@
 const mongoose = require("mongoose");
 
-const addressSchema = new mongoose.Schema({
-  province: { type: String, required: true },
-  district: { type: String, required: true },
-  ward: { type: String, required: true },
-  name: { type: String, required: true },
-  phone_number: { type: String, required: true },
-  detailed_address: { type: String, required: true },
-});
+const addressSchema = new mongoose.Schema(
+  {
+    province: { type: String, required: true },
+    district: { type: String, required: true },
+    ward: { type: String, required: true },
+    name: { type: String, required: true },
+    phone_number: { type: String, required: true },
+    detailed_address: { type: String, required: true },
+  },
+  { _id: false }
+);
 
 const orderItemSchema = new mongoose.Schema(
   {
@@ -28,19 +31,6 @@ const orderItemSchema = new mongoose.Schema(
   },
   { _id: false }
 );
-
-const addressSchema = new mongoose.Schema(
-  {
-    province: { type: String, required: true },
-    district: { type: String, required: true },
-    ward: { type: String, required: true },
-    name: { type: String, required: true },
-    phone_number: { type: String, required: true },
-    detailed_address: { type: String, required: true },
-  },
-  { _id: false }
-);
-
 
 const orderSchema = new mongoose.Schema(
   {
@@ -64,14 +54,12 @@ const orderSchema = new mongoose.Schema(
       enum: ["pending", "processing", "shipped", "delivered", "cancelled"],
       default: "pending",
     },
-<<<<<<< HEAD
+
     address: {
       type: addressSchema,
       required: true,
     },
-=======
-    address: [addressSchema],
->>>>>>> vinh
+
     payment_method: {
       type: String,
       required: true,

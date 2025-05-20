@@ -32,38 +32,17 @@ import { toastError, toastRequest, toastSuccess } from "@util/toaster";
 import { renderPaymentMethod } from "@util/render";
 
 const Payment = () => {
+  const session = useSelector((state) => state.session);
   const params = useSearchParams();
   const orderId = params.get("orderId");
-  const orderId_Zalo = params.get("apptransid");
   const router = useRouter();
-  const session = useSelector((state) => state.session);
-  const order = useSelector((state) => state.order);
+  const [order, setOrder] = useState(null);
   const reduxDispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
-  const [isSuccessful, setIsSuccessful] = useState(false);
   const [receipt, setReceipt] = useState({
     subtotal: 0,
-    discount: 0,
     total: 0,
   });
-
-  if (!orderId) router.replace("/");
-
-  useEffect(() => {
-    setIsSuccessful(true);
-    setIsLoading(false);
-    const subtotal =
-      order?.order_item?.reduce(
-        (acc, item) => acc + item.price * item.quantity,
-        0
-      ) || 0;
-
-    const total = subtotal;
-    setReceipt({
-      subtotal,
-      total,
-    });
-  }, []);
 
   const handleContinueShopping = async () => {
     setIsLoading(true);
@@ -73,6 +52,33 @@ const Payment = () => {
       router.push("/");
     }, 1000);
   };
+
+  const fetchOrder = async () => {
+    console.log(orderId)
+    setIsLoading(true);
+    getOrder(orderId).then((data) => {
+      if (data) {
+        console.log(data)
+        setOrder(data.user_id._id === session?.customer._id ? data : null);
+        const subtotal =
+          data?.order_item?.reduce(
+            (acc, item) => acc + item.price * item.quantity,
+            0
+          ) || 0;
+
+        const total = subtotal;
+        setReceipt({
+          subtotal,
+          total,
+        });
+      }
+      setIsLoading(false);
+    });
+  };
+
+  useEffect(() => {
+    fetchOrder();
+  }, []);
 
   if (isLoading)
     return (
@@ -85,27 +91,14 @@ const Payment = () => {
     <section className="size-full flex flex-col items-center gap-10 p-4">
       {/* Total review */}
       <div className="panel-1 flex flex-col gap-4 text-base w-full ">
-        {isSuccessful ? (
-          <>
-            <FontAwesomeIcon
-              icon={faCircleCheck}
-              className="text-6xl  transition-transform duration-200 scale-90 sm:scale-100 md:scale-110 my-4 text-green-500"
-            />
-            <h3 className="text-lg sm:text-xl md:text-3xl text-center text-green-500">
-              Thanks for your order!
-            </h3>
-          </>
-        ) : (
-          <>
-            <FontAwesomeIcon
-              icon={faCircleXmark}
-              className="text-6xl  transition-transform duration-200 scale-90 sm:scale-100 md:scale-110 my-4 text-red-500"
-            />
-            <h3 className="text-lg sm:text-xl md:text-3xl text-center text-red-500">
-              Unable to create order
-            </h3>
-          </>
-        )}
+        <FontAwesomeIcon
+          icon={faCircleCheck}
+          className="text-6xl  transition-transform duration-200 scale-90 sm:scale-100 md:scale-110 my-4 text-green-500"
+        />
+        <h3 className="text-lg sm:text-xl md:text-3xl text-center text-green-500">
+          Thanks for your order!
+        </h3>
+
         <h3 className="font-bold md:text-xl">Transaction date</h3>
         <h4 className="opacity-70">{formattedFullDate(new Date())}</h4>
         <Divider />
@@ -127,7 +120,7 @@ const Payment = () => {
         <Divider />
         <div className="flex flex-wrap items-center gap-2  justify-between">
           <h3 className="font-bold md:text-xl">Payment method</h3>
-          {renderPaymentMethod(order.payment_method)}
+          {renderPaymentMethod(order?.payment_method)}
         </div>
         <Divider />
 
@@ -135,8 +128,8 @@ const Payment = () => {
         <CollapsibleContainer
           content={
             <ul className="flex flex-col gap-4">
-              {order.order_item?.map((item) => (
-                <OrderItem key={item.product_id} orderItem={item} />
+              {order?.order_item?.map((item) => (
+                <OrderItem key={item.product_id._id} orderItem={item} />
               ))}
             </ul>
           }
@@ -160,7 +153,7 @@ const Payment = () => {
         <div className="flex flex-row justify-between items-center font-bold gap-4">
           <h3>Grand total</h3>
           <span className="font-bold text-lg">
-            {formattedPrice(receipt.total - 30000)}
+            {formattedPrice(receipt.total + 30000)}
           </span>
         </div>
 

@@ -148,13 +148,13 @@ const Payment = () => {
           </label>
           <label
             className=" py-4 gap-4 rounded-xl bg-surface my-2 flex flex-row justify-between  h-fit items-center px-4"
-            htmlFor="zalo"
+            htmlFor="zalopay"
           >
             <div className="flex flex-row gap-4 items-center">
               <RadioButton
                 name={"payment method"}
-                value={"zalo"}
-                checked={selectedOption === "zalo"}
+                value={"zalopay"}
+                checked={selectedOption === "zalopay"}
                 onChange={handleRadioSelectionChange}
               />
 

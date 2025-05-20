@@ -3,19 +3,20 @@
 import { generateDummyCustomerData } from "@util/generator/customer";
 
 export const getCustomer = async (id) => {
-  if (process.env.DEV_ENV !== "production") return generateDummyCustomerData(id);
-  try {
-    const response = await fetch(`${process.env.APP_URL}/customers/${id}`);
-    if (response.ok) {
-      const data = await response.json();
-      return data;
-    } else {
-      return {};
-    }
-  } catch (error) {
-    console.log(error);
-    return {};
-  }
+  return generateDummyCustomerData(id);
+  // if (process.env.DEV_ENV !== "production") return generateDummyCustomerData(id);
+  // try {
+  //   const response = await fetch(`${process.env.APP_URL}/customers/${id}`);
+  //   if (response.ok) {
+  //     const data = await response.json();
+  //     return data;
+  //   } else {
+  //     return {};
+  //   }
+  // } catch (error) {
+  //   console.log(error);
+  //   return {};
+  // }
 };
 
 export const patchCustomer = async (payload) => {

@@ -124,10 +124,6 @@ const ChatList = ({ selected, onSelect }) => {
   useEffect(() => {
     if (!socket) return;
 
-    socket.off(SOCKET_JOIN_CHANNEL.CUSTOMER_JOIN);
-    socket.off(SOCKET_JOIN_CHANNEL.CUSTOMER_LEAVE);
-    socket.off(SOCKET_INBOX_CHANNEL.GET_CONVERSATIONS);
-    socket.off(SOCKET_INBOX_CHANNEL.GET_MORE_CONVERSATIONS);
 
     socket.on(SOCKET_JOIN_CHANNEL.CUSTOMER_JOIN, ({ customer_id }) =>
       handleOnlineState(customer_id, true)

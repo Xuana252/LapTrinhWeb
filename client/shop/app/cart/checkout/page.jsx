@@ -54,7 +54,7 @@ const Checkout = () => {
   const session = useSelector((state) => state.session);
   const order = useSelector((state) => state.order);
 
-  console.log(order)
+  console.log(order);
   const router = useRouter();
 
   const [provinces, setProvinces] = useState();
@@ -73,7 +73,10 @@ const Checkout = () => {
       (acc, item) => acc + item.price * item.quantity,
       0
     ),
-    total: 0,
+    total: order?.order_item.reduce(
+      (acc, item) => acc + item.price * item.quantity,
+      0
+    ),
   });
 
   const [province, setProvince] = useState();
@@ -104,19 +107,19 @@ const Checkout = () => {
   };
 
   useEffect(() => {
-    setAddress((a) => ({ ...a, province: province?.name ||"" }));
+    setAddress((a) => ({ ...a, province: province?.name || "" }));
     setDistrict(null);
     getDistricts(province?.id || "");
   }, [province]);
 
   useEffect(() => {
-    setAddress((a) => ({ ...a, district: district?.name ||"" }));
+    setAddress((a) => ({ ...a, district: district?.name || "" }));
     setWard(null);
     getWards(district?.id || "");
   }, [district]);
 
   useEffect(() => {
-    setAddress((a) => ({ ...a, ward: ward?.name ||"" }));
+    setAddress((a) => ({ ...a, ward: ward?.name || "" }));
   }, [ward]);
 
   const getProvinces = async () => {
@@ -153,9 +156,9 @@ const Checkout = () => {
     getProvinces();
   }, []);
 
-  useEffect(()=> {
+  useEffect(() => {
     fetchAddress();
-  },[])
+  }, []);
 
   useEffect(() => {
     const total = receipt.subtotal - receipt.discount;
@@ -177,13 +180,13 @@ const Checkout = () => {
     // Dispatch the shipping address to Redux
     reduxDispatch(
       setOrderAddress({
-        address: {  
-            name: checkoutAddress.name,
-            phone_number: checkoutAddress.phone_number,
-            detailed_address: checkoutAddress.detailed_address,
-            province:  checkoutAddress.province,
-            district: checkoutAddress.district,
-            ward: checkoutAddress.ward,
+        address: {
+          name: checkoutAddress.name,
+          phone_number: checkoutAddress.phone_number,
+          detailed_address: checkoutAddress.detailed_address,
+          province: checkoutAddress.province,
+          district: checkoutAddress.district,
+          ward: checkoutAddress.ward,
         },
       })
     );
@@ -260,7 +263,9 @@ const Checkout = () => {
             <InputBox
               value={address.detailed_address}
               name={"Specific address *"}
-              onChange={(s) => setAddress((a) => ({ ...a, detailed_address: s }))}
+              onChange={(s) =>
+                setAddress((a) => ({ ...a, detailed_address: s }))
+              }
             />
           </div>
 
@@ -314,7 +319,7 @@ const Checkout = () => {
                       </h4>
                       <h3 className="opacity-50">{item.detailed_address}</h3>
                       <h3 className="opacity-50">
-                        {[item.ward, item.district, item.city].join(", ")}
+                        {[item.ward, item.district, item.province].join(", ")}
                       </h3>
                     </div>
                   </label>
@@ -341,10 +346,6 @@ const Checkout = () => {
           <div className="flex flex-row justify-between items-center gap-4">
             <h3 className="opacity-70">Subtotal</h3>
             <span className="">{formattedPrice(receipt.subtotal)}</span>
-          </div>
-          <div className="flex flex-row justify-between items-center gap-4">
-            <h3 className="opacity-70">Discount</h3>
-            <span>{formattedPrice(receipt.discount)}</span>
           </div>
 
           <Divider />

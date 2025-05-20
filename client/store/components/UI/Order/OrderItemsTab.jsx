@@ -1,3 +1,4 @@
+import OrderItem from "../OrderItem";
 import ProductCard from "../Product/ProductCard";
 
 const OrderItemTab = ({orderItems, isLoading}) => {
@@ -9,9 +10,9 @@ const OrderItemTab = ({orderItems, isLoading}) => {
       <div className="space-y-3">
         {isLoading
           ? Array.from({length:3}).map((_, index) => (
-              <ProductCard loading={isLoading} key={index} />
+              <OrderItem loading={isLoading} key={index} />
             ))
-          : orderItems.map((item,index) => <ProductCard product={item.product_id} key={index}/>)}
+          : orderItems.map((item,index) => <OrderItem orderItem={item} key={index}/>)}
       </div>
     </div>
   );

@@ -20,7 +20,7 @@ import { io } from "@node_modules/socket.io-client/build/esm";
 import { formattedDateTime } from "@util/format";
 import { SOCKET_INBOX_CHANNEL } from "@components/socket/socket";
 
-const SupportChatBox = () => {
+const SupportChat = () => {
   const session = useSelector((state) => state.session);
 
   const MESSAGE_LIMIT = 20;
@@ -58,10 +58,6 @@ const SupportChatBox = () => {
 
   useEffect(() => {
     if (!socket) return;
-
-    socket.off(SOCKET_INBOX_CHANNEL.SEEN_MESSAGE);
-    socket.off(SOCKET_INBOX_CHANNEL.GET_MESSAGES);
-    socket.off(SOCKET_INBOX_CHANNEL.GET_MORE_MESSAGES);
 
     socket.on(SOCKET_INBOX_CHANNEL.SEEN_MESSAGE, ({ isCustomer }) => {
       !isCustomer && setIsSeen(true);
@@ -264,4 +260,4 @@ const SupportChatBox = () => {
   );
 };
 
-export default SupportChatBox;
+export default SupportChat;

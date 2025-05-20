@@ -1,6 +1,7 @@
+"use client";
 import { SOCKET_NOTIFICATION_CHANNEL } from "@components/socket/socket";
 import useSocket from "@components/socket/useSocket";
-import { faBell } from "@node_modules/@fortawesome/free-solid-svg-icons";
+import { faBell, faClose } from "@node_modules/@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@node_modules/@fortawesome/react-fontawesome";
 import { useSelector } from "@node_modules/react-redux/dist/react-redux";
 import { toastNotification, toastRequest, toastSuccess } from "@util/toaster";
@@ -12,6 +13,7 @@ import {
   readNotification,
   fetchNotification,
 } from "@service/notification";
+import NotificationButton from "./NotificationButton";
 
 const Notification = () => {
   const session = useSelector((state) => state.session);
@@ -101,12 +103,8 @@ const Notification = () => {
   useEffect(() => {
     if (!socket) return;
 
-    socket.off(SOCKET_NOTIFICATION_CHANNEL.GET_NOTIFICATIONS);
     socket.on(SOCKET_NOTIFICATION_CHANNEL.GET_NOTIFICATIONS, (data) => {
-      console.log("toast fired for:", data);
-      // toastSuccess("hello")
       toastNotification(data);
-
       setUnreadCount((prev) => prev + 1);
       setNotification((prev) => [data, ...prev]);
     });
@@ -117,24 +115,19 @@ const Notification = () => {
   }, [socket]);
 
   return (
-    <div className="relative flex items-center justify-center">
-      <button className="relative" onClick={() => setIsOpen((prev) => !prev)}>
-        <FontAwesomeIcon icon={faBell} />
-
-        {unreadCount > 0 && (
-          <div className=" absolute size-4 rounded-full bg-primary-variant text-on-primary text-xs flex items-center justify-center font-bold top-0 left-full -translate-x-1/2">
-            {unreadCount}
-          </div>
-        )}
-      </button>
-
-      {isOpen && (
-        <div className="absolute top-[100%] right-0 flex flex-col gap-2 bg-secondary/80 text-base shadow-sm p-1 rounded z-50">
+    <>
+      {isOpen ? (
+        <div className="fixed bottom-0 left-0 m-2 flex flex-col gap-2 bg-secondary/80 text-base text-on-secondary shadow-sm p-1 rounded z-50">
           <div className="flex flex-row gap-1 items-center justify-between px-2">
             <span className="text-lg font-semibold">Notification</span>
-            <button className="text-sm " onClick={handleClearAll}>
-              Clear
-            </button>
+            <div className="flex flex-row gap-2 items-center ">
+              <button className="text-sm " onClick={handleClearAll}>
+                Clear
+              </button>
+              <button onClick={() => setIsOpen(false)}>
+                <FontAwesomeIcon icon={faClose} />
+              </button>
+            </div>
           </div>
           <ul className="max-w-[400px] max-h-[300px] overflow-y-auto w-full flex flex-col gap-1 min-w-[300px] bg-secondary rounded p-1">
             {notification.map((noti) => (
@@ -156,8 +149,13 @@ const Notification = () => {
             )}
           </ul>
         </div>
+      ) : (
+        <NotificationButton
+          onClick={() => setIsOpen(true)}
+          unread={unreadCount}
+        />
       )}
-    </div>
+    </>
   );
 };
 

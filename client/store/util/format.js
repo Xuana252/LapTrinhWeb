@@ -99,3 +99,45 @@ export const formattedDateTime = (dateString) => {
   return `${month}/${day}/${year} ${hours}:${minutes}`;
 };
 
+export const normalizeVietnameseAddressNoMark = (ward, district, province) => {
+  const removeDiacritics = (str) =>
+    str
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/đ/g, "d")
+      .replace(/Đ/g, "D");
+
+  const removeLeadingPrefix = (str) => {
+    const prefixes = [
+      "Phường",
+      "P.",
+      "Xã",
+      "Thị trấn",
+      "Thị xã",
+      "Quận",
+      "Q.",
+      "Huyện",
+      "TP.",
+      "Thành phố",
+      "Tỉnh",
+      "Thành phố trực thuộc Trung ương",
+    ];
+
+    const regex = new RegExp(
+      `^(${prefixes.join("|")})\\s+`,
+      "i"
+    );
+    return str.replace(regex, "").trim();
+  };
+
+  const parts = [ward, district, province]
+    .filter(Boolean)
+    .map((part) => {
+      const trimmed = part.trim();
+      const noPrefix = removeLeadingPrefix(trimmed);
+      const noMark = removeDiacritics(noPrefix);
+      return noMark;
+    });
+
+  return parts.join(", ");
+};

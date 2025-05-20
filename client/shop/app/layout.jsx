@@ -7,10 +7,11 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import "leaflet/dist/leaflet.css";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 
-import SupportChatBox from "@components/Chat/SupportChatBox";
+import SupportChat from "@components/Chat/SupportChat";
 import ThemeProvider from "@components/theme/ThemeProvider";
 import Providers from "@provider/ReduxProvider";
 import useSyncSession from "@provider/redux/useSyncSession";
+import Notification from "@components/Notification/Notification";
 
 config.autoAddCss = false;
 
@@ -38,7 +39,8 @@ export default function RootLayout({ children }) {
                 </div>
               </div>
               <Footer />
-              <SupportChatBox />
+              <SupportChat />
+              <Notification />
             </div>
             <Toaster richColors position="bottom-right" />
           </Providers>
