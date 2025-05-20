@@ -118,7 +118,7 @@ body {
     @apply order-state bg-green-500;
   }
 
-  .confirmed {
+  .processing {
     @apply order-state bg-black;
   }
   .cancelled {

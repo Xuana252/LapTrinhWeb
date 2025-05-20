@@ -3,7 +3,7 @@ import { generateDummyProductData } from "./product";
 
 const ORDER_STATUS = [
   "pending",
-  "confirmed",
+  "processing",
   "shipped",
   "delivered",
   "cancelled",
@@ -51,7 +51,8 @@ export const generateDummyOrderData = () => {
   const dummyOrder = {
     _id: "order_" + Math.round(Math.random() * 1000).toString(),
     user_id: dummyCustomer,
-    order_status: "shipped" || ORDER_STATUS[Math.floor(Math.random() * ORDER_STATUS.length)],
+    order_status:
+      ORDER_STATUS[Math.floor(Math.random() * ORDER_STATUS.length)],
     payment_method:
       PAYMENT_METHOD[Math.floor(Math.random() * PAYMENT_METHOD.length)],
     total_price: dummyOrderItems.reduce(

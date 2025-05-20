@@ -44,7 +44,7 @@ export const renderStatus = (status) => {
       return <div className="delivered">{status}</div>;
     case "cancelled":
       return <div className="cancelled">{status}</div>;
-    case "confirmed":
-      return <div className="confirmed">{status}</div>;
+    case "processing":
+      return <div className="processing">{status}</div>;
   }
 };

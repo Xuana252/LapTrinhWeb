@@ -39,7 +39,7 @@ const OrderTag = ({ order, loading, onReorder, onCancel }) => {
             Reorder
           </button>
         );
-      case "confirmed":
+      case "processing":
         return (
           <Link href={`/tracking?orderId=${order._id}`}>
             <button className="button-variant-2">Track</button>

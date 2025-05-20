@@ -77,7 +77,7 @@ const RoutingMachine = ({ toCoords, status }) => {
     routingControl.on("routesfound", (e) => {
       const coords = e.routes[0].coordinates;
       let midIndex;
-      if (["pending", "cancelled", "confirmed"].includes(status)) {
+      if (["pending", "cancelled", "processing"].includes(status)) {
         midIndex = 0; // starting point
       } else if (status === "delivered") {
         midIndex = coords.length - 1; // destination point

@@ -20,7 +20,7 @@ const CustomerOrdersTab = ({ id }) => {
   const viewItems = [
     "All",
     "Pending",
-    "Confirmed",
+    "Processing",
     "Shipping",
     "Delivered",
     "Cancelled",
@@ -30,7 +30,7 @@ const CustomerOrdersTab = ({ id }) => {
   const fetchCustomerOrders = () => {
     setIsLoading(true);
     getCustomerOrders(id).then((data) => {
-      const sortedOrders = data.sort(
+      const sortedOrders = data.data.sort(
         (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
       );
 

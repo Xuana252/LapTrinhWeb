@@ -26,23 +26,22 @@ export default function FilterButton({
       onBlur={() => setIsSelecting(false)}
       className="relative font-mono"
     >
-      <div className="flex flex-row items-center p-1 rounded-md bg-on-primary/20 border-secondary-1 border-2 w-fit">
+      <div className="grid grid-cols-[auto_1fr] gap-1 items-center p-1 rounded-md bg-on-primary/20 border-secondary-1 border-2 w-auto">
         {name && (
           <>
             <div
               className="text-sm max-w-[100px] whitespace-nowrap  overflow-hidden text-ellipsis"
               title={name}
             >
-              {name}
-            </div>{" "}
-            {": "}
+              {name} {": "}
+            </div>
           </>
         )}
         <button
-          className="ml-1 grid grid-cols-[1fr_auto] bg-secondary-variant text-on-secondary rounded-md p-[2px] text-sm "
+          className="grid grid-cols-[1fr_auto] bg-secondary-variant text-on-secondary rounded-md px-2 py-1 gap-1 text-sm "
           onClick={() => setIsSelecting((prev) => !prev)}
         >
-          <div className="p-[2px] items-center flex justify-center">
+          <div className=" items-center flex justify-center">
             {option[selectedIndex]?.text}
           </div>
           <div className="flex items-center justify-center aspect-square h-full rounded-md bg-accent text-secondary-1">

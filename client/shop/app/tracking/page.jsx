@@ -7,7 +7,9 @@ const Map = dynamic(() => import("@/components/UI/Map"), {
 import InputBox from "@components/Input/InputBox";
 import OrderItem from "@components/UI/OrderItem";
 import {
+  faCancel,
   faCircleCheck,
+  faCircleXmark,
   faCreditCard,
   faHouse,
   faMoneyBill,
@@ -77,13 +79,19 @@ export default function Tracking() {
         <div className="relative  w-full flex flex-col gap-2">
           <ul className="flex flex-row items-center justify-between ">
             <li className="relative flex items-center justify-center rounded-full size-4 md:size-6 bg-on-background">
-              {["pending", "cancelled"].includes(order?.order_status) && (
+              {order?.order_status === "cancelled" && (
+                <span className="bg-background rounded-full size-2 md:size-3 absolute"></span>
+              )}
+            </li>
+              <li className="grow border-t-4 border-on-background"></li>
+            <li className="relative flex items-center justify-center rounded-full size-4 md:size-6 bg-on-background">
+              {order?.order_status === "pending" && (
                 <span className="bg-background rounded-full size-2 md:size-3 absolute"></span>
               )}
             </li>
             <li className="grow border-t-4 border-on-background"></li>
             <li className="relative flex items-center justify-center rounded-full size-4 md:size-6 bg-on-background">
-              {order?.order_status === "confirmed" && (
+              {order?.order_status === "processing" && (
                 <span className="bg-background rounded-full size-2 md:size-3 absolute"></span>
               )}
             </li>
@@ -101,6 +109,9 @@ export default function Tracking() {
             </li>
           </ul>
           <ul className="flex flex-row items-center justify-between text-xl">
+            <li>
+              <FontAwesomeIcon icon={faCircleXmark} />
+            </li>
             <li>
               <FontAwesomeIcon icon={faSpinner} />
             </li>

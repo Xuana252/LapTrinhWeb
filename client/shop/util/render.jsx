@@ -38,13 +38,16 @@ export const renderStatus = (status) => {
   switch (status) {
     case "pending":
       return <div className="pending">{status}</div>;
-    case "shipped":
-      return <div className="shipped">{status}</div>;
+    case "processing":
+      return <div className="processing">{status}</div>;
     case "delivered":
       return <div className="delivered">{status}</div>;
     case "cancelled":
       return <div className="cancelled">{status}</div>;
-    case "confirmed":
-      return <div className="confirmed">{status}</div>;
+    case "shipped":
+      return <div className="shipped">{status}</div>;
+      default: 
+      console.log(status)
+      return <div className=""></div>
   }
 };
