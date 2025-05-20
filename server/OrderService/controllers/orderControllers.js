@@ -4,10 +4,43 @@ const Product = require("../models/ProductModel");
 const asyncHandler = require("express-async-handler");
 
 const getOrder = asyncHandler(async (req, res) => {
-  const orders = await Order.find()
+  const {
+    page = 1,
+    limit = 10,
+    orderStatus,
+    sortBy = "createdAt",
+    sortOrder = -1,
+  } = req.query;
+
+  // Tạo bộ lọc (filter) động
+  const filter = {};
+  if (orderStatus) {
+    filter.order_status = orderStatus;
+  }
+
+  // Tính offset phân trang
+  const skip = (page - 1) * limit;
+
+  // Tạo object sắp xếp
+  const sortOptions = {
+    [sortBy]: Number(sortOrder),
+  };
+
+  // Fetch dữ liệu với filter, sort và phân trang
+  const orders = await Order.find(filter)
+    .sort(sortOptions)
+    .skip(skip)
+    .limit(parseInt(limit))
     .populate("user_id", "-password")
     .populate("order_item.product_id");
-  res.status(200).json(orders);
+
+  // Đếm tổng số order (phục vụ tính tổng trang)
+  const count = await Order.countDocuments(filter);
+
+  res.status(200).json({
+    count: count,
+    orders,
+  });
 });
 
 const getUserOrder = asyncHandler(async (req, res) => {
@@ -34,7 +67,7 @@ const changeOrderStatus = asyncHandler(async (req, res) => {
 
 const addOrder = asyncHandler(async (req, res) => {
   const order = Order.create(req.body);
-  res.status(200).json(order);
+  res.status(200).json(order,{ message: "thêm order thành công" });
 });
 
 const deleteOrder = asyncHandler(async (req, res) => {
@@ -52,12 +85,22 @@ const getMonthlyRevenue = asyncHandler(async (req, res) => {
   const start = new Date(year, month - 1, 1);
   const end = new Date(year, month);
 
-  const orders = await Order.find({
-    createdAt: { $gte: start, $lt: end },
-    order_status: "delivered",
-  }).select("total_price");
+  const revenueResult = await Order.aggregate([
+    {
+      $match: {
+        createdAt: { $gte: start, $lt: end },
+        order_status: "delivered",
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        totalRevenue: { $sum: "$total_price" },
+      },
+    },
+  ]);
 
-  const revenue = orders.reduce((sum, order) => sum + order.total_price, 0);
+  const revenue = revenueResult[0]?.totalRevenue || 0;
   res.status(200).json({ revenue });
 });
 
@@ -76,12 +119,48 @@ const getYearlyRevenue = asyncHandler(async (req, res) => {
 });
 
 const getRevenue = asyncHandler(async (req, res) => {
-  const orders = await Order.find({
-    order_status: "delivered",
-  }).select("total_price");
+  const revenueResult = await Order.aggregate([
+    {
+      $group: {
+        _id: null,
+        totalRevenue: { $sum: "$total_price" },
+      },
+    },
+  ]);
 
-  const revenue = orders.reduce((sum, order) => sum + order.total_price, 0);
+  const revenue = revenueResult[0]?.totalRevenue || 0;
   res.status(200).json({ revenue });
+});
+
+const getMonthlyOrder = asyncHandler(async (req, res) => {
+  const now = new Date();
+  const startofDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const endofDay = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+  const todayOrderCount = await Order.countDocuments({
+    createdAt: {
+      $gte: startofDay,
+      $lt: endofDay,
+    },
+  });
+  const status = ["pending", "processing", "shipped", "delivered", "cancelled"];
+  const result = [];
+  for (let i = 0; i < status.length; i++) {
+    result[i] = await Order.countDocuments({
+      order_status: status[i],
+    });
+  }
+  const totalOrder = await Order.countDocuments();
+  res
+    .status(200)
+    .json({
+      totalOrder,
+      todayOrderCount,
+      pendingOrder: result[0],
+      processingOrder: result[1],
+      shippedgOrder: result[2],
+      deliveredOrder: result[3],
+      cancelledOrder: result[4],
+    });
 });
 
 module.exports = {
@@ -93,4 +172,5 @@ module.exports = {
   getMonthlyRevenue,
   getYearlyRevenue,
   getRevenue,
+  getMonthlyOrder
 };
