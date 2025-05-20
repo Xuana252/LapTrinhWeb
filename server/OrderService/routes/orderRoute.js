@@ -1,21 +1,28 @@
-const express=require('express');
-const router=express.Router();
-const {getOrder,getUserOrder,changeOrderStatus,addOrder,deleteOrder, getRevenue, getMonthlyRevenue, getYearlyRevenue}=require('../controllers/orderControllers')
+const express = require("express");
+const router = express.Router();
+const {
+  getOrder,
+  getUserOrder,
+  changeOrderStatus,
+  addOrder,
+  deleteOrder,
+  getRevenue,
+  getMonthlyRevenue,
+  getYearlyRevenue,
+  getMonthlyOrder,
+} = require("../controllers/orderControllers");
 
-router.get('/',getOrder);
+// 1. Route cụ thể nên đặt trước
+router.get("/revenue/total", getRevenue);
+router.get("/revenue/month", getMonthlyRevenue);
+router.get("/revenue/year", getYearlyRevenue);
+router.get("/monthlyOrder", getMonthlyOrder);
 
-router.get('/:userId',getUserOrder)
+// 2. Route không cụ thể
+router.get("/", getOrder);
+router.get("/:userId", getUserOrder);
+router.post("/", addOrder);
+router.patch("/:orderId", changeOrderStatus);
+router.delete("/:orderId", deleteOrder);
 
-router.post('/',addOrder)
-
-router.patch('/:orderId',changeOrderStatus)
-
-router.delete('/:orderId',deleteOrder)
-
-router.get('/revenue/total',getRevenue)
-
-router.get('/revenue/month',getMonthlyRevenue)
-
-router.get('/revenue/year',getYearlyRevenue)
-
-module.exports=router
+module.exports = router;

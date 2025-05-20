@@ -1,5 +1,14 @@
 const mongoose = require("mongoose");
 
+const addressSchema = new mongoose.Schema({
+  province: { type: String, required: true },
+  district: { type: String, required: true },
+  ward: { type: String, required: true },
+  name: { type: String, required: true },
+  phone_number: { type: String, required: true },
+  detailed_address: { type: String, required: true },
+});
+
 const orderItemSchema = new mongoose.Schema(
   {
     product_id: {
@@ -43,7 +52,7 @@ const orderSchema = new mongoose.Schema(
     order_item: {
       type: [orderItemSchema],
       required: true,
-      validate: [arr => arr.length > 0, "Order must have at least one item"],
+      validate: [(arr) => arr.length > 0, "Order must have at least one item"],
     },
     total_price: {
       type: Number,
@@ -55,10 +64,14 @@ const orderSchema = new mongoose.Schema(
       enum: ["pending", "processing", "shipped", "delivered", "cancelled"],
       default: "pending",
     },
+<<<<<<< HEAD
     address: {
       type: addressSchema,
       required: true,
     },
+=======
+    address: [addressSchema],
+>>>>>>> vinh
     payment_method: {
       type: String,
       required: true,

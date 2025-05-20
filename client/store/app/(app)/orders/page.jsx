@@ -31,6 +31,10 @@ const Order = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
+  const [dateSort,setDateSort]=useState(0);
+  const [revenueSort,setRevenueSort]=useState(0)
+  const [orderStatus,setOrderStatus]=useState("")
+
 
   const fetchOrders = async () => {
     setIsLoading(true);
@@ -47,7 +51,7 @@ const Order = () => {
 
   useEffect(() => {
     fetchOrders();
-  }, []);
+  }, [dateSort,revenueSort,orderStatus,page]);
 
   return (
     <div className="gap-4 flex flex-col">
@@ -87,6 +91,7 @@ const Order = () => {
               { text: "Delivered", value: "delivered", icon: faBoxOpen },
               { text: "Cancelled", value: "cancelled", icon: faTimesCircle },
             ]}
+            onChange={setOrderStatus}
           />
           <FilterButton
             name={"Create Date"}
@@ -96,6 +101,7 @@ const Order = () => {
               { text: "Oldest", value: 1, icon: faArrowDownAZ },
               { text: "Latest", value: -1, icon: faArrowUpAZ },
             ]}
+            onChange={setDateSort}
           />
           <FilterButton
             name={"Total Price"}
@@ -105,6 +111,7 @@ const Order = () => {
               { text: "Desc", value: -1, icon: faSortNumericDesc },
               { text: "Asc", value: 1, icon: faSortNumericAsc },
             ]}
+            onChange={setRevenueSort}
           />
         </div>
       </div>
