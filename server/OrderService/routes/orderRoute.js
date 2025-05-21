@@ -8,14 +8,12 @@ const {
   deleteOrder,
   getRevenue,
   getMonthlyRevenue,
-  getYearlyRevenue,
   getMonthlyOrder,
 } = require("../controllers/orderControllers");
 
 // 1. Route cụ thể nên đặt trước
 router.get("/revenue/total", getRevenue);
 router.get("/revenue/month", getMonthlyRevenue);
-router.get("/revenue/year", getYearlyRevenue);
 router.get("/monthlyOrder", getMonthlyOrder);
 
 // 2. Route không cụ thể
