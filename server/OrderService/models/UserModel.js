@@ -10,7 +10,6 @@ const addressSchema = new mongoose.Schema(
     phone_number: { type: String, required: true },
     detailed_address: { type: String, required: true },
   },
-  { _id: false }
 );
 
 const cartItemSchema = new mongoose.Schema(

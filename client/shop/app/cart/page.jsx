@@ -103,7 +103,7 @@ const Cart = () => {
   };
 
   const handleRemoveItem = async (id) => {
-    console.log(session.customer._id, id)
+ 
     deleteCartItem(session.customer._id, id).then((result) => {
       if (result) {
         const newCart = cartItems.filter((item) => item.product_id._id !== id);

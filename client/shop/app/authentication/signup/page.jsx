@@ -11,18 +11,13 @@ import { toastError, toastSuccess, toastWarning } from "@util/toaster";
 import { signIn } from "@node_modules/next-auth/react";
 import { FontAwesomeIcon } from "@node_modules/@fortawesome/react-fontawesome";
 import { faSpinner } from "@node_modules/@fortawesome/free-solid-svg-icons";
-import validator from 'validator';
-
+import validator from "validator";
 
 export default function SignUp() {
   const [isLoading, setIsLoading] = useState(false);
   const [newAccount, setNewAccount] = useState({
-    firstname: "",
-    lastname: "",
-    gender: "Male",
-    birthdate: "",
     username: "",
-    phonenumber: "",
+    phone_number: "",
     email: "",
     password: "",
     repeatpassword: "",
@@ -35,14 +30,11 @@ export default function SignUp() {
     // Validate fields
 
     if (
-      !newAccount.firstname ||
-      !newAccount.lastname ||
       !newAccount.username ||
-      !newAccount.phonenumber ||
+      !newAccount.phone_number ||
       !newAccount.email ||
       !newAccount.password ||
-      !newAccount.repeatpassword ||
-      !newAccount.birthdate
+      !newAccount.repeatpassword
     ) {
       toastWarning("Please fill out all fields!");
       return;
@@ -51,7 +43,7 @@ export default function SignUp() {
       toastWarning("Invalid email!");
       return;
     }
-    if(newAccount.phonenumber.trim().length!=10) {
+    if (newAccount.phone_number.trim().length != 10) {
       toastWarning("Phone number must be at least 10 digits long!");
       return;
     }
@@ -67,15 +59,10 @@ export default function SignUp() {
     }
 
     const signUpData = {
-      account: {
-        email: newAccount.email,
-        password: newAccount.password,
-      },
+      email: newAccount.email,
+      password: newAccount.password,
       username: newAccount.username.trim().replace(" ", "_"),
-      full_name: `${newAccount.firstname} ${newAccount.lastname}`,
-      phone_number: newAccount.phonenumber,
-      male: newAccount.gender === "Male", // Convert "Male" to true, "Female" to false
-      birth_date: new Date(newAccount.birthdate.split("-").reverse().join("-")).toISOString(), // Convert DD-MM-YYYY to YYYY-MM-DD
+      phone_number: newAccount.phone_number,
     };
 
     setIsLoading(true);
@@ -98,11 +85,11 @@ export default function SignUp() {
         }
       } catch (e) {
         console.log(e);
-        setIsLoading(false)
+        setIsLoading(false);
       }
     } else {
       toastError("Signed up failed! Pleased try again");
-      setIsLoading(false)
+      setIsLoading(false);
     }
   };
 
@@ -115,55 +102,6 @@ export default function SignUp() {
         <h1 className="text-5xl font-bold text-right">Sign up</h1>
 
         <div className="flex flex-col gap-10 bg-inherit">
-          <div className="flex md:flex-row flex-col gap-10 bg-inherit">
-            <InputBox
-              value={newAccount.firstname}
-              onChange={(v) =>
-                setNewAccount((prev) => ({ ...prev, firstname: v }))
-              }
-              name={"first name"}
-            />
-            <InputBox
-              value={newAccount.lastname}
-              onChange={(v) =>
-                setNewAccount((prev) => ({ ...prev, lastname: v }))
-              }
-              name={"last name"}
-            />
-          </div>
-          <div className="flex md:flex-row flex-col gap-10 bg-inherit items-center">
-            <div className="flex flex-row gap-4">
-              <label className="flex gap-2 items-center" htmlFor="Male">
-                <RadioButton
-                  name={"gender"}
-                  value={"Male"}
-                  checked={newAccount.gender === "Male"}
-                  onChange={() =>
-                    setNewAccount((prev) => ({ ...prev, gender: "Male" }))
-                  }
-                />
-                <span>Male</span>
-              </label>
-              <label className="flex gap-2 items-center" htmlFor="Female">
-                <RadioButton
-                  name={"gender"}
-                  value={"Female"}
-                  checked={newAccount.gender === "Female"}
-                  onChange={() =>
-                    setNewAccount((prev) => ({ ...prev, gender: "Female" }))
-                  }
-                />
-                <span>Female</span>
-              </label>
-            </div>
-            <DatePicker
-              name={"birth date"}
-              value={newAccount.birthdate}
-              onChange={(v) =>
-                setNewAccount((prev) => ({ ...prev, birthdate: v }))
-              }
-            />
-          </div>
           <InputBox
             value={newAccount.username}
             onChange={(v) =>
@@ -173,9 +111,9 @@ export default function SignUp() {
           />
           <PhoneInput
             maxLength={10}
-            value={newAccount.phonenumber}
+            value={newAccount.phone_number}
             onChange={(v) =>
-              setNewAccount((prev) => ({ ...prev, phonenumber: v }))
+              setNewAccount((prev) => ({ ...prev, phone_number: v }))
             }
             name={"phone number"}
           />
