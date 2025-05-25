@@ -12,7 +12,7 @@ import DropDownButton from "@components/Input/DropDownButton";
 import InputBox from "@components/Input/InputBox";
 import PhoneInput from "@components/Input/PhoneInput";
 import Divider from "@components/UI/Layout/Divider";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSession } from "@node_modules/next-auth/react";
 import { toastError, toastSuccess, toastWarning } from "@util/toaster";
 import { FontAwesomeIcon } from "@node_modules/@fortawesome/react-fontawesome";
@@ -27,8 +27,10 @@ const Address = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isUpdatingAddresses, setIsUpdatingAddresses] = useState("");
   const [addresses, setAddresses] = useState([]);
+  const fetchFlag = useRef(true);
 
   const [newAddress, setNewAddress] = useState({
+    _id: "",
     name: "",
     phone_number: "",
     detailed_address: "",
@@ -62,22 +64,19 @@ const Address = () => {
     return false;
   };
   const deleteAddress = (id) => {
-    deleteCustomerAddress(session.customer.customer_id, id).then(
-      (data) => {
-        if (data) {
-          toastSuccess("Address deleted");
-          setAddresses(
-            addresses.filter((address) => address.address_id !== id)
-          );
-        } else {
-          toastError("Failed to delete address");
-        }
+    deleteCustomerAddress(session.customer._id, id).then((data) => {
+      if (data) {
+        toastSuccess("Address deleted");
+        setAddresses(addresses.filter((address) => address._id !== id));
+      } else {
+        toastError("Failed to delete address");
       }
-    );
+    });
   };
   const addAddress = () => {
+    if (!session?.customer?._id) return;
     const payload = {
-      detailed_address: newAddress.address,
+      detailed_address: newAddress.detailed_address,
       province: province.name,
       district: district.name,
       ward: ward.name,
@@ -85,10 +84,10 @@ const Address = () => {
       phone_number: newAddress.phone_number,
     };
     setIsUpdatingAddresses("");
-    postCustomerAddress(session.customer.customer_id, payload).then((data) => {
+    postCustomerAddress(session.customer._id, payload).then((data) => {
       if (data) {
         toastSuccess("Address added");
-        setAddresses((prev) => [...prev, data]);
+        setAddresses((prev) => [ data,...prev]);
       } else {
         toastError("Failed to add address");
       }
@@ -96,16 +95,19 @@ const Address = () => {
   };
 
   const updateAddress = (id) => {
+    if (!session?.customer?._id) return;
+
     const payload = {
-      detailed_address: newAddress.address,
+      _id: id,
+      detailed_address: newAddress.detailed_address,
       province: province.name,
       district: district.name,
       ward: ward.name,
-      name: newAddress.full_name,
+      name: newAddress.name,
       phone_number: newAddress.phone_number,
     };
     setIsUpdatingAddresses("");
-    patchCustomerAddress(session.customer.customer_id, payload).then((data) => {
+    patchCustomerAddress(session.customer._id, payload).then((data) => {
       if (data) {
         toastSuccess("Address updated");
         setAddresses(
@@ -120,7 +122,7 @@ const Address = () => {
   };
   const fetchAddress = () => {
     setIsLoading(true);
-    getCustomerAddresses(session.customer?.customer_id).then((data) => {
+    getCustomerAddresses(session.customer?._id).then((data) => {
       setAddresses(data);
     });
 
@@ -170,10 +172,15 @@ const Address = () => {
   };
 
   useEffect(() => {
-    if (!session.isAuthenticated) return;
-    getProvinces();
-    fetchAddress();
+    if (session?.customer?._id && fetchFlag.current) {
+      fetchAddress();
+      fetchFlag.current = false;
+    }
   }, [session]);
+
+  useEffect(() => {
+    getProvinces();
+  }, []);
 
   useEffect(() => {
     if (!isUpdatingAddresses) {
@@ -184,7 +191,7 @@ const Address = () => {
       setDistrict(null);
       setWard(null);
       setNewAddress({
-        id: "",
+        _id: "",
         name: "",
         phone_number: "",
         detailed_address: "",
@@ -206,7 +213,7 @@ const Address = () => {
 
   const handleUpdateAddress = () => {
     if (checkEmptyInput()) return;
-    updateAddress(newAddress.address_id);
+    updateAddress(newAddress._id);
     setIsUpdatingAddresses("");
   };
 

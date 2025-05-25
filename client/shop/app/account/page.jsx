@@ -19,24 +19,18 @@ import {
   useSelector,
 } from "@node_modules/react-redux/dist/react-redux";
 import { updateSession } from "@provider/redux/session/sessionSlice";
+import { upload } from "@util/generator/uploader";
 
 const Account = () => {
   const dispatch = useDispatch();
   const session = useSelector((state) => state.session);
+  const fetchFlag = useRef(true);
   const [customer, setCustomer] = useState();
   const [image, setImage] = useState({ name: "", url: "" });
   const imagePicker = useRef(null);
-  const handleRadioSelectionChange = (value) => {
-    setGender(value);
-  };
 
   const checkEmptyInput = () => {
-    if (
-      !customer.full_name.trim() ||
-      !customer.phone_number.trim() ||
-      !customer.username.trim() ||
-      !customer.birth_date.trim()
-    ) {
+    if (!customer.phone_number.trim() || !customer.username.trim()) {
       toastWarning("Please fill out all field");
       return true;
     }
@@ -44,17 +38,15 @@ const Account = () => {
   };
 
   const handleEditCustomer = async () => {
-    console.log(image);
+    if (!session?.customer?._id) return;
     if (checkEmptyInput()) return;
+    const imageUrl = await upload(image.url, session?.customer?._id);
     const payload = {
       username: customer.username,
       phone_number: customer.phone_number,
-      image: {
-        name: image.name,
-        url: image.url,
-      },
+      image: imageUrl,
     };
-    patchCustomer(payload).then((data) => {
+    patchCustomer(session.customer._id, payload).then((data) => {
       if (data) {
         console.log(data);
         dispatch(
@@ -70,13 +62,20 @@ const Account = () => {
   };
 
   const fetchUser = () => {
-    setImage({ name: "user", url: session.customer?.image });
-    setCustomer(session.customer);
+    getCustomer(session?.customer?._id).then((data) => {
+      if (data) {
+        setImage({ name: data._id, url: data.image });
+        setCustomer(data);
+      }
+    });
   };
 
   useEffect(() => {
-    fetchUser();
-  }, []);
+    if(fetchFlag.current && session?.customer?._id) {
+      fetchUser();
+      fetchFlag.current = false
+    }
+  }, [session]);
 
   const changeImage = ({ name, url }) => {
     setImage({

@@ -50,8 +50,9 @@ export const options = {
         }
 
         // If the login is successful
-        if (data && data.access_token) {
-          const decodedToken = jwt.decode(data.access_token);
+        if (data && data.token) {
+          const decodedToken = jwt.decode(data.token);
+          console.log(decodedToken)
           const userId = decodedToken?.id;
 
           if (!userId) {
@@ -60,7 +61,7 @@ export const options = {
 
           return {
             id: userId,
-            accessToken: data.access_token,
+            accessToken: data.token,
             expiresIn: data.expires_in,
           };
         }

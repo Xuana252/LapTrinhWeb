@@ -24,7 +24,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/navigation";
-import React, { useReducer, useState, useEffect, useContext } from "react";
+import React, { useReducer, useState, useEffect, useContext, useRef } from "react";
 import CollapsibleContainer from "@components/UI/CollapsibleBanner";
 import { formattedPrice } from "@util/format";
 import { toastWarning } from "@util/toaster";
@@ -54,7 +54,7 @@ const Checkout = () => {
   const session = useSelector((state) => state.session);
   const order = useSelector((state) => state.order);
 
-  console.log(order);
+  const fetchFlag = useRef(true)
   const router = useRouter();
 
   const [provinces, setProvinces] = useState();
@@ -95,7 +95,7 @@ const Checkout = () => {
   const fetchAddress = () => {
     setIsLoading(true);
 
-    getCustomerAddresses(session.customer?.customer_id).then((data) => {
+    getCustomerAddresses(session.customer?._id).then((data) => {
       setUserAddresses(data.map((a, index) => ({ id: index, ...a })));
     });
 
@@ -157,8 +157,11 @@ const Checkout = () => {
   }, []);
 
   useEffect(() => {
-    fetchAddress();
-  }, []);
+    if(session?.customer?._id&&fetchFlag.current) {
+      fetchAddress();
+      fetchFlag.current = false;
+    }
+  }, [session]);
 
   useEffect(() => {
     const total = receipt.subtotal - receipt.discount;

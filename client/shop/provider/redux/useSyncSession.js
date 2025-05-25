@@ -22,7 +22,7 @@ export default function useSyncSession() {
       );
       dispatch(
         setCart({
-          customerId: session?.user.customer.customer_id,
+          customerId: session?.user.customer._id,
           cart: [...session.user.cart||[]],
         })
       );

@@ -3,32 +3,31 @@
 import { generateDummyCustomerData } from "@util/generator/customer";
 
 export const getCustomer = async (id) => {
-  return generateDummyCustomerData(id);
-  // if (process.env.DEV_ENV !== "production") return generateDummyCustomerData(id);
-  // try {
-  //   const response = await fetch(`${process.env.APP_URL}/customers/${id}`);
-  //   if (response.ok) {
-  //     const data = await response.json();
-  //     return data;
-  //   } else {
-  //     return {};
-  //   }
-  // } catch (error) {
-  //   console.log(error);
-  //   return {};
-  // }
+  if (process.env.DEV_ENV !== "production") return generateDummyCustomerData(id);
+  try {
+    const response = await fetch(`${process.env.APP_URL}/users/${id}`);
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      return {};
+    }
+  } catch (error) {
+    console.log(error);
+    return {};
+  }
 };
 
-export const patchCustomer = async (payload) => {
+export const patchCustomer = async (id,payload) => {
   try {
     const response = await fetch(
-      `${process.env.APP_URL}/customers/${payload.user_id}`,
+      `${process.env.APP_URL}/users/${id}`,
       {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(payload.new_customer),
+        body: JSON.stringify(payload),
       }
     );
     if (response.ok) {

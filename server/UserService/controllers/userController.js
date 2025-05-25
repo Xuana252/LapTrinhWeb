@@ -5,6 +5,7 @@ const { json } = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { generaToken } = require("../utils/generateToken");
+const { default: mongoose } = require("mongoose");
 
 const getAllUser = asyncHandler(async (req, res) => {
   const {
@@ -24,24 +25,50 @@ const getAllUser = asyncHandler(async (req, res) => {
     .sort(sortOptions)
     .skip(skip)
     .limit(parseInt(limit))
-    .populate("cart.product_id");
+    .select("-__v -password -notification -cart -address");
 
   const count = await User.countDocuments();
 
   res.status(200).json({ count: count, users });
 });
 
+const getUser = asyncHandler(async (req, res) => {
+  const { userId } = req.params;
+
+  const objectId = new mongoose.Types.ObjectId(userId);
+
+  const user = await User.findById(objectId).select(
+    "-__v -password -notification -cart -address"
+  );
+
+  if (!user) return res.status(404).json({ message: "không tìm thấy user" });
+
+  res.status(200).json(user);
+});
+
 const banUser = asyncHandler(async (req, res) => {
+  const { userId } = req.params;
+
+  const user = await User.findById(userId).select(
+    "-__v -password -notification -cart -address"
+  );
+
+  if (!user) return res.status(404).json({ message: "không tìm thấy user" });
+
+  user.is_active = !user.is_active;
+  const updatedUser = await user.save();
+
+  res.status(200).json(updatedUser);
+});
+
+const getAddress = asyncHandler(async (req, res) => {
   const { userId } = req.params;
 
   const user = await User.findById(userId);
 
   if (!user) return res.status(404).json({ message: "không tìm thấy user" });
 
-  user.is_active = false;
-  const updatedUser = await user.save();
-
-  res.status(200).json(updatedUser);
+  res.status(200).json(user.address);
 });
 
 const addAddress = asyncHandler(async (req, res) => {
@@ -64,12 +91,11 @@ const addAddress = asyncHandler(async (req, res) => {
   const user = await User.findById(userId);
   if (!user) return res.status(404).json({ message: "không tìm thấy user" });
 
-  user.address.push(address);
+  user.address.unshift(address);
   await user.save();
 
-  res
-    .status(200)
-    .json({ address: user.address, message: "thêm địa chỉ thành công" });
+  const addedAddress = user.address[0] ?? null;
+  res.status(200).json(addedAddress);
 });
 
 const deleteAddress = asyncHandler(async (req, res) => {
@@ -89,36 +115,39 @@ const deleteAddress = asyncHandler(async (req, res) => {
 const updatedAddress = asyncHandler(async (req, res) => {
   const address = req.body;
   const { userId } = req.params;
-  let updated=false
+  let updated = false;
 
   const user = await User.findById(userId);
   if (!user) return res.status(404);
 
   user.address = user.address.map((a) => {
     if (a._id.toString() === address._id) {
-      updated=true
-      return{...a.toObject(),...address}
+      updated = true;
+      return { ...a.toObject(), ...address };
     }
-     return a
+    return a;
   });
 
-  if(!updated)
-    return res.status(404)
+  if (!updated) return res.status(404);
 
-  await user.save()
+  await user.save();
 
-  return res.status(200).json({address:user.address})
+  const updatedAddress = user.address.find(
+    (a) => a._id.toString() === address._id
+  );
+
+  return res.status(200).json(updatedAddress);
 });
 
-const updatedUser = asyncHandler(async (req, res) => {
+const updateUser = asyncHandler(async (req, res) => {
   const { username, phone_number, image } = req.body;
-  const { userId } = res.params;
+  const { userId } = req.params;
 
   const result = await User.findByIdAndUpdate(
     userId,
     { username, phone_number, image },
     { new: true }
-  );
+  ).select("-__v -password -notification -cart -address");
 
   if (!result) return res.status(404).json({ message: "Không tìm thấy user" });
 
@@ -127,12 +156,27 @@ const updatedUser = asyncHandler(async (req, res) => {
 
 const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  const user = await User.findOne({ email });
 
-  if (!user) return res.status(401);
-  else if (bcrypt.compare(password, user.password))
-    return res.status(200).json({ user, token: generaToken(user._id) });
-  else return res.status(401);
+  const user = await User.findOne({ email }).select(
+    "-__v  -notification -cart -address"
+  );
+
+  if (!user) {
+    return res.status(401).json({ message: "User not found" });
+  }
+  if (!user.is_active) {
+    return res.status(403).json({ message: "Account is banned" });
+  }
+  const isMatch = await user.comparePassword(password);
+  if (!isMatch) {
+    return res.status(401).json({ message: "Wrong password" });
+  }
+
+  return res.status(200).json({
+    user,
+    expires_in: 3600 * 24 * 30,
+    token: generaToken(user._id),
+  });
 });
 
 const signup = asyncHandler(async (req, res) => {
@@ -156,29 +200,34 @@ const signup = asyncHandler(async (req, res) => {
 
 const changePassword = asyncHandler(async (req, res) => {
   const { userId } = req.params;
-  const {password} = req.body;
+  const { password, newPassword } = req.body;
 
-  const salt =await bcrypt.genSalt(10)
-  const hashedPassword=await bcrypt.hash(password,salt)
+  const objectId = new mongoose.Types.ObjectId(userId);
 
-  const user = await User.findByIdAndUpdate(
-    userId,
-    { password: hashedPassword },
-    { new: true }
-  );
+  const user = await User.findById(objectId);
   if (!user) return res.status(404);
 
-  return res.status(200).json({message:"đổi mật khẩu thành công"});
+  const isMatch = await user.comparePassword(password);
+
+  if (isMatch) {
+    user.password = newPassword;
+    user.save();
+    return res.status(200).json({ message: "đổi mật khẩu thành công" });
+  } else {
+    return res.status(401).json({ message: "Wrong password" });
+  }
 });
 
 module.exports = {
   getAllUser,
+  getUser,
+  updateUser,
+  getAddress,
   banUser,
   addAddress,
   deleteAddress,
   updatedAddress,
-  updatedUser,
   login,
   signup,
-  changePassword
+  changePassword,
 };

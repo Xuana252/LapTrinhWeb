@@ -318,7 +318,6 @@ const getUserRevenue = asyncHandler(async (req, res) => {
   res.status(200).json({ total, categories, monthly });
 });
 
-
 const getRevenue = asyncHandler(async (req, res) => {
   // Monthly revenue
   const monthlyRevenue = await Order.aggregate([
@@ -487,11 +486,9 @@ module.exports = {
   changeOrderStatus,
   addOrder,
   deleteOrder,
-<<<<<<< HEAD
+
   getUserRevenue,
-=======
-  getMonthlyRevenue,
->>>>>>> vinh
+
   getRevenue,
   getMonthlyOrder,
 };

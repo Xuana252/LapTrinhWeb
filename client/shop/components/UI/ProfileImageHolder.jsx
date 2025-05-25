@@ -29,10 +29,11 @@ const ProfileImageHolder = ({ url, size=100 }) => {
       {isValid ? (
         <Image
           src={url}
-          alt="Profile image"
+          alt="profile"
           className="size-full object-cover"
-          width={size}
-          height={size}
+          quality={75}
+          width={300}
+          height={300}
         />
       ) : (
         <FontAwesomeIcon icon={faUserCircle} className="md:text-6xl text-xl size-full" />

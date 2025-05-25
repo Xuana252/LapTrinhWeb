@@ -6,7 +6,7 @@ import { useSession } from "@node_modules/next-auth/react";
 import Link from "@node_modules/next/link";
 import { cancelOrder, getOrders } from "@service/order";
 import { formattedDate, formattedPrice } from "@util/format";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   useDispatch,
   useSelector,
@@ -16,7 +16,11 @@ import { useRouter } from "@node_modules/next/navigation";
 import { addCartItem } from "@service/cart";
 import { addItem } from "@provider/redux/cart/cartSlice";
 import { FontAwesomeIcon } from "@node_modules/@fortawesome/react-fontawesome";
-import { faMoneyBill } from "@node_modules/@fortawesome/free-solid-svg-icons";
+import {
+  faAngleLeft,
+  faAngleRight,
+  faMoneyBill,
+} from "@node_modules/@fortawesome/free-solid-svg-icons";
 import Image from "@node_modules/next/image";
 import OrderTag from "@components/UI/OrderTag";
 
@@ -24,18 +28,23 @@ const Orders = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const session = useSelector((state) => state.session);
-  const cart = useSelector((state) => state.cart);
+  const fetchFlag = useRef(true);
+  // const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const [selectedView, setSelectedView] = useState("All");
+  const ORDER_LIMIT = 5;
+  const [page, setPage] = useState(1);
   const viewItems = [
     "All",
     "Pending",
-    "Confirmed",
-    "Shipping",
+    "Processing",
+    "Shipped",
     "Delivered",
     "Cancelled",
   ];
   const [orders, setOrders] = useState([]);
+
+  useEffect(() => setPage(1), [selectedView]);
 
   const fetchOrders = () => {
     setIsLoading(true);
@@ -106,9 +115,17 @@ const Orders = () => {
   };
 
   useEffect(() => {
-    if (!session.isAuthenticated) return;
-    fetchOrders();
-  }, [session?.customer?._id]);
+    if (session?.customer?._id && fetchFlag.current) {
+      fetchOrders();
+      fetchFlag.current = false;
+    }
+  }, [session]);
+
+  const filteredOrders = orders?.filter(
+    (item) =>
+      item.order_status.toLowerCase() === selectedView.toLowerCase() ||
+      selectedView === "All"
+  );
 
   return (
     <section className="w-full flex flex-col gap-2">
@@ -122,30 +139,41 @@ const Orders = () => {
           {viewItems.map((viewItem) => (
             <button
               key={viewItem}
-              className={`grow text-center gap-2 min-w-[100px] p-2 hover:border-on-secondary/50 hover:border-b-2 ${
+              className={`relative grow text-center gap-2 min-w-[100px] p-2 hover:border-on-secondary/50 hover:border-b-2 ${
                 selectedView === viewItem
                   ? "border-b-4 border-on-primary font-bold"
                   : ""
               }`}
               onClick={() => setSelectedView(viewItem)}
             >
+              {orders?.filter(
+                (item) =>
+                  item.order_status.toLowerCase() === viewItem.toLowerCase() ||
+                  viewItem === "All"
+              ).length >0  && (
+                <span className="absolute top-0 right-0  text-xs font-semibold bg-green-500 text-white rounded-full aspect-square size-4">
+                  {
+                    orders?.filter(
+                      (item) =>
+                        item.order_status.toLowerCase() ===
+                          viewItem.toLowerCase() || viewItem === "All"
+                    ).length
+                  }
+                </span>
+              )}
               {viewItem}
             </button>
           ))}
         </div>
         <Divider />
       </div>
-      <div className="flex flex-col justify-center  gap-4">
+      <div className="flex flex-col  gap-4 max-h-screen overflow-y-auto">
         {isLoading
-          ? Array.from({ length: 3 }).map((_, index) => (
+          ? Array.from({ length: ORDER_LIMIT }).map((_, index) => (
               <OrderTag key={index} loading={true} />
             ))
-          : orders
-              ?.filter(
-                (item) =>
-                  item.order_status.toLowerCase() ===
-                    selectedView.toLowerCase() || selectedView === "All"
-              )
+          : filteredOrders
+              .slice((page - 1) * ORDER_LIMIT, page * ORDER_LIMIT)
               .map((item) => (
                 <OrderTag
                   order={item}
@@ -156,6 +184,40 @@ const Orders = () => {
                 />
               ))}
       </div>
+      <ul className="flex my-2 gap-2 flex-row items-center justify-center bg-background/20 backdrop-blur-sm rounded-xl size-fit m-auto">
+        <button
+          className="p-2 rounded-lg hover:bg-surface active:bg-secondary-variant/20 text-lg size-10"
+          onClick={() => setPage(Math.max(page - 1, 1))}
+        >
+          <FontAwesomeIcon icon={faAngleLeft} />
+        </button>
+        {Array.from({
+          length: Math.ceil(filteredOrders.length / ORDER_LIMIT),
+        }).map((_, index) => (
+          <button
+            key={index}
+            className={`${
+              page === index + 1 ? "bg-surface" : ""
+            } p-2 rounded-lg hover:bg-surface active:bg-secondary-variant/20 text-lg size-10`}
+            onClick={() => setPage(index + 1)}
+          >
+            {index + 1}
+          </button>
+        ))}
+        <button
+          className="p-2 rounded-lg hover:bg-surface active:bg-secondary-variant/20 text-lg size-10"
+          onClick={() =>
+            setPage(
+              Math.min(
+                page + 1,
+                Math.ceil(filteredProducts.length / PRODUCT_LIMIT)
+              )
+            )
+          }
+        >
+          <FontAwesomeIcon icon={faAngleRight} />
+        </button>
+      </ul>
     </section>
   );
 };
