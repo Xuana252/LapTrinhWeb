@@ -1,7 +1,7 @@
 "use client";
 import React, { useRef } from "react";
 
-const InputBox = ({ value, name, onChange }) => {
+const InputBox = ({ value, name, onChange,...rest }) => {
   const labelRef = useRef(null); // Create a reference for the label
 
   const handleFocus = () => {
@@ -35,6 +35,7 @@ const InputBox = ({ value, name, onChange }) => {
         onBlur={handleBlur}
         autoComplete="off"
         onChange={onTextChange}
+        {...rest}
       />
     </div>
   );

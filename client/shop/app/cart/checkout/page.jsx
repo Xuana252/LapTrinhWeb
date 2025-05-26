@@ -11,7 +11,7 @@ import InputBox from "@components/Input/InputBox";
 import PhoneInput from "@components/Input/PhoneInput";
 import RadioButton from "@components/Input/RadioButton";
 import CartItem from "@components/UI/CartItem";
-import Divider from "@components/UI/Divider";
+import Divider from "@components/UI/Layout/Divider";
 import OrderItem from "@components/UI/OrderItem";
 import { faCheckSquare } from "@fortawesome/free-regular-svg-icons";
 import {
@@ -24,7 +24,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/navigation";
-import React, { useReducer, useState, useEffect, useContext } from "react";
+import React, { useReducer, useState, useEffect, useContext, useRef } from "react";
 import CollapsibleContainer from "@components/UI/CollapsibleBanner";
 import { formattedPrice } from "@util/format";
 import { toastWarning } from "@util/toaster";
@@ -53,6 +53,8 @@ function reducer(state, action) {
 const Checkout = () => {
   const session = useSelector((state) => state.session);
   const order = useSelector((state) => state.order);
+
+  const fetchFlag = useRef(true)
   const router = useRouter();
 
   const [provinces, setProvinces] = useState();
@@ -67,12 +69,14 @@ const Checkout = () => {
   const reduxDispatch = useDispatch();
 
   const [receipt, dispatch] = useReducer(reducer, {
-    subtotal: order?.order_items.reduce(
-      (acc, item) => acc + item.total_price,
+    subtotal: order?.order_item.reduce(
+      (acc, item) => acc + item.price * item.quantity,
       0
     ),
-    discount: 0,
-    total: 0,
+    total: order?.order_item.reduce(
+      (acc, item) => acc + item.price * item.quantity,
+      0
+    ),
   });
 
   const [province, setProvince] = useState();
@@ -80,11 +84,10 @@ const Checkout = () => {
   const [ward, setWard] = useState();
 
   const [address, setAddress] = useState({
-    address_id:"0",
-    full_name: "",
+    name: "",
     phone_number: "",
-    address: "",
-    city: "",
+    detailed_address: "",
+    province: "",
     district: "",
     ward: "",
   });
@@ -92,8 +95,7 @@ const Checkout = () => {
   const fetchAddress = () => {
     setIsLoading(true);
 
-    getCustomerAddresses(session.customer?.customer_id).then((data) => {
-      setSelectedOption(data.findIndex((item) => item.is_primary) + 1);
+    getCustomerAddresses(session.customer?._id).then((data) => {
       setUserAddresses(data.map((a, index) => ({ id: index, ...a })));
     });
 
@@ -105,19 +107,19 @@ const Checkout = () => {
   };
 
   useEffect(() => {
-    setAddress((a) => ({ ...a, city: province?.name ||"" }));
+    setAddress((a) => ({ ...a, province: province?.name || "" }));
     setDistrict(null);
     getDistricts(province?.id || "");
   }, [province]);
 
   useEffect(() => {
-    setAddress((a) => ({ ...a, district: district?.name ||"" }));
+    setAddress((a) => ({ ...a, district: district?.name || "" }));
     setWard(null);
     getWards(district?.id || "");
   }, [district]);
 
   useEffect(() => {
-    setAddress((a) => ({ ...a, ward: ward?.name ||"" }));
+    setAddress((a) => ({ ...a, ward: ward?.name || "" }));
   }, [ward]);
 
   const getProvinces = async () => {
@@ -154,9 +156,12 @@ const Checkout = () => {
     getProvinces();
   }, []);
 
-  useEffect(()=> {
-    fetchAddress();
-  },[session])
+  useEffect(() => {
+    if(session?.customer?._id&&fetchFlag.current) {
+      fetchAddress();
+      fetchFlag.current = false;
+    }
+  }, [session]);
 
   useEffect(() => {
     const total = receipt.subtotal - receipt.discount;
@@ -178,14 +183,13 @@ const Checkout = () => {
     // Dispatch the shipping address to Redux
     reduxDispatch(
       setOrderAddress({
-        address: {  
-            address_id: checkoutAddress.address_id,
-            full_name: checkoutAddress.full_name,
-            phone_number: checkoutAddress.phone_number,
-            address: checkoutAddress.address,
-            city:  checkoutAddress.city,
-            district: checkoutAddress.district,
-            ward: checkoutAddress.ward,
+        address: {
+          name: checkoutAddress.name,
+          phone_number: checkoutAddress.phone_number,
+          detailed_address: checkoutAddress.detailed_address,
+          province: checkoutAddress.province,
+          district: checkoutAddress.district,
+          ward: checkoutAddress.ward,
         },
       })
     );
@@ -227,9 +231,9 @@ const Checkout = () => {
               <FontAwesomeIcon icon={faLocationDot} />
             </div>
             <InputBox
-              value={address.full_name}
+              value={address.name}
               name={"Full name *"}
-              onChange={(s) => setAddress((a) => ({ ...a, full_name: s }))}
+              onChange={(s) => setAddress((a) => ({ ...a, name: s }))}
             />
             <PhoneInput
               value={address.phone_number}
@@ -260,9 +264,11 @@ const Checkout = () => {
               />
             </div>
             <InputBox
-              value={address.address}
+              value={address.detailed_address}
               name={"Specific address *"}
-              onChange={(s) => setAddress((a) => ({ ...a, address: s }))}
+              onChange={(s) =>
+                setAddress((a) => ({ ...a, detailed_address: s }))
+              }
             />
           </div>
 
@@ -312,11 +318,11 @@ const Checkout = () => {
                     </div>
                     <div className="flex flex-col items-start justify-around text-xs">
                       <h4>
-                        {item.full_name} | {item.phone_number}
+                        {item.name} | {item.phone_number}
                       </h4>
-                      <h3 className="opacity-50">{item.address}</h3>
+                      <h3 className="opacity-50">{item.detailed_address}</h3>
                       <h3 className="opacity-50">
-                        {[item.ward, item.district, item.city].join(", ")}
+                        {[item.ward, item.district, item.province].join(", ")}
                       </h3>
                     </div>
                   </label>
@@ -330,8 +336,8 @@ const Checkout = () => {
           <CollapsibleContainer
             content={
               <ul className="flex flex-col gap-4">
-                {order?.order_items.map((item) => (
-                  <OrderItem key={item.product_id} orderItem={item} />
+                {order?.order_item.map((item) => (
+                  <OrderItem key={item.product_id._id} orderItem={item} />
                 ))}
               </ul>
             }
@@ -343,10 +349,6 @@ const Checkout = () => {
           <div className="flex flex-row justify-between items-center gap-4">
             <h3 className="opacity-70">Subtotal</h3>
             <span className="">{formattedPrice(receipt.subtotal)}</span>
-          </div>
-          <div className="flex flex-row justify-between items-center gap-4">
-            <h3 className="opacity-70">Discount</h3>
-            <span>{formattedPrice(receipt.discount)}</span>
           </div>
 
           <Divider />

@@ -5,28 +5,31 @@ import {
   generateDummyOrdersData,
 } from "@util/generator/order";
 
-export const getOrder = async (id, order) => {
+export const getOrder = async (id) => {
   if (process.env.DEV_ENV !== "production") return generateDummyOrderData();
   try {
     const response = await fetch(
-      `${process.env.APP_URL}/orders/${id}/${order}`
+      `${process.env.APP_URL}/orders/${id}`
     );
     if (response.ok) {
       const data = await response.json();
       return data;
     } else {
-      return {};
+      return null;
     }
   } catch (error) {
     console.log(error);
-    return {};
+    return null;
   }
 };
 
 export const getOrders = async (id) => {
-  if (process.env.DEV_ENV !== "production") return generateDummyOrdersData(Math.round(Math.random()*4)+1);
+  if (process.env.DEV_ENV !== "production")
+    return generateDummyOrdersData(Math.round(Math.random() * 4) + 1);
   try {
-    const response = await fetch(`${process.env.APP_URL}/orders/${id}`);
+    const response = await fetch(
+      `${process.env.APP_URL}/orders/customer/${id}`
+    );
     if (response.ok) {
       const data = await response.json();
       return data;
@@ -39,15 +42,15 @@ export const getOrders = async (id) => {
   }
 };
 
-export const cancelOrder = async (customer_id,id) => {
+export const cancelOrder = async (id) => {
   try {
-    const response = await fetch(`${process.env.APP_URL}/orders/${customer_id}/${id}`, {
+    const response = await fetch(`${process.env.APP_URL}/orders/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        	"order_status": "CANCELLED"
+        status: "cancelled",
       }),
     });
     if (response.ok) {
@@ -61,77 +64,32 @@ export const cancelOrder = async (customer_id,id) => {
   }
 };
 
-export const payWithZaloPay = async (payload) => {
-  try {
-    const response = await fetch(`${process.env.APP_URL}/zalo-payment/${payload.customer_id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(
-        	payload.order
-      ),
-    });
-
-
-    if (response.ok) {
-      const data = await response.json()
-      return data.order_url
-    } else {
-      return "";
-    }
-  } catch (error) {
-    console.log(error);
-    return "";
-  }
-}
-
-export const payWithMoMo = async (payload) => {
-  try {
-    const response = await fetch(`${process.env.APP_URL}/momo-payment/${payload.customer_id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(
-        	payload.order
-      ),
-    });
-
-
-    if (response.ok) {
-      const data = await response.json()
-      return data.shortLink
-    } else {
-      return "";
-    }
-  } catch (error) {
-    console.log(error);
-    return "";
-  }npm 
-}
-
 export const postOrder = async (payload) => {
+  if (process.env.DEV_ENV !== "production") return { order_id: "123" };
+
   try {
-    const response = await fetch(`${process.env.APP_URL}/orders/${payload.customer_id}`, {
+    const response = await fetch(`${process.env.APP_URL}/orders/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(
-        	payload.order
-      ),
+      body: JSON.stringify(payload),
     });
 
-
     if (response.ok) {
-      const data = await response.json()
-      return data;
+      
+      const data = await response.json();
+      return { order: data, success: true, message: "" };
     } else {
-      return null;
+      const data = await response.json();
+      return {
+        order: null,
+        success: false,
+        message: data.message || "Failed to create order",
+      };
     }
   } catch (error) {
     console.log(error);
-    return null
+    return { order: null, success: false, message: "Failed to create order" };
   }
-}
+};

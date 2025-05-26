@@ -1,3 +1,4 @@
+
 import Compressor from "compressorjs";
 
 export const handleImage = async (file, callback ) => {
@@ -23,3 +24,15 @@ export const handleImage = async (file, callback ) => {
     },
   });
 };
+
+
+export const testImageUrl = async (url) => {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => resolve(true); // URL is valid and image loaded
+    img.onerror = () => resolve(false); // URL is invalid or image failed to load
+    img.src = url;
+  });
+};
+
+

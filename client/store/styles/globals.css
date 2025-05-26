@@ -1,4 +1,26 @@
-@import "tailwindcss/preflight";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(var(--primary), 0.5);
+  border-radius: 10px;
+}
+
+/* Scrollbar Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(var(--on-primary), 0.5);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--on-primary), 1);
+}
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -65,20 +87,10 @@ input[type="number"] {
 html,
 body {
   background: black;
+  height: 100vh;
 }
 
 @layer utilities {
-  .no-scrollbar::-webkit-scrollbar {
-    display: black;
-  }
-  ul {
-    @apply overflow-scroll no-scrollbar;
-  }
-
-  .no-scrollbar {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-  }
   * {
     box-sizing: border-box;
   }
@@ -86,23 +98,33 @@ body {
     text-wrap: balance;
   }
 
+  .input-variant-1 {
+    @apply bg-surface rounded-full outline-none border-none text-sm shadow-inner py-1 px-2
+  }
+
   .button-variant-1 {
     @apply bg-on-surface font-bold text-surface p-2 rounded-lg hover:scale-105 active:scale-95 transition-transform duration-200 ease-out gap-2 flex items-center justify-center h-fit;
   }
+
+
 
   .button-variant-2 {
     @apply shadow-md text-on-primary bg-primary active:bg-primary/80 active:scale-95 transition-all duration-100 px-2 py-1 hover:font-semibold rounded-lg gap-2 flex items-center justify-center h-fit;
   }
 
+  .button-variant-3 {
+    @apply bg-primary  text-on-primary p-1 rounded-lg active:opacity-80 transition-colors duration-200 ease-out gap-2 flex items-center justify-center h-fit;
+  }
+
   .order-state {
-    @apply flex items-center justify-center rounded-xl   px-3 py-1 font-semibold text-white;
+    @apply flex items-center justify-center rounded  px-3 py-1 font-semibold text-white;
   }
 
   .pending {
     @apply order-state bg-slate-500;
   }
 
-  .shipping {
+  .shipped {
     @apply order-state bg-blue-500;
   }
 
@@ -110,7 +132,7 @@ body {
     @apply order-state bg-green-500;
   }
 
-  .confirmed {
+  .processing {
     @apply order-state bg-black;
   }
   .cancelled {
@@ -118,11 +140,19 @@ body {
   }
 
   .panel-1 {
-    @apply h-fit overflow-hidden rounded-xl border-[2px] border-on-secondary p-4 bg-primary/20 backdrop-blur-sm shadow-xl;
+    @apply h-fit  rounded-xl border-[2px] border-on-secondary p-4 bg-primary/20 backdrop-blur-sm shadow-xl;
   }
 
   .panel-2 {
-    @apply overflow-hidden rounded-md bg-primary shadow-lg text-on-primary p-4;
+    @apply  rounded-md bg-primary shadow-lg text-on-primary p-4;
+  }
+
+  .panel-3 {
+    @apply shadow-md rounded-md bg-secondary-variant/50 text-on-secondary p-2;
+  }
+  
+  .panel-4 {
+    @apply shadow-md rounded-md bg-surface/80 text-on-surface p-2;
   }
 
   .account-nav-bar-item {
@@ -133,43 +163,79 @@ body {
     @apply grid grid-cols-[auto_1fr] gap-2 items-center bg-secondary text-on-secondary rounded-lg p-2  text-left justify-items-start  w-full min-w-fit;
   }
 
-  .voucher {
-    padding-right: 10%;
-    z-index: 1;
+  .Side_bar_menu {
+    @apply grid grid-rows-[auto_1fr_auto] justify-start bg-on-surface/80 backdrop-blur-sm gap-3 p-2 flex-col z-40;
+  }
+  .Side_bar_path_list {
+    @apply flex flex-col gap-2 overflow-y-auto;
+  }
+  .Side_bar_section {
+    @apply flex flex-col gap-2 bg-surface/50 w-full p-2 rounded-lg  transition-all duration-200 ease-out;
   }
 
-  .voucher::after {
-    content: "";
-    position: absolute;
-    top: -4px;
-    left: -4px;
-    width: calc(100% + 8px); /* Expand the border area */
-    height: calc(100% + 8px); /* Expand the border area */
-    background: rgba(var(--surface), 1);
-    clip-path: polygon(
-      0 0,
-      100% 0%,
-      /* Keep top straight */ 90% 15%,
-      100% 30%,
-      90% 45%,
-      100% 60%,
-      90% 75%,
-      100% 90%,
-      90% 100%,
-      0 100% /* Keep bottom straight */
-    ); /* Fewer jagged points on the sides, straight top and bottom */
-    z-index: -1; /* Position the border behind the content */
-  }
-  .message-base {
-    @apply whitespace-normal break-all text-base rounded-3xl  size-fit p-2 px-3 max-w-[80%] font-semibold shadow-md;
+  .Side_bar_item {
+    @apply flex flex-row transition-all text-sm duration-150 ease-in-out origin-bottom-left hover:border-l-4 hover:border-b-4 border-primary active:border-none rounded-lg gap-2 items-center w-full text-left px-4 py-2 text-primary hover:bg-on-primary/50 hover:text-primary active:bg-on-primary active:text-primary font-bold;
   }
 
-  
+  .Side_bar_selected_item {
+    @apply flex flex-row rounded-lg gap-2 border-l-4 border-b-4 border-primary  text-sm items-center w-full text-left px-4 py-2 font-bold bg-on-primary text-primary;
+  }
+
+   .message-base {
+    @apply whitespace-pre-line break-all text-sm rounded-lg size-fit p-1 px-2 max-w-[80%]  shadow-md;
+  }
+
   .my-message {
     @apply message-base ml-auto bg-on-primary text-primary;
   }
 
   .other-message {
     @apply message-base mr-auto bg-primary text-on-primary;
+  }
+
+  .title {
+    @apply text-2xl font-bold text-on-primary;
+  }
+
+  .number-scroll-up {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    font-weight: bold;
+    animation: scrollNumbersUp 2s linear infinite;
+  }
+
+  .number-scroll-up span {
+    display: block;
+  }
+
+  @keyframes scrollNumbersUp {
+    0% {
+      transform: translateY(0%);
+    }
+    100% {
+      transform: translateY(-400%);
+    } /* Moves up by 5 numbers */
+  }
+
+  .number-scroll-down {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    font-weight: bold;
+    animation: scrollNumbersDown 2s linear infinite;
+  }
+
+  .number-scroll-down span {
+    display: block;
+  }
+
+  @keyframes scrollNumbersDown {
+    0% {
+      transform: translateY(-400%);
+    }
+    100% {
+      transform: translateY(0%);
+    } /* Moves up by 5 numbers */
   }
 }

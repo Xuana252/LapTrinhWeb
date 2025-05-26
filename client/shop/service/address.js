@@ -34,17 +34,15 @@ export const fetchWards = async (id) => {
 };
 
 export const getCustomerAddresses = async (id) => {
+  // return generateDummyCustomerAddresses(Math.floor(Math.random() * 4) + 1);
   if (process.env.DEV_ENV !== "production")
     return generateDummyCustomerAddresses(Math.floor(Math.random() * 4) + 1);
   try {
-    const response = await fetch(
-      `${process.env.APP_URL}/addresses/${id}`,
-      {
-        headers: {
-          access_token: "",
-        },
-      }
-    );
+    const response = await fetch(`${process.env.APP_URL}/users/${id}/address`, {
+      headers: {
+        access_token: "",
+      },
+    });
     if (response.ok) {
       const data = await response.json();
       return data;
@@ -57,17 +55,17 @@ export const getCustomerAddresses = async (id) => {
   }
 };
 
-export const postCustomerAddress = async (payload) => {
-  if (process.env.DEV_ENV !== "production") return true;
+export const postCustomerAddress = async (id, payload) => {
+  if (process.env.DEV_ENV !== "production") return payload;
   try {
     const response = await fetch(
-      `${process.env.APP_URL}/addresses/${payload.user_id}`,
+      `${process.env.APP_URL}/users/${id}/address`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(payload.new_address),
+        body: JSON.stringify(payload),
       }
     );
 
@@ -83,42 +81,39 @@ export const postCustomerAddress = async (payload) => {
   }
 };
 
-export const patchCustomerAddress = async (payload) => {
-  if (process.env.DEV_ENV !== "production") return true;
+export const patchCustomerAddress = async (id, payload) => {
+  if (process.env.DEV_ENV !== "production") return payload;
   try {
-    const response = await fetch(
-      `${process.env.APP_URL}/addresses/${payload.user_id}/${payload.address_id}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload.new_address),
-      }
-    );
+    const response = await fetch(`${process.env.APP_URL}/users/${id}/address`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
 
     if (response.ok) {
-      return true;
+      const data = await response.json();
+
+      return data;
     } else {
-      return false;
+      return null;
     }
   } catch (error) {
     console.log(error);
-    return false;
+    return null;
   }
 };
 
-export const deleteCustomerAddress = async (payload) => {
+export const deleteCustomerAddress = async (id, address_id) => {
   if (process.env.DEV_ENV !== "production") return true;
-  console.log(payload)
   try {
     const response = await fetch(
-      `${process.env.APP_URL}/addresses/${payload.user_id}/${payload.address_id}`,
+      `${process.env.APP_URL}/users/${id}/address/${address_id}`,
       {
         method: "DELETE",
       }
     );
-
 
     if (response.ok) {
       return true;

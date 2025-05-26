@@ -1,6 +1,6 @@
 "use client";
 import PasswordInput from "@components/Input/PasswordInput";
-import Divider from "@components/UI/Divider";
+import Divider from "@components/UI/Layout/Divider";
 import { changePassword, patchAccount } from "@service/account";
 import { toastError, toastSuccess, toastWarning } from "@util/toaster";
 import React, { useState } from "react";
@@ -50,16 +50,16 @@ const ChangePassword = () => {
 
 
   const handleChangePassword =  async () => {
+    if(!session?.customer?._id) return
     if (checkEmptyInput()) return;
     if (!validateNewPassword()) return;
 
 
     const payload = {
-      account_id: session.customer.account_id,
-      currentPassword: password.current_password,
+      password: password.current_password,
       newPassword: password.new_password,
     };
-    changePassword(payload).then((data) => {
+    changePassword(session?.customer?._id,payload).then((data) => {
       if (data.status) {
         toastSuccess(data.message);
         handleSignOut();

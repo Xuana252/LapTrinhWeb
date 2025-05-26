@@ -7,7 +7,7 @@ import InputBox from "@components/Input/InputBox";
 import PhoneInput from "@components/Input/PhoneInput";
 import RadioButton from "@components/Input/RadioButton";
 import CartItem from "@components/UI/CartItem";
-import Divider from "@components/UI/Divider";
+import Divider from "@components/UI/Layout/Divider";
 import OrderItem from "@components/UI/OrderItem";
 import {
   faCheckSquare,
@@ -31,12 +31,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/navigation";
 import React, { useReducer, useState, useEffect, useContext } from "react";
 import CollapsibleContainer from "@components/UI/CollapsibleBanner";
-import { getVouchers } from "@service/voucher";
 import { useSession } from "@node_modules/next-auth/react";
 import { formattedDate, formattedPrice } from "@util/format";
 import Image from "@node_modules/next/image";
-import { useDispatch, useSelector } from "@node_modules/react-redux/dist/react-redux";
-import { setOrderItems, setOrderPaymentMethod, setOrderState, setOrderStateAsync, setOrderVoucher } from "@provider/redux/order/orderSlice";
+import {
+  useDispatch,
+  useSelector,
+} from "@node_modules/react-redux/dist/react-redux";
+import {
+  setOrderItems,
+  setOrderPaymentMethod,
+  setOrderState,
+  setOrderStateAsync,
+} from "@provider/redux/order/orderSlice";
 import Link from "@node_modules/next/link";
 
 function reducer(state, action) {
@@ -53,78 +60,38 @@ function reducer(state, action) {
 const Payment = () => {
   const session = useSelector((state) => state.session);
   const order = useSelector((state) => state.order);
-  const paymentMethods = ["MOMO", "COD","ZALOPAY"];
   const router = useRouter();
 
-  const [selectedOption, setSelectedOption] = useState("COD");
+  const [selectedOption, setSelectedOption] = useState("cod");
 
-  const [vouchers, setVouchers] = useState([]);
-  const [isSelectingVoucher, setIsSelectingVoucher] = useState(false);
-  const [voucher, setVoucher] = useState();
-
-  const reduxDispatch = useDispatch()
+  const reduxDispatch = useDispatch();
   const [receipt, dispatch] = useReducer(reducer, {
-    subtotal: order?.order_items.reduce(
-      (acc, item) => acc + item.total_price,
+    subtotal: order?.order_item.reduce(
+      (acc, item) => acc + item.price * item.quantity,
       0
     ),
-    discount: 0,
     total: 0,
   });
-
-  const fetchVoucher = () => {
-    getVouchers().then((data) => {
-      const activeAndValidVouchers = data.filter(
-        (voucher) =>
-          voucher.is_active && new Date(voucher.valid_to) >= new Date()
-      );
-
-      setVouchers(activeAndValidVouchers);
-    });
-  };
 
   const handleRadioSelectionChange = (value) => {
     setSelectedOption(value);
   };
 
   useEffect(() => {
-    fetchVoucher();
-  }, []);
+    const total = receipt.subtotal;
 
-
-  useEffect(() => {
-    // If no voucher is selected, reset the total and discount
-    if (!voucher) {
-      dispatch({ type: "change_total", payload: receipt.subtotal });
-      dispatch({ type: "change_discount", payload: 0 });
-      return;
-    }
-  
-    // Apply percentage discount if voucher is selected
-    const discountAmount = voucher.discount_amount;  // Assuming this is a percentage
-    const total = receipt.subtotal - (receipt.subtotal * (discountAmount / 100));
-  
     // Ensure the total is not negative
     const finalTotal = total < 0 ? 0 : total;
-  
+
     // Dispatch updated values to the reducer
     dispatch({ type: "change_total", payload: finalTotal });
-    dispatch({ type: "change_discount", payload: discountAmount });
-  }, [voucher, receipt.subtotal]);
-  
-  
+  }, [receipt.subtotal]);
 
   const handleConfirm = async () => {
-    reduxDispatch(
-      setOrderVoucher({
-        voucher: voucher,
-      })
-    );
-  
     // Dispatch the payment method action
     reduxDispatch(
       setOrderPaymentMethod({
-        payment_method: selectedOption
+        payment_method: selectedOption,
       })
     );
     await reduxDispatch(setOrderStateAsync(3));
@@ -136,11 +103,17 @@ const Payment = () => {
       <div className="w-full grid grid-cols-1 md:grid-rows-[auto_1fr] md:grid-flow-col gap-4">
         {/* Cart header */}
         <ul className="flex flex-row items-center gap-2">
-          <h3 className="text-xl opacity-50"><Link href={'/cart'}>Cart</Link></h3>
+          <h3 className="text-xl opacity-50">
+            <Link href={"/cart"}>Cart</Link>
+          </h3>
           <span className="size-2 sm:size-3 bg-on-background rounded-full opacity-50"></span>
-          <h3 className="text-xl opacity-50"><Link href={'/cart/checkout'}>Checkout</Link></h3>
+          <h3 className="text-xl opacity-50">
+            <Link href={"/cart/checkout"}>Checkout</Link>
+          </h3>
           <span className="size-2 sm:size-3 bg-on-background rounded-full opacity-50"></span>
-          <h3 className="font-bold text-2xl"><Link href={'/cart/checkout/payment'}>Payment</Link></h3>
+          <h3 className="font-bold text-2xl">
+            <Link href={"/cart/checkout/payment"}>Payment</Link>
+          </h3>
         </ul>
         {/* Cart items list */}
         <div className="panel-1 ">
@@ -151,16 +124,16 @@ const Payment = () => {
 
           <label
             className=" py-4 gap-4 rounded-xl bg-surface my-2 flex flex-row justify-between  h-fit items-center px-4"
-            htmlFor="MOMO"
+            htmlFor="momo"
           >
             <div className="flex flex-row gap-4 items-center">
               <RadioButton
                 name={"payment method"}
-                value={"MOMO"}
-                checked={selectedOption === "MOMO"}
+                value={"momo"}
+                checked={selectedOption === "momo"}
                 onChange={handleRadioSelectionChange}
               />
-              
+
               <h3>E-wallet (MOMO)</h3>
               <div className="size-9 overflow-hidden rounded-md">
                 <Image
@@ -175,16 +148,16 @@ const Payment = () => {
           </label>
           <label
             className=" py-4 gap-4 rounded-xl bg-surface my-2 flex flex-row justify-between  h-fit items-center px-4"
-            htmlFor="ZALOPAY"
+            htmlFor="zalopay"
           >
             <div className="flex flex-row gap-4 items-center">
               <RadioButton
                 name={"payment method"}
-                value={"ZALOPAY"}
-                checked={selectedOption === "ZALOPAY"}
+                value={"zalopay"}
+                checked={selectedOption === "zalopay"}
                 onChange={handleRadioSelectionChange}
               />
-              
+
               <h3>E-wallet (ZALOPAY)</h3>
               <div className="size-9 overflow-hidden rounded-md">
                 <Image
@@ -199,13 +172,13 @@ const Payment = () => {
           </label>
           <label
             className="py-4 gap-4 rounded-xl bg-surface my-2 flex flex-row justify-between h-fit items-center px-4"
-            htmlFor="COD"
+            htmlFor="cod"
           >
             <div className="flex flex-row gap-4 items-center">
               <RadioButton
                 name={"payment method"}
-                value={"COD"}
-                checked={selectedOption === "COD"}
+                value={"cod"}
+                checked={selectedOption === "cod"}
                 onChange={handleRadioSelectionChange}
               />
               <h3>Cash on Delivery</h3>
@@ -220,8 +193,8 @@ const Payment = () => {
           <CollapsibleContainer
             content={
               <ul className="flex flex-col gap-4">
-                {order?.order_items.map((item) => (
-                  <OrderItem key={item.product_id} orderItem={item} />
+                {order?.order_item.map((item) => (
+                  <OrderItem key={item.product_id._id} orderItem={item} />
                 ))}
               </ul>
             }
@@ -232,82 +205,24 @@ const Payment = () => {
           <h3 className="text-base md:text-xl">Shipping address</h3>
           <div className="flex flex-col items-start h-full justify-around text-sm">
             <h4>
-              {order?.order_address?.full_name} |{" "}
-              {order?.order_address?.phone_number}
+              {order?.address?.name} | {order?.address?.phone_number}
             </h4>
-            <h3 className="opacity-50">
-              {order?.order_address?.address}
-            </h3>
-            <h3 className="opacity-50">
-              {[
-                order?.order_address?.ward,
-                order?.order_address?.district,
-                order?.order_address?.city,
-              ].join(", ")}
+            <h3 className="opacity-50">{order?.address?.detailed_address}</h3>
+            <h3 className="opacity-50 whitespace-pre-line">
+              {
+                (order?.address.ward ?? "") +
+                ", " +
+                (order?.address.district ?? "") +
+                ", " +
+                (order?.address.province ?? "")}
             </h3>
           </div>
-          <Divider />
-
-          <h3 className="text-base md:text-xl">Discount</h3>
-          <div className="flex flex-row gap-2 items-center justify-between">
-            <InputBox
-              name={"Vouchers"}
-              value={voucher ? voucher.voucher_name : ""}
-              onChange={() => {}}
-            />
-            <button
-              className="button-variant-1"
-              onClick={() => setIsSelectingVoucher((prev) => !prev)}
-            >
-              Select
-            </button>
-          </div>
-          {isSelectingVoucher && (
-            <div className="flex flex-col gap-4 overflow-y-scroll no-scrollbar p-2  max-h-[250px]">
-              {vouchers.map((vc) => (
-                <div
-                  key={vc.voucher_code}
-                  className="relative h-[80px] w-full flex flex-row  items-center cursor-pointer voucher "
-                  onClick={() => setVoucher(v=>v?.voucher_code===vc.voucher_code?null:vc)}
-                >
-                  <div className=" relative flex items-center justify-center h-full aspect-square bg-on-primary grow max-w-[80px] text-primary text-3xl font-bold">
-                    {vc.discount_amount}% {voucher?.voucher_code===vc.voucher_code&&<FontAwesomeIcon icon={faCheckCircle} className="text-lg absolute top-1 left-1"/>}
-                  </div>
-                  <div className="p-2 flex flex-col gap-[1px] ">
-                    <h3 className="text-base font-bold">
-                     {vc.voucher_name}
-                    </h3>
-                    <h4 className="opacity-60 text-xs ">
-                      {vc.description}
-                    </h4>
-                    <div className="flex flex-row items-center gap-2 text-xs white">
-                      <FontAwesomeIcon icon={faClock} />
-                      <h5>
-                        {formattedDate(vc.valid_from)} to{" "}
-                        {formattedDate(vc.valid_to)}
-                      </h5>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
 
           <Divider />
 
           <div className="flex flex-row justify-between items-center gap-4">
             <h3 className="opacity-70">Subtotal</h3>
             <span className="">{formattedPrice(receipt.subtotal)}</span>
-          </div>
-          <div className="flex flex-row justify-between items-center gap-4">
-            <h3 className="opacity-70">Discount</h3>
-            <span>
-              <span className="font-bold text-red-500">
-                {" "}
-                (-{receipt.discount}%){" "}
-              </span>
-              {formattedPrice((receipt.discount / 100) * receipt.subtotal)}
-            </span>
           </div>
 
           <div className="flex flex-row justify-between items-center gap-4">
@@ -319,7 +234,7 @@ const Payment = () => {
           <div className="flex flex-row justify-between items-center gap-4">
             <h3>Grand total</h3>
             <span className="font-bold text-lg">
-              {formattedPrice(receipt.total-30000)}
+              {formattedPrice(receipt.total + 30000)}
             </span>
           </div>
 

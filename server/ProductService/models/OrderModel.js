@@ -20,6 +20,19 @@ const orderItemSchema = new mongoose.Schema(
   { _id: false }
 );
 
+const addressSchema = new mongoose.Schema(
+  {
+    province: { type: String, required: true },
+    district: { type: String, required: true },
+    ward: { type: String, required: true },
+    name: { type: String, required: true },
+    phone_number: { type: String, required: true },
+    detailed_address: { type: String, required: true },
+  },
+  { _id: false }
+);
+
+
 const orderSchema = new mongoose.Schema(
   {
     user_id: {
@@ -43,9 +56,8 @@ const orderSchema = new mongoose.Schema(
       default: "pending",
     },
     address: {
-      type: String,
+      type: addressSchema,
       required: true,
-      trim: true,
     },
     payment_method: {
       type: String,

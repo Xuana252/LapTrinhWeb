@@ -66,7 +66,7 @@ const SupportButton = ({ onClick, unreadMsg }) => {
     <button
       id="chatButton"
       className={` shadow-xl fixed size-9 m-4 rounded-full bg-on-primary text-primary sm:scale-110 transition-transform duration-150 hover:scale-150 z-50 ${
-        unreadMsg > 0 ? `animate-bounce` : ""
+        unreadMsg ? `animate-bounce` : ""
       }`}
       onMouseDown={handleDragStart}
       onMouseMove={handleDragMove}
@@ -82,9 +82,9 @@ const SupportButton = ({ onClick, unreadMsg }) => {
         cursor: "pointer",
       }}
     >
-      {unreadMsg > 0 && (
-        <div className="absolute top-0 right-0 translate-x-1/4 -translate-y-1/4 size-4 text-xs sm:text-sm rounded-full bg-primary text-on-primary font-semibold flex items-center justify-center">
-          {unreadMsg}
+      {unreadMsg && (
+        <div className="absolute top-0 right-0 translate-x-1/4 -translate-y-1/4 size-4 rounded-full bg-primary">
+          {" "}
         </div>
       )}
       <FontAwesomeIcon icon={faPhone} size="lg" />

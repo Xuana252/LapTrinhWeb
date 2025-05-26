@@ -3,9 +3,13 @@ import DatePicker from "@components/Input/DatePicker";
 import InputBox from "@components/Input/InputBox";
 import PhoneInput from "@components/Input/PhoneInput";
 import RadioButton from "@components/Input/RadioButton";
-import Divider from "@components/UI/Divider";
+import Divider from "@components/UI/Layout/Divider";
 import ProfileImageHolder from "@components/UI/ProfileImageHolder";
-import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSpider,
+  faSpinner,
+  faUserCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getSession, useSession } from "@node_modules/next-auth/react";
 import { getCustomer, patchCustomer } from "@service/customer";
@@ -19,25 +23,19 @@ import {
   useSelector,
 } from "@node_modules/react-redux/dist/react-redux";
 import { updateSession } from "@provider/redux/session/sessionSlice";
+import { upload } from "@util/generator/uploader";
 
 const Account = () => {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(true);
   const session = useSelector((state) => state.session);
+  const fetchFlag = useRef(true);
   const [customer, setCustomer] = useState();
   const [image, setImage] = useState({ name: "", url: "" });
-  const [gender, setGender] = useState("Male");
   const imagePicker = useRef(null);
-  const handleRadioSelectionChange = (value) => {
-    setGender(value);
-  };
 
   const checkEmptyInput = () => {
-    if (
-      !customer.full_name.trim() ||
-      !customer.phone_number.trim() ||
-      !customer.username.trim() ||
-      !customer.birth_date.trim()
-    ) {
+    if (!customer.phone_number.trim() || !customer.username.trim()) {
       toastWarning("Please fill out all field");
       return true;
     }
@@ -45,27 +43,20 @@ const Account = () => {
   };
 
   const handleEditCustomer = async () => {
-    console.log(image)
+    if (!session?.customer?._id) return;
     if (checkEmptyInput()) return;
+    setIsLoading(true);
+    let imageUrl = customer.image;
+    if (image.url !== customer.image) {
+      imageUrl = await upload(image.url, session?.customer?._id);
+    }
     const payload = {
-      user_id: session?.customer?.customer_id,
-      new_customer: {
-        username: customer.username,
-        full_name: customer.full_name,
-        phone_number: customer.phone_number,
-        birth_date: new Date(
-          customer.birth_date.split("-").reverse().join("-")
-        ).toISOString(),
-        male: gender === "Male",
-        image: {
-          name: image.name,
-          url: image.url,
-        },
-      },
+      username: customer.username,
+      phone_number: customer.phone_number,
+      image: imageUrl,
     };
-    patchCustomer(payload).then((data) => {
+    patchCustomer(session.customer._id, payload).then((data) => {
       if (data) {
-        console.log(data);
         dispatch(
           updateSession({
             customer: data,
@@ -75,34 +66,26 @@ const Account = () => {
       } else {
         toastError("Failed to update information");
       }
+      setIsLoading(false);
     });
   };
 
   const fetchUser = () => {
-    setImage({ name: "user", url: session.customer?.image });
-    setCustomer({
-      ...session.customer,
-      birth_date: formattedDate(session.customer?.birth_date),
+    getCustomer(session?.customer?._id).then((data) => {
+      if (data) {
+        setImage({ name: data._id, url: data.image });
+        setCustomer(data);
+      }
+       setIsLoading(false)
     });
-    setGender(session.customer?.male ? "Male" : "Female");
   };
+
   useEffect(() => {
-    fetchUser();
-  }, []);
-
-  const handleFirstNameChange = (firstName) => {
-    setCustomer((c) => ({
-      ...c,
-      full_name: `${firstName} ${c.full_name.split(" ").slice(1).join(" ")}`,
-    }));
-  };
-
-  const handleLastNameChange = (lastName) => {
-    setCustomer((c) => ({
-      ...c,
-      full_name: `${c.full_name.split(" ")[0]} ${lastName}`,
-    }));
-  };
+    if (fetchFlag.current && session?.customer?._id) {
+      fetchUser();
+      fetchFlag.current = false;
+    }
+  }, [session]);
 
   const changeImage = ({ name, url }) => {
     setImage({
@@ -131,7 +114,7 @@ const Account = () => {
         </div>
       </div>
       <Divider />
-      <div className="flex flex-col md:flex-row">
+      <div className="flex flex-col">
         <div className="flex flex-col gap-4 items-center p-4">
           <ProfileImageHolder url={image.url} />
           <button className="button-variant-1" onClick={handleOpenImage}>
@@ -146,73 +129,30 @@ const Account = () => {
           />
         </div>
         <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-4 md:flex-row">
-            <span className="grid grid-cols-1 md:grid-cols-[100px_1fr] whitespace-nowrap items-start md:items-center md:justify-items-end md:gap-x-10 gap-y-4 ">
-              <span>Last name</span>
-              <InputBox
-                value={
-                  customer?.full_name
-                    ?.split(" ")
-                    .filter((_, index) => index !== 0)
-                    .join(" ") || ""
-                }
-                onChange={handleLastNameChange}
-              />
-            </span>
-            <span className="grid grid-cols-1 md:grid-cols-[100px_1fr] whitespace-nowrap items-start md:items-center md:justify-items-end md:gap-x-10 gap-y-4 ">
-              <span>First name</span>
-              <InputBox
-                value={customer?.full_name?.split(" ")[0] || ""}
-                onChange={handleFirstNameChange}
-              />
-            </span>
-          </div>
           <span className="grid grid-cols-1 md:grid-cols-[100px_1fr] whitespace-nowrap items-start md:items-center md:justify-items-end md:gap-x-10 gap-y-4 ">
             <span>Username</span>
             <InputBox
               value={customer?.username || ""}
               onChange={(s) => setCustomer((c) => ({ ...c, username: s }))}
             />
-            <span>Phone</span>
+            <span>Phone number</span>
             <PhoneInput
               value={customer?.phone_number || ""}
               onChange={(s) => setCustomer((c) => ({ ...c, phone_number: s }))}
             />
-            <span>Gender</span>
-            <div className="flex flex-row gap-4">
-              <label className="flex gap-2 items-center" htmlFor="Male">
-                <RadioButton
-                  name={"gender"}
-                  value={"Male"}
-                  checked={gender === "Male"}
-                  onChange={handleRadioSelectionChange}
-                />
-                <span>Male</span>
-              </label>
-              <label className="flex gap-2 items-center" htmlFor="Female">
-                <RadioButton
-                  name={"gender"}
-                  value={"Female"}
-                  checked={gender === "Female"}
-                  onChange={handleRadioSelectionChange}
-                />
-                <span>Female</span>
-              </label>
-            </div>
           </span>
-          <span className="grid grid-rows-[auto_1fr] md:grid-cols-[100px_1fr] md:grid-rows-1 whitespace-nowrap items-start md:items-center md:justify-items-end md:gap-10 ">
-            <span>Birth date</span>
-            <DatePicker
-              value={customer?.birth_date}
-              onChange={(s) => setCustomer((c) => ({ ...c, birth_date: s }))}
-            />
-          </span>
+
           <div>
             <button
+              disabled={isLoading}
               className="button-variant-1 ml-auto"
               onClick={handleEditCustomer}
             >
-              Edit profile
+              {isLoading ? (
+                <FontAwesomeIcon icon={faSpinner} className="animate-spin" />
+              ) : (
+                "Edit profile"
+              )}
             </button>
           </div>
         </div>

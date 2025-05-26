@@ -1,6 +1,6 @@
 "use client";
 import { getAllProduct, getProducts } from "@service/product";
-import ProductCard from "@components/UI/ProductCard";
+import ProductCard from "@components/UI/Product/ProductCard";
 import { faEquals } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useRef, useState } from "react";
@@ -120,11 +120,16 @@ export default function Home() {
               ))
             : categories.slice(0, 5).map((item) => (
                 <li
-                  key={item.category_id}
-                  className="hover:font-bold cursor-pointer"
+                  key={item._id}
+                  className=" relative text-sm  p-2 font-semibold bg-primary/50 hover:bg-primary rounded-lg cursor-pointer"
                 >
-                  <Link href={`/search?category=${item.category_id}`}>
+                  <Link href={`/search?category=${item._id}`}>
                     {item.category_name}
+                    {item.discount > 0 && (
+                      <span className="absolute -top-1 -right-2 text-xs bg-green-500 text-white px-2 rounded">
+                        -{item.discount}%
+                      </span>
+                    )}
                   </Link>
                 </li>
               ))}
@@ -141,7 +146,7 @@ export default function Home() {
           : products
               .slice(0, 8)
               .map((item) => (
-                <ProductCard key={item.product_id} product={item} />
+                <ProductCard key={item._id} product={item} />
               ))}
       </ul>
 
@@ -158,17 +163,20 @@ export default function Home() {
               </li>
             ))
           : categories?.slice(0, 4).map((item) => (
-              <li key={item.category_id}>
-                <p className="text-2xl font-semibold my-4">
-                  Products from {item.category_name}
+              <li key={item._id}>
+                <p className="text-2xl font-semibold my-4 flex flex-row gap-2 items-center">
+                  <span>Products from {item.category_name}</span>
+                  {item.discount >0&& (
+                    <span className="text-base bg-green-500 text-white px-2 rounded">
+                      -{item.discount}%
+                    </span>
+                  )}
                 </p>
                 <ul className="w-full overflow-x-scroll no-scrollbar flex flex-row gap-2 shadow-inner">
                   {products
-                    .filter(
-                      (pd) => pd.categories[0]?.category_id === item.category_id
-                    )
+                    .filter((pd) => pd.category._id === item._id)
                     .map((pd) => (
-                      <ProductCard key={pd.product_id} product={pd} />
+                      <ProductCard key={pd._id} product={pd} />
                     ))}
                 </ul>
               </li>

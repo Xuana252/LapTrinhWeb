@@ -1,0 +1,7 @@
+{
+  "customer_id": { "$oid": "680efe26c1c33f9f4981e4ce" },
+  "rating": "4",
+  "feedback": "Good product",
+  "createdAt": { "$date": "2024-05-01T00:00:00.000Z" },
+  "updatedAt": { "$date": "2024-05-01T00:00:00.000Z" }
+}

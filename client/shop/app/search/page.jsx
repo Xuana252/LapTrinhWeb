@@ -1,6 +1,6 @@
 "use client";
 import DropDownButton from "@components/Input/DropDownButton";
-import ProductCard from "@components/UI/ProductCard";
+import ProductCard from "@components/UI/Product/ProductCard";
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSearchParams } from "@node_modules/next/navigation";
@@ -18,9 +18,9 @@ export default function Search() {
   const [products, setProducts] = useState([]);
   const priceRange = [
     { id: 0, name: "none" },
-    { id: 1, name: "<= 10M VNĐ" },
-    { id: 2, name: "> 10M VNĐ, <50M VNĐ" },
-    { id: 3, name: ">= 50M VNĐ" },
+    { id: 1, name: "0 - 10M VNĐ" },
+    { id: 2, name: "10M - 50M VNĐ" },
+    { id: 3, name: "above 50M VNĐ" },
   ];
   const [categories, setCategories] = useState([]);
 

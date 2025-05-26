@@ -1,0 +1,30 @@
+{
+    "user_id": { "$oid": "68149573efa55695535541b4" },
+    "order_item": [
+      {
+        "product_id": { "$oid": "68149933efa55695535541cb" },
+        "quantity": 4,
+        "price": 10000000
+      },
+      {
+        "product_id": { "$oid": "681494bfa7e83a5c84565bad" },
+        "quantity": 10,
+        "price": 290000000
+      }
+    ],
+    "total_price": 40000000,
+    "order_status": "delivered",
+    "address": {
+      "province": "Hanoi",
+      "district": "Cau Giay",
+      "ward": "Dich Vong Hau",
+      "name": "Nguyen Thi Mai",
+      "phone_number": "0912345678",
+      "detailed_address": "123 Ho Tung Mau, Hanoi"
+    },
+    "payment_method": "cod",
+    "createdAt": { "$date": "2025-05-01T00:00:00.000Z" },
+    "updatedAt": { "$date": "2025-05-01T00:00:00.000Z" }
+  }
+  
+

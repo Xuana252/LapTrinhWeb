@@ -1,7 +1,7 @@
 "use client";
 import CheckBox from "@components/Input/CheckBox";
 import CartItem from "@components/UI/CartItem";
-import Divider from "@components/UI/Divider";
+import Divider from "@components/UI/Layout/Divider";
 import { faCheckSquare } from "@fortawesome/free-regular-svg-icons";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,7 +12,7 @@ import {
   updateCartItem,
 } from "@service/cart";
 import { formattedPrice } from "@util/format";
-import { toastSuccess, toastWarning } from "@util/toaster";
+import { toastError, toastSuccess, toastWarning } from "@util/toaster";
 import { useRouter } from "next/navigation";
 import React, { useReducer, useState, useEffect, useContext } from "react";
 
@@ -50,18 +50,9 @@ const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [receipt, dispatch] = useReducer(reducer, {
     subtotal: 0,
-    discount: 0,
     total: 0,
   });
 
-  const deleteItem = (id) => {
-    deleteCartItem(session.customer.customer_id, id);
-    reduxDispatch(
-      removeItem({
-        id: id,
-      })
-    );
-  };
   useEffect(() => {
     session && setCartItems(cart.map((item) => ({ checked: false, ...item })));
   }, [session]);
@@ -70,14 +61,15 @@ const Cart = () => {
     const newSubtotal = cartItems.reduce((acc, item) => {
       return item.checked
         ? acc +
-            (item.product.price -
-              (item.product.price / 100) * item.product.discount) *
+            (item.product_id.price -
+              (item.product_id.price / 100) *
+                (item.product_id.discount +
+                  item.product_id.category.discount)) *
               item.quantity
         : acc;
     }, 0);
 
     dispatch({ type: "change_subtotal", payload: newSubtotal });
-
   }, [cartItems]);
 
   useEffect(() => {
@@ -93,37 +85,52 @@ const Cart = () => {
     const orderItems = cartItems
       .filter((item) => item.checked)
       .map((item) => ({
-        order_id: "",
         product_id: item.product_id,
-        product: item.product,
         quantity: item.quantity,
-        unit_price:
-          item.product.price -
-          (item.product.price / 100) * item.product.discount,
-        total_price:
-          (item.product.price -
-            (item.product.price / 100) * item.product.discount) *
-          item.quantity,
+        price:
+          item.product_id.price -
+          (item.product_id.price / 100) *
+            Math.max(
+              item.product_id.discount + item.product_id.category.discount,
+              0
+            ),
       }));
 
     // Dispatching the order items to Redux
-    reduxDispatch(setOrderItems({ items: orderItems }));
+    reduxDispatch(setOrderItems({ item: orderItems }));
     await reduxDispatch(setOrderStateAsync(1));
     router.push("cart/checkout");
   };
 
   const handleRemoveItem = async (id) => {
-    const newCart = cartItems.filter((item) => item.product_id !== id);
-    deleteItem(id);
-    setCartItems(newCart);
-    toastSuccess("item deleted");
+ 
+    deleteCartItem(session.customer._id, id).then((result) => {
+      if (result) {
+        const newCart = cartItems.filter((item) => item.product_id._id !== id);
+        setCartItems(newCart);
+        reduxDispatch(
+          removeItem({
+            id: id,
+          })
+        );
+        toastSuccess("Item removed");
+      } else {
+        toastError("Failed to remove item");
+      }
+    });
+
   };
 
   const handleRemoveAllItems = async () => {
-    reduxDispatch(removeAllItem());
-    deleteAllCartItem(session.customer.customer_id);
-    setCartItems([]);
-    toastSuccess("items deleted");
+    deleteAllCartItem(session.customer._id).then((result) => {
+      if (result) {
+        setCartItems([]);
+        reduxDispatch(removeAllItem());
+        toastSuccess("Item removed");
+      } else {
+        toastError("Failed to remove item");
+      }
+    });
   };
 
   const setAllCheckState = (checked) => {
@@ -136,7 +143,7 @@ const Cart = () => {
 
   const handleCalculateSubtotal = (id, quantity, checked) => {
     const newCart = cartItems.map((item) => {
-      if (item.product_id === id) {
+      if (item.product_id._id === id) {
         return { ...item, checked, quantity };
       }
       return item;
@@ -153,7 +160,7 @@ const Cart = () => {
           <h3 className="font-bold text-4xl">Cart</h3>
           <button
             className="button-variant-1 text-xs md:text-base"
-            onClick={()=>handleRemoveAllItems()}
+            onClick={() => handleRemoveAllItems()}
           >
             <FontAwesomeIcon icon={faTrash} />
             <span>Remove all</span>
@@ -181,7 +188,7 @@ const Cart = () => {
             <ul className="flex flex-col gap-4 py-4">
               {cartItems?.map((item) => (
                 <CartItem
-                  key={item.product_id}
+                  key={item.product_id._id}
                   reCalculate={handleCalculateSubtotal}
                   cartItem={item}
                   removeItem={handleRemoveItem}
