@@ -11,7 +11,7 @@ const FeedbackTag = ({ feedback, loading = false }) => {
   if (loading)
     return (
       <li
-        className="w-full grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-2 bg-surface p-2 rounded-lg"
+        className="w-full grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-2 bg-surface  p-2 rounded-lg"
       >
         <span className="text-3xl animate-pulse">
           <FontAwesomeIcon icon={faUserCircle} />
@@ -29,7 +29,7 @@ const FeedbackTag = ({ feedback, loading = false }) => {
   return (
     <li
       key={feedback._id}
-      className="w-full grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-2 bg-surface p-2 rounded-lg"
+      className="w-full grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-2 bg-surface text-on-surface p-2 rounded-lg"
     >
       <ProfileImageHolder url={feedback.user_id?.image} size={32}/>
       <div className="flex flex-col gap-2 items-start">

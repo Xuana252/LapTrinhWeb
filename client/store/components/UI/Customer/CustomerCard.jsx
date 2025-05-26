@@ -38,9 +38,7 @@ const CustomerCard = ({ customer, loading }) => {
           <FontAwesomeIcon icon={faCalendar} />{" "}
           {formattedDate(customer.createdAt)}
         </span>
-        <span className="text-green-500 font-semibold">
-          <FontAwesomeIcon icon={faMoneyBill} />{" "}
-          {formattedPrice(customer.revenue)}
+        <span className={`${customer.is_active?"bg-green-500":"bg-red-500"} size-3 rounded-full`}>
         </span>
       </div>
     </Link>

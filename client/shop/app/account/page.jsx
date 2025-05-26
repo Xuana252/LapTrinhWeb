@@ -5,7 +5,11 @@ import PhoneInput from "@components/Input/PhoneInput";
 import RadioButton from "@components/Input/RadioButton";
 import Divider from "@components/UI/Layout/Divider";
 import ProfileImageHolder from "@components/UI/ProfileImageHolder";
-import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSpider,
+  faSpinner,
+  faUserCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getSession, useSession } from "@node_modules/next-auth/react";
 import { getCustomer, patchCustomer } from "@service/customer";
@@ -23,6 +27,7 @@ import { upload } from "@util/generator/uploader";
 
 const Account = () => {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(true);
   const session = useSelector((state) => state.session);
   const fetchFlag = useRef(true);
   const [customer, setCustomer] = useState();
@@ -40,7 +45,11 @@ const Account = () => {
   const handleEditCustomer = async () => {
     if (!session?.customer?._id) return;
     if (checkEmptyInput()) return;
-    const imageUrl = await upload(image.url, session?.customer?._id);
+    setIsLoading(true);
+    let imageUrl = customer.image;
+    if (image.url !== customer.image) {
+      imageUrl = await upload(image.url, session?.customer?._id);
+    }
     const payload = {
       username: customer.username,
       phone_number: customer.phone_number,
@@ -48,7 +57,6 @@ const Account = () => {
     };
     patchCustomer(session.customer._id, payload).then((data) => {
       if (data) {
-        console.log(data);
         dispatch(
           updateSession({
             customer: data,
@@ -58,6 +66,7 @@ const Account = () => {
       } else {
         toastError("Failed to update information");
       }
+      setIsLoading(false);
     });
   };
 
@@ -67,13 +76,14 @@ const Account = () => {
         setImage({ name: data._id, url: data.image });
         setCustomer(data);
       }
+       setIsLoading(false)
     });
   };
 
   useEffect(() => {
-    if(fetchFlag.current && session?.customer?._id) {
+    if (fetchFlag.current && session?.customer?._id) {
       fetchUser();
-      fetchFlag.current = false
+      fetchFlag.current = false;
     }
   }, [session]);
 
@@ -134,10 +144,15 @@ const Account = () => {
 
           <div>
             <button
+              disabled={isLoading}
               className="button-variant-1 ml-auto"
               onClick={handleEditCustomer}
             >
-              Edit profile
+              {isLoading ? (
+                <FontAwesomeIcon icon={faSpinner} className="animate-spin" />
+              ) : (
+                "Edit profile"
+              )}
             </button>
           </div>
         </div>

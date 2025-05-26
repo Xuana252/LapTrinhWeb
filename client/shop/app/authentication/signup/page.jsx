@@ -67,8 +67,10 @@ export default function SignUp() {
 
     setIsLoading(true);
 
+
+
     const result = await singUp(signUpData);
-    if (result) {
+    if (result.success) {
       toastSuccess("Signed up successfully ");
       try {
         const result = await signIn("credentials", {
@@ -88,7 +90,7 @@ export default function SignUp() {
         setIsLoading(false);
       }
     } else {
-      toastError("Signed up failed! Pleased try again");
+      toastError(result.message);
       setIsLoading(false);
     }
   };
@@ -103,9 +105,19 @@ export default function SignUp() {
 
         <div className="flex flex-col gap-10 bg-inherit">
           <InputBox
+            value={newAccount.email}
+            maxLength={50}
+            onChange={(v) => setNewAccount((prev) => ({ ...prev, email: v }))}
+            name={"email"}
+          />
+          <InputBox
             value={newAccount.username}
+            maxLength={20}
             onChange={(v) =>
-              setNewAccount((prev) => ({ ...prev, username: v }))
+              setNewAccount((prev) => ({
+                ...prev,
+                username: v.replace(" ", "_"),
+              }))
             }
             name={"username"}
           />
@@ -117,12 +129,9 @@ export default function SignUp() {
             }
             name={"phone number"}
           />
-          <InputBox
-            value={newAccount.email}
-            onChange={(v) => setNewAccount((prev) => ({ ...prev, email: v }))}
-            name={"email"}
-          />
+
           <PasswordInput
+            maxLength={50}
             value={newAccount.password}
             onChange={(v) =>
               setNewAccount((prev) => ({ ...prev, password: v }))
@@ -130,6 +139,7 @@ export default function SignUp() {
             name={"password"}
           />
           <PasswordInput
+            maxLength={50}
             value={newAccount.repeatpassword}
             onChange={(v) =>
               setNewAccount((prev) => ({ ...prev, repeatpassword: v }))

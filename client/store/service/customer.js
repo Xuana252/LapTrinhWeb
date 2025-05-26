@@ -26,7 +26,13 @@ export const getCustomer = async (id) => {
 export const banCustomer = async (id) => {
   if (process.env.DEV_ENV !== "production") return true;
   try {
-    const response = await fetch(`${process.env.APP_URL}/users/ban/${id}`);
+    const response = await fetch(`${process.env.APP_URL}/users/${id}/ban`,{
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+    });
     if (response.ok) {
       return true;
     } else {
@@ -43,23 +49,23 @@ export const getAllCustomers = async (
   page,
   searchText,
   dateSort,
-  revenueSort
+  banFilter
 ) => {
   if (process.env.DEV_ENV !== "production")
     return generateDummyCustomersData(20);
   try {
     const response = await fetch(
-      `${process.env.APP_URL}/users?page=${page}&limit=${limit}&searchText=${searchText}&dateSort=${dateSort}&revenueSort=${revenueSort}`
+      `${process.env.APP_URL}/users?page=${page}&limit=${limit}&searchText=${searchText}&dateSort=${dateSort}&banFilter=${banFilter}`
     );
     if (response.ok) {
       const data = await response.json();
       return data;
     } else {
-      return [];
+      return {users: [], count: 0};
     }
   } catch (error) {
     console.log(error);
-    return [];
+    return {users: [], count: 0};
   }
 };
 
@@ -81,18 +87,17 @@ export const getCustomerRevenue = async (id) => {
 };
 
 export const getCustomerData = async () => {
-  return generateMockUserData();
-  // if (process.env.DEV_ENV !== "production") return generateMockUserData();
-  // try {
-  //   const response = await fetch(`${process.env.APP_URL}/customers`);
-  //   if (response.ok) {
-  //     const data = await response.json();
-  //     return data;
-  //   } else {
-  //     return [];
-  //   }
-  // } catch (error) {
-  //   console.log(error);
-  //   return [];
-  // }
+  if (process.env.DEV_ENV !== "production") return generateMockUserData();
+  try {
+    const response = await fetch(`${process.env.APP_URL}/users/monthlyUser`);
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 };

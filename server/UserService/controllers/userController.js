@@ -1,4 +1,5 @@
 const User = require("../models/UserModel");
+const Order = require("../models/OrderModel");
 const Product = require("../models/ProductModel");
 const asyncHandler = require("express-async-handler");
 const { json } = require("express");
@@ -9,25 +10,37 @@ const { default: mongoose } = require("mongoose");
 
 const getAllUser = asyncHandler(async (req, res) => {
   const {
-    page = 1,
-    limit = 10,
-    sortBy = "createdAt",
-    sortUser = -1,
+    page = "1",
+    limit = "10",
+    searchText = "",
+    dateSort = "1",
+    banFilter = "0",
   } = req.query;
+  const pageNum = parseInt(page);
+  const limitNum = parseInt(limit);
+  const dateSortNum = parseInt(dateSort);
+  const banFilterNum = parseInt(banFilter);
 
-  const skip = (page - 1) * limit;
+  const skip = (pageNum - 1) * limitNum;
 
-  const sortOptions = {
-    [sortBy]: Number(sortUser),
+  const query = {
+    $or: [
+      { username: { $regex: searchText, $options: "i" } },
+      { email: { $regex: searchText, $options: "i" } },
+    ],
   };
 
-  const users = await User.find()
-    .sort(sortOptions)
+  if (banFilterNum !== 0) {
+    query.is_active = banFilterNum === 1;
+  }
+
+  const users = await User.find(query)
+    .sort({ createdAt: dateSortNum })
     .skip(skip)
-    .limit(parseInt(limit))
+    .limit(limitNum)
     .select("-__v -password -notification -cart -address");
 
-  const count = await User.countDocuments();
+  const count = await User.countDocuments(query);
 
   res.status(200).json({ count: count, users });
 });
@@ -151,7 +164,7 @@ const updateUser = asyncHandler(async (req, res) => {
 
   if (!result) return res.status(404).json({ message: "Không tìm thấy user" });
 
-  res.status(200).json({ user: result, message: "cập nhật thành công" });
+  res.status(200).json(result);
 });
 
 const login = asyncHandler(async (req, res) => {
@@ -183,8 +196,7 @@ const signup = asyncHandler(async (req, res) => {
   const { email, password, username, phone_number } = req.body;
 
   const checkUser = await User.findOne({ email });
-  if (checkUser)
-    return res.status(400).json({ message: "tài khoản đã tồn tại" });
+  if (checkUser) return res.status(400).json({ message: "Email đã tồn tại" });
 
   const user = await User.create({
     email,
@@ -218,6 +230,74 @@ const changePassword = asyncHandler(async (req, res) => {
   }
 });
 
+const getMonthlyUser = asyncHandler(async (req, res) => {
+  const now = new Date();
+  const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const endOfDay = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate() + 1
+  );
+
+  const total = await User.countDocuments();
+
+  const today = await User.countDocuments({
+    createdAt: { $gte: startOfDay, $lt: endOfDay },
+  });
+
+  const banned = await User.countDocuments({
+    is_active: false,
+  });
+
+  const monthlyRaw = await User.aggregate([
+    {
+      $group: {
+        _id: {
+          year: { $year: "$createdAt" },
+          month: { $month: "$createdAt" },
+        },
+        count: { $sum: 1 },
+      },
+    },
+    { $sort: { "_id.year": 1, "_id.month": 1 } },
+  ]);
+
+  const monthlyMap = {};
+  for (const m of monthlyRaw) {
+    const key = `${m._id.year}-${m._id.month}`;
+    monthlyMap[key] = {
+      _id: m._id,
+      count: m.count,
+    };
+  }
+
+  const start = new Date(2024, 7);
+  const end = new Date(now.getFullYear(), now.getMonth());
+
+  const formattedMonthly = [];
+  let current = new Date(start);
+
+  while (current <= end) {
+    const year = current.getFullYear();
+    const month = current.getMonth() + 1; // Convert to 1-based
+    const key = `${year}-${month}`;
+
+    formattedMonthly.push(
+      monthlyMap[key] || {
+        _id: { year, month },
+        count: 0,
+      }
+    );
+
+    // Go to next month
+    current.setMonth(current.getMonth() + 1);
+  }
+
+  return res
+    .status(200)
+    .json({ total, today, banned, monthly: formattedMonthly });
+});
+
 module.exports = {
   getAllUser,
   getUser,
@@ -230,4 +310,5 @@ module.exports = {
   login,
   signup,
   changePassword,
+  getMonthlyUser,
 };

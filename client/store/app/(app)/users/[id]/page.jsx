@@ -33,12 +33,11 @@ const UserInfo = () => {
       banCustomer(customer._id).then((res) => {
         if (res) {
           toastSuccess(`Customer ${customer?.is_active ? "ban" : "unban"}ned`);
-          setUser((prev) => ({ ...prev, is_active: false }));
+          setUser((prev) => ({ ...prev, is_active: !prev.is_active }));
         } else {
           toastError(
             `Failed to  ${customer?.is_active ? "ban" : "unban"} customer`
           );
-          setUser((prev) => ({ ...prev, is_active: true }));
         }
       });
       setTimeout(() => setIsLoading(false), 1000);
@@ -93,11 +92,16 @@ const UserInfo = () => {
               <FontAwesomeIcon icon={faPhone} /> {customer?.phone_number}
             </span>
           </div>
-          <div className="panel-4 text-right">
+          <div className="panel-4 text-right flex items-center justify-between gap-2">
             <span>
               <FontAwesomeIcon icon={faCalendar} />{" "}
               {formattedDate(customer?.createdAt)}
             </span>
+            <span
+              className={`size-3 rounded-full ${
+                customer?.is_active ? "bg-green-500" : "bg-red-500"
+              }`}
+            ></span>
           </div>
         </div>
       </div>

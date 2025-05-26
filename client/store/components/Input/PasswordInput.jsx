@@ -40,7 +40,7 @@ const PasswordInput = ({ value, name,onChange }) => {
             autoComplete="new-password"
             onChange={onTextChange}
           />
-          <button className='p-2' onClick={(e)=>{e.preventDefault();setIsVisible(prev=>!prev)}}>
+          <button className='p-2' type="button" tabIndex={-1} onClick={(e)=>{e.preventDefault();setIsVisible(prev=>!prev)}}>
             <FontAwesomeIcon icon={isVisible?faEye:faEyeSlash}/>
           </button>
       </div>

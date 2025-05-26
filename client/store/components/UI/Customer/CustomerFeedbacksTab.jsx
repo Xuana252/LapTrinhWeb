@@ -120,7 +120,7 @@ export default function CustomerFeedbacksTab({ id }) {
               ))}
       </ul>
       {/* page selector */}
-      <ul className="flex my-4 gap-2 flex-row items-center justify-center bg-background/20 backdrop-blur-sm rounded-xl size-fit m-auto">
+      <ul className="flex my-4 gap-2 flex-row items-center justify-center bg-background/20 backdrop-blur-sm rounded-xl size-fit m-auto text-on-surface">
         <button
           className="p-2 rounded-lg hover:bg-surface active:bg-secondary-variant/20 text-lg size-10"
           onClick={() => setPage(Math.max(page - 1, 1))}

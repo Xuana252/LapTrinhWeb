@@ -30,7 +30,7 @@ import { getAllCustomers } from "@service/customer";
 import React, { useEffect, useState } from "react";
 
 const User = () => {
-  const USER_LIMIT = 18;
+  const USER_LIMIT = 10;
   const [isLoading, setIsLoading] = useState(true);
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
@@ -39,8 +39,8 @@ const User = () => {
   const [pendingText, setPendingText] = useState("");
   const [searchText, setSearchText] = useState("");
 
-  const [dateSort, setDateSort] = useState(0);
-  const [revenueSort, setRevenueSort] = useState(0);
+  const [dateSort, setDateSort] = useState(-1);
+  const [banFilter, setBanFilter] = useState(0);
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -54,9 +54,9 @@ const User = () => {
 
   const fetchUsers = async () => {
     setIsLoading(true);
-    getAllCustomers(USER_LIMIT, page, searchText, revenueSort, dateSort)
+    getAllCustomers(USER_LIMIT, page, searchText, dateSort, banFilter)
       .then((res) => {
-        setUsers(res.data);
+        setUsers(res.users);
         setCount(res.count);
       })
       .catch((err) => {
@@ -67,19 +67,16 @@ const User = () => {
 
   useEffect(() => {
     fetchUsers();
-  }, [dateSort, revenueSort, page,searchText]);
+  }, [dateSort, page,banFilter,searchText, searchText]);
 
   useEffect(() => {
     setPage(1);
-  }, [searchText]);
+  }, [searchText,banFilter]);
 
   return (
     <div className="flex flex-col gap-4">
       <div className="title">
         <FontAwesomeIcon icon={faBox} /> Users
-      </div>
-      <div className="flex-wrap-reverse gap-4 flex items-center justify-end h-fit shadow-lg rounded-xl w-full bg-surface py-2 px-4 panel-3">
-        <h2 className="text-lg mr-auto font-bold">{users.length} users</h2>
       </div>
       <UsersSection />
       <div className="panel-3">
@@ -101,27 +98,26 @@ const User = () => {
       </div>
       {/* filter */}
       <div className="flex-wrap-reverse gap-4 flex items-center justify-end h-fit shadow-lg rounded-xl w-full bg-surface py-2 px-4 panel-3">
-        <h2 className="text-lg mr-auto font-bold">{users.length} results</h2>
+        <h2 className="text-lg mr-auto font-bold">{count} results</h2>
         <div className="flex flex-wrap gap-4 panel-3">
           <FilterButton
             name={"join date"}
             icon={faSort}
             option={[
-              { text: "All", value: 0, icon: faCalendar },
-              { text: "Oldest", value: 1, icon: faArrowDownAZ },
               { text: "Latest", value: -1, icon: faArrowUpAZ },
+              { text: "Oldest", value: 1, icon: faArrowDownAZ },
             ]}
             onChange={setDateSort}
           />
           <FilterButton
-            name={"revenue"}
+            name={"active"}
             icon={faSort}
             option={[
               { text: "All", value: 0, icon: faMoneyBill },
-              { text: "Desc", value: -1, icon: faSortNumericDesc },
-              { text: "Asc", value: 1, icon: faSortNumericAsc },
+              { text: "Banned", value: -1, icon: faSortNumericDesc },
+              { text: "Active", value: 1, icon: faSortNumericAsc },
             ]}
-            onChange={setRevenueSort}
+            onChange={setBanFilter}
           />
         </div>
       </div>
@@ -131,9 +127,9 @@ const User = () => {
           ? Array.from({ length: USER_LIMIT }).map((_, index) => (
               <CustomerCard key={index} loading={true} />
             ))
-          : users
-              .slice((page - 1) * USER_LIMIT, page * USER_LIMIT)
-              .map((item) => <CustomerCard key={item._id} customer={item} />)}
+          : users?.map((item) => (
+              <CustomerCard key={item._id} customer={item} />
+            ))}
       </ul>
       {/* page selector */}
       <Pagination

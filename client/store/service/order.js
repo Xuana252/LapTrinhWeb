@@ -6,6 +6,7 @@ import {
   generateMockOrderData,
   generateMockRevenueData,
 } from "@util/generator/order";
+import { count } from "console";
 
 export const getOrder = async (id) => {
   if (process.env.DEV_ENV !== "production") return generateDummyOrderData();
@@ -30,13 +31,13 @@ export const getCustomerOrders = async (id) => {
     const response = await fetch(`${process.env.APP_URL}/orders/customer/${id}`);
     if (response.ok) {
       const data = await response.json();
-      return data;
+      return {data:data,count: data.length};
     } else {
-      return [];
+      return {data:[], count: 0};
     }
   } catch (error) {
     console.log(error);
-    return [];
+    return {data:[], count: 0};
   }
 };
 

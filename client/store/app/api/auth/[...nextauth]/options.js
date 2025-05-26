@@ -2,7 +2,7 @@ import { NextAuthOptions, Session } from "next-auth";
 import CredentialsProvider, {
   CredentialInput,
 } from "next-auth/providers/credentials";
-// import jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 export const options = {
   providers: [
@@ -27,17 +27,21 @@ export const options = {
         // Basic hardcoded check
         if (email === "admin@gmail.com" && password === "admin123") {
           return {
-            id: "1", // or any unique identifier
+            id: "1", 
             name: "Admin User",
             email: "admin@gmail.com",
-            // accessToken: jwt.sign(
-            //   mockTokenPayload1,
-            //   process.env.NEXTAUTH_SECRET,
-            //   {
-            //     expiresIn: "30d",
-            //   }
-            // ),
-            // expires_in: 3600 * 24 * 30,
+            accessToken: jwt.sign(
+              {
+                id: "1", 
+                name: "Admin User",
+                email: "admin@gmail.com",
+              },
+              process.env.NEXTAUTH_SECRET,
+              {
+                expiresIn: "30d",
+              }
+            ),
+            expires_in: 3600 * 24 * 30,
           };
         }
 

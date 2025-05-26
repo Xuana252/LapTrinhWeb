@@ -11,8 +11,12 @@ const {
   getAddress,
   updatedAddress,
   changePassword,
+  getMonthlyUser
 } = require("../controllers/userController");
 const router = express.Router();
+
+
+router.get("/monthlyUser",getMonthlyUser);
 
 router.get("/:userId/address/", getAddress);
 router.post("/:userId/address/", addAddress);

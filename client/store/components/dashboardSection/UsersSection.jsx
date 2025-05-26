@@ -13,6 +13,7 @@ import {
   faTrophy,
   faUserAltSlash,
   faUsers,
+  faBan,
 } from "@node_modules/@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@node_modules/@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
@@ -66,6 +67,14 @@ export default function UsersSection() {
             </span>
             <span className="font-mono text-2xl font-bold">
               {formatNumber(data?.total ?? null) ?? <NumberLoader />}
+            </span>
+          </div>
+            <div className="panel-4 grow flex flex-col items-start">
+            <span>
+              <FontAwesomeIcon icon={faBan} /> Banned
+            </span>
+            <span className="font-mono text-2xl font-bold">
+              {formatNumber(data?.banned ?? null) ?? <NumberLoader />}
             </span>
           </div>
           <div className="panel-4 grow flex flex-col items-start">
@@ -137,7 +146,7 @@ export default function UsersSection() {
                     <span className="font-mono text-2xl font-bold">
                       {formatNumber(peak.count)}
                     </span>
-                    <span className="font-mono text-sm text-primary/80 ml-auto mt-auto">
+                    <span className="font-mono text-xs text-on-surface/60 ml-auto mt-auto">
                       {peak._id.year}/{peak._id.month}
                     </span>
                   </>

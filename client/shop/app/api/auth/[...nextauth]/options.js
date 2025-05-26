@@ -52,7 +52,6 @@ export const options = {
         // If the login is successful
         if (data && data.token) {
           const decodedToken = jwt.decode(data.token);
-          console.log(decodedToken)
           const userId = decodedToken?.id;
 
           if (!userId) {
