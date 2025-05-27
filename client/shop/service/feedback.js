@@ -26,7 +26,7 @@ export const addFeedback = async (payload) => {
     const response = await fetch(
       `${process.env.APP_URL}/products/feedback/${payload.product_id}`,
       {
-        method: "POST",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
