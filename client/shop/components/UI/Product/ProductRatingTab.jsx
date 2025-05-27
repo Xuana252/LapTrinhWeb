@@ -38,32 +38,31 @@ const ProductRatingTab = ({ id }) => {
       return;
     }
 
-    const newFeedback = {
-      product_id: id,
-      customer_id: session.customer.customer_id,
+    const payload = {
+      customer_id: session.customer._id,
       feedback: feedback.content,
       rating: feedback.rating,
     };
 
-    await addFeedback(newFeedback).then((data) => {
-      if (data) {
+    await addFeedback(id,payload).then((data) => {
+      if (data.feedback) {
         setProductFeedBacks((prev) => {
           const existingFeedbackIndex = prev.findIndex(
-            (feedbackItem) => feedbackItem.feedback_id === data.feedback_id
+            (feedbackItem) => feedbackItem._id === data.feedback._id
           );
 
           if (existingFeedbackIndex >= 0) {
             // Feedback exists, replace it
             const updatedFeedbacks = [...prev];
-            updatedFeedbacks[existingFeedbackIndex] = data;
+            updatedFeedbacks[existingFeedbackIndex] = data.feedback;
             return updatedFeedbacks;
           } else {
             // Feedback does not exist, add it
-            return [...prev, data];
+            return [...prev, data.feedback];
           }
         });
         setFeedback({ content: "", rating: 0 });
-        switch (data.rating) {
+        switch (data.feedback.rating) {
           case 0:
             toastSuccess(
               "We are sorry to hear you had a bad experience. Thank you for your feedback."
@@ -101,7 +100,7 @@ const ProductRatingTab = ({ id }) => {
             break;
         }
       } else {
-        toastError("Failed to add feedback");
+        toastError(data.message || "Failed to add feedback");
       }
     });
   };
