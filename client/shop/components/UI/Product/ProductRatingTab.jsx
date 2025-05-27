@@ -39,7 +39,7 @@ const ProductRatingTab = ({ id }) => {
     }
 
     const newFeedback = {
-      product_id: params.id,
+      product_id: id,
       customer_id: session.customer.customer_id,
       feedback: feedback.content,
       rating: feedback.rating,
