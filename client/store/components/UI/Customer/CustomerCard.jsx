@@ -20,7 +20,10 @@ const CustomerCard = ({ customer, loading }) => {
       </div>
     );
   return (
-    <Link href={`users/${customer._id}`} className="flex flex-col rounded bg-surface/60 hover:bg-surface shadow-md p-2 gap-4">
+    <Link
+      href={`users/${customer._id}`}
+      className="flex flex-col rounded bg-surface/60 hover:bg-surface shadow-md p-2 gap-4"
+    >
       <div className="flex flex-row gap-2 items-center ">
         <ProfileImageHolder url={customer?.image} size={32} />
 
@@ -38,8 +41,11 @@ const CustomerCard = ({ customer, loading }) => {
           <FontAwesomeIcon icon={faCalendar} />{" "}
           {formattedDate(customer.createdAt)}
         </span>
-        <span className={`${customer.is_active?"bg-green-500":"bg-red-500"} size-3 rounded-full`}>
-        </span>
+        <span
+          className={`${
+            customer.is_active ? "bg-green-500" : "bg-red-500"
+          } size-3 rounded-full`}
+        ></span>
       </div>
     </Link>
   );

@@ -13,7 +13,7 @@ const getAllUser = asyncHandler(async (req, res) => {
     page = "1",
     limit = "10",
     searchText = "",
-    dateSort = "1",
+    dateSort = "-1",
     banFilter = "0",
   } = req.query;
   const pageNum = parseInt(page);

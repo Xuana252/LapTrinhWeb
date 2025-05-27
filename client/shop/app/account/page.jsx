@@ -76,7 +76,7 @@ const Account = () => {
         setImage({ name: data._id, url: data.image });
         setCustomer(data);
       }
-       setIsLoading(false)
+      setIsLoading(false);
     });
   };
 
