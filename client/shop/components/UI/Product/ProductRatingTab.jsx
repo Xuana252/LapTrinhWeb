@@ -13,7 +13,7 @@ import ProfileImageHolder from "../ProfileImageHolder";
 const ProductRatingTab = ({ id }) => {
   const session = useSelector((state) => state.session);
   const [productFeedbacks, setProductFeedBacks] = useState([]);
-  const [feedback, setFeedback] = useState({ rating: 1, content: "" });
+  const [feedback, setFeedback] = useState({ rating: 0, content: "" });
   const [feedbackFilter, setFeedbackFilter] = useState(-1);
   const [isLoading, setIsLoading] = useState(true);
   const productRating =
