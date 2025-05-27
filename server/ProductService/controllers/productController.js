@@ -1,6 +1,7 @@
 const Product = require("../models/ProductModel");
 const User = require("../models/UserModel");
 const Order = require("../models/OrderModel");
+const ProductFeedback = require("../models/ProductFeedback");
 const asyncHandler = require("express-async-handler");
 const mongoose = require("mongoose");
 
@@ -464,19 +465,14 @@ const createProduct = asyncHandler(async (req, res) => {
   }
 });
 
-
 const updateProduct = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
 
-    const product = await Product.findByIdAndUpdate(
-      id,
-      req.body,
-      {
-        new: true,
-      }
-    );
-    
+    const product = await Product.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+
     if (!product) {
       res
         .status(404)
@@ -512,6 +508,10 @@ const deleteProduct = asyncHandler(async (req, res) => {
         },
       }
     );
+
+    await ProductFeedback.deleteMany({
+      product_id: new mongoose.Types.ObjectId(id),
+    });
 
     const product = await Product.findByIdAndDelete(id);
     if (!product) {
