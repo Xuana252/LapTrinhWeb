@@ -8,7 +8,7 @@ const getProductFeedback = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     const feedbacks = await ProductFeedback.find({ product_id: id })
-      .populate("user_id")
+      .populate("user_id", "image email createdAt username is_active _id")
       .sort({ createdAt: -1 });
 
     res.status(200).json(feedbacks);
@@ -31,6 +31,11 @@ const createProductFeedback = asyncHandler(async (req, res) => {
       return;
     }
 
+    user_id = new mongoose.Types.ObjectId(customer_id);
+    if (!user_id) {
+      res.status(400).json({ message: "Invalid user ID" });
+    }
+
     const order = await Order.findOne({
       user_id: customer_id,
       "order_item.product_id": id,
@@ -47,7 +52,7 @@ const createProductFeedback = asyncHandler(async (req, res) => {
     const existingFeedback = await ProductFeedback.findOne({
       product_id: id,
       user_id: customer_id,
-    });
+    }).populate("user_id", "image email createdAt username is_active _id");
 
     if (existingFeedback) {
       existingFeedback.rating = rating;
@@ -55,9 +60,12 @@ const createProductFeedback = asyncHandler(async (req, res) => {
       await existingFeedback.save();
       res.status(200).json(existingFeedback);
     } else {
+      const user = await User.findById(user_id).select(
+        "image email createdAt username is_active _id"
+      );
       const newFeedback = await ProductFeedback.create({
         product_id: id,
-        user_id: customer_id,
+        user_id: user,
         feedback: feedback,
         rating: rating,
       });
