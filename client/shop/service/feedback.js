@@ -24,7 +24,7 @@ export const addFeedback = async (payload) => {
   if(process.env.DEV_ENV !=="production") return payload
   try {
     const response = await fetch(
-      `${process.env.APP_URL}/feedback/${payload.product_id}`,
+      `${process.env.APP_URL}/products/feedback/${payload.product_id}`,
       {
         method: "POST",
         headers: {
