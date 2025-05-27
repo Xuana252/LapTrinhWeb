@@ -35,7 +35,7 @@ export default function Search() {
   const fetchCategories = () => {
     getAllCategory().then((data) => {
       const formattedCategories = data.map((cate) => ({
-        id: cate.category_id,
+        id: cate._id,
         name: cate.category_name,
       }));
       setCategories([{ id: 0, name: "none" }, ...formattedCategories]);
@@ -71,7 +71,7 @@ export default function Search() {
 
   const filteredProducts = products.filter((item) => {
     const matchesCategory = selectedCategory && selectedCategory.id !==0
-      ? item.categories[0]?.category_id === selectedCategory.id
+      ? item.category?._id === selectedCategory.id
       : true;
     const matchesPriceRange = isWithinPriceRange(item.price);
 
@@ -110,7 +110,7 @@ export default function Search() {
           : filteredProducts
               .slice((page - 1) * PRODUCT_LIMIT, page * PRODUCT_LIMIT)
               .map((item) => (
-                <ProductCard key={item.product_id} product={item} />
+                <ProductCard key={item._id} product={item} />
               ))}
       </ul>
       {/* page selector */}
