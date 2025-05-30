@@ -1,6 +1,10 @@
 "use client";
 import { formattedPrice } from "@util/format";
-import { getProductDetail, getAllProduct, createProduct } from "@service/product";
+import {
+  getProductDetail,
+  getAllProduct,
+  createProduct,
+} from "@service/product";
 
 import ProductCard from "@components/UI/Product/ProductCard";
 import ReviewStar from "@components/UI/ReviewStar";
@@ -67,7 +71,6 @@ const AddProduct = () => {
         category_id: product.category_id,
       };
 
-
       createProduct(payload).then((res) => {
         if (res) toastSuccess("Product created successfully");
         else toastError("Failed to create product");
@@ -82,7 +85,11 @@ const AddProduct = () => {
     getAllCategory()
       .then((res) => {
         setCategories(res);
-        changeProductCategory(res[0]._id);
+        setProduct((prev) => ({
+          ...prev,
+          category: res[0],
+          category_id: res[0]._id,
+        }));
       })
       .catch((err) => {
         console.log(err);
@@ -147,9 +154,7 @@ const AddProduct = () => {
                   product?.price -
                     (product?.price / 100) *
                       Math.min(
-                        product?.discount ??
-                          0 + product?.category?.discount ??
-                          0,
+                        product?.discount + (product?.category?.discount ?? 0),
                         100
                       )
                 )}
