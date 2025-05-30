@@ -61,7 +61,7 @@ const createProductFeedback = asyncHandler(async (req, res) => {
       await existingFeedback.save();
       res.status(200).json(existingFeedback);
     } else {
-      const user = await User.findById(user_id).select(
+      const user = await User.findById(userid).select(
         "image email createdAt username is_active _id"
       );
       const newFeedback = await ProductFeedback.create({
