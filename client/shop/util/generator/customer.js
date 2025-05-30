@@ -27,7 +27,7 @@ export const generateDummyCustomerData = (id) => {
     _id: id || `customer-${Math.floor(Math.random() * 100000)}`,
     email: randomEmail(),
     username: randomUsername(),
-    is_active: Math.random() >= 0.5,
+    is_active: true,
     phone_number: randomPhoneNumber(),
     createdAt: new Date(
       new Date().getTime() - Math.floor(Math.random() * 3.154e10)

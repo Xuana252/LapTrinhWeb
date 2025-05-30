@@ -2,13 +2,13 @@
 import jwt from "jsonwebtoken";
 
 const mockTokenPayload1 = {
-  _id: "68149573efa55695535541b4",
+  id: "68149573efa55695535541b4",
   email: "john.doe@gmail.com",
   name: "John Doe",
 };
 
 const mockTokenPayload2 = {
-  _id: "6821a22f8ce982d1e5e8e2d2",
+  id: "6821a22f8ce982d1e5e8e2d2",
   email: "john.moe@gmail.com",
   name: "John Moe",
 };

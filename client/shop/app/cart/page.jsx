@@ -90,9 +90,9 @@ const Cart = () => {
         price:
           item.product_id.price -
           (item.product_id.price / 100) *
-            Math.max(
+            Math.min(
               item.product_id.discount + item.product_id.category.discount,
-              0
+              100
             ),
       }));
 
@@ -103,7 +103,6 @@ const Cart = () => {
   };
 
   const handleRemoveItem = async (id) => {
- 
     deleteCartItem(session.customer._id, id).then((result) => {
       if (result) {
         const newCart = cartItems.filter((item) => item.product_id._id !== id);
@@ -118,7 +117,6 @@ const Cart = () => {
         toastError("Failed to remove item");
       }
     });
-
   };
 
   const handleRemoveAllItems = async () => {
