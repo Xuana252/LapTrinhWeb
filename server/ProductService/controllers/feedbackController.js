@@ -31,13 +31,13 @@ const createProductFeedback = asyncHandler(async (req, res) => {
       return;
     }
 
-    user_id = new mongoose.Types.ObjectId(customer_id);
-    if (!user_id) {
+    const userid = new mongoose.Types.ObjectId(customer_id);
+    if (!userid) {
       res.status(400).json({ message: "Invalid user ID" });
     }
 
     const order = await Order.findOne({
-      user_id: customer_id,
+      user_id: userid,
       "order_item.product_id": id,
       order_status: "delivered",
     });
@@ -51,7 +51,7 @@ const createProductFeedback = asyncHandler(async (req, res) => {
 
     const existingFeedback = await ProductFeedback.findOne({
       product_id: id,
-      user_id: customer_id,
+      user_id: userid,
     }).populate("user_id", "image email createdAt username is_active _id");
 
     if (existingFeedback) {
@@ -65,11 +65,11 @@ const createProductFeedback = asyncHandler(async (req, res) => {
       );
       const newFeedback = await ProductFeedback.create({
         product_id: id,
-        user_id: user,
+        user_id: userid,
         feedback: feedback,
         rating: rating,
       });
-      res.status(201).json(newFeedback);
+      res.status(201).json({...newFeedback, user_id: user });
     }
   } catch (error) {
     res.status(500);
