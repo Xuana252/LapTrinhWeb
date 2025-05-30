@@ -1,0 +1,20 @@
+[{
+  "_id": {
+    "$oid": "6814a08c42e5920f62b4289f"
+  },
+  "product_id": {
+    "$oid": "68149933efa55695535541cb"
+  },
+  "user_id": {
+    "$oid": "68149573efa55695535541b4"
+  },
+  "feedback": "Good product",
+  "rating": 5,
+  "createdAt": {
+    "$date": "2025-05-02T10:38:04.511Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-02T10:38:04.511Z"
+  },
+  "__v": 0
+}]

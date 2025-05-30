@@ -70,7 +70,7 @@ const createProductFeedback = asyncHandler(async (req, res) => {
         feedback: feedback,
         rating: rating,
       });
-      res.status(201).json({...newFeedback, user_id: user });
+      res.status(201).json({...newFeedback.toJSON(), user_id: user });
     }
   } catch (error) {
     res.status(500);

@@ -1,0 +1,466 @@
+[{
+  "_id": {
+    "$oid": "680f1d2cc1c33f9f4981e4e7"
+  },
+  "user_id": {
+    "$oid": "68149573efa55695535541b4"
+  },
+  "order_item": [
+    {
+      "product_id": {
+        "$oid": "68149933efa55695535541cb"
+      },
+      "quantity": 2,
+      "price": 10000000
+    },
+    {
+      "product_id": {
+        "$oid": "681494bfa7e83a5c84565bad"
+      },
+      "quantity": 1,
+      "price": 29000000
+    }
+  ],
+  "total_price": 40000000,
+  "order_status": "shipped",
+  "address": {
+    "province": "Hanoi",
+    "district": "Cau Giay",
+    "ward": "Dich Vong Hau",
+    "name": "Nguyen Thi Mai",
+    "phone_number": "0912345678",
+    "detailed_address": "123 Ho Tung Mau, Hanoi"
+  },
+  "payment_method": "cod",
+  "createdAt": {
+    "$date": "2025-04-28T12:34:56.789Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-20T06:56:42.851Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6814c10defa55695535541e9"
+  },
+  "user_id": {
+    "$oid": "68149573efa55695535541b4"
+  },
+  "order_item": [
+    {
+      "product_id": {
+        "$oid": "68149933efa55695535541cb"
+      },
+      "quantity": 4,
+      "price": 10000000
+    },
+    {
+      "product_id": {
+        "$oid": "681494bfa7e83a5c84565bad"
+      },
+      "quantity": 10,
+      "price": 290000000
+    }
+  ],
+  "total_price": 40000000,
+  "order_status": "delivered",
+  "address": {
+    "province": "Hanoi",
+    "district": "Cau Giay",
+    "ward": "Dich Vong Hau",
+    "name": "Nguyen Thi Mai",
+    "phone_number": "0912345678",
+    "detailed_address": "123 Ho Tung Mau, Hanoi"
+  },
+  "payment_method": "cod",
+  "createdAt": {
+    "$date": "2025-05-01T00:00:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-05T09:25:42.292Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "68188085e975d436de633125"
+  },
+  "user_id": {
+    "$oid": "68149573efa55695535541b4"
+  },
+  "order_item": [
+    {
+      "product_id": {
+        "$oid": "681494bfa7e83a5c84565bad"
+      },
+      "quantity": 10,
+      "price": 1000000
+    }
+  ],
+  "total_price": 20000000,
+  "order_status": "delivered",
+  "address": {
+    "province": "Hanoi",
+    "district": "Cau Giay",
+    "ward": "Dich Vong Hau",
+    "name": "Nguyen Thi Mai",
+    "phone_number": "0912345678",
+    "detailed_address": "123 Ho Tung Mau, Hanoi"
+  },
+  "payment_method": "cod",
+  "createdAt": {
+    "$date": "2025-05-04T00:00:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-05T09:25:42.292Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "682bd3a28dad317dfdcab691"
+  },
+  "user_id": {
+    "$oid": "68149573efa55695535541b4"
+  },
+  "order_item": [
+    {
+      "product_id": {
+        "$oid": "681494bfa7e83a5c84565bad"
+      },
+      "quantity": 2,
+      "price": 150000
+    },
+    {
+      "product_id": {
+        "$oid": "681494caa7e83a5c84565baf"
+      },
+      "quantity": 1,
+      "price": 250000
+    }
+  ],
+  "total_price": 150000,
+  "order_status": "pending",
+  "address": {
+    "province": "Hanoi",
+    "district": "Cau Giay",
+    "ward": "Dich Vong Hau",
+    "name": "Nguyen Thi Mai",
+    "phone_number": "0912345678",
+    "detailed_address": "123 Ho Tung Mau, Hanoi"
+  },
+  "payment_method": "cod",
+  "createdAt": {
+    "$date": "2025-05-20T00:58:10.663Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-20T00:58:10.663Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "682bfedca22be236c2d8e20f"
+  },
+  "user_id": {
+    "$oid": "68149573efa55695535541b4"
+  },
+  "order_item": [
+    {
+      "product_id": {
+        "$oid": "681494bfa7e83a5c84565bad"
+      },
+      "quantity": 12,
+      "price": 150000
+    },
+    {
+      "product_id": {
+        "$oid": "681494caa7e83a5c84565baf"
+      },
+      "quantity": 1,
+      "price": 250000
+    }
+  ],
+  "total_price": 1500000,
+  "order_status": "pending",
+  "address": {
+    "province": "Hanoi",
+    "district": "Cau Giay",
+    "ward": "Dich Vong Hau",
+    "name": "Nguyen Thi Mai",
+    "phone_number": "0912345678",
+    "detailed_address": "123 Ho Tung Mau, Hanoi"
+  },
+  "payment_method": "cod",
+  "createdAt": {
+    "$date": "2025-05-20T04:02:36.743Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-20T04:02:36.743Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "682bfee5a22be236c2d8e211"
+  },
+  "user_id": {
+    "$oid": "68149573efa55695535541b4"
+  },
+  "order_item": [
+    {
+      "product_id": {
+        "$oid": "681494bfa7e83a5c84565bad"
+      },
+      "quantity": 12,
+      "price": 150000
+    },
+    {
+      "product_id": {
+        "$oid": "681494caa7e83a5c84565baf"
+      },
+      "quantity": 1,
+      "price": 250000
+    }
+  ],
+  "total_price": 1500000,
+  "order_status": "pending",
+  "address": {
+    "province": "Hanoi",
+    "district": "Cau Giay",
+    "ward": "Dich Vong Hau",
+    "name": "Nguyen Thi Mai",
+    "phone_number": "0912345678",
+    "detailed_address": "123 Ho Tung Mau, Hanoi"
+  },
+  "payment_method": "cod",
+  "createdAt": {
+    "$date": "2025-05-20T04:02:45.051Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-20T04:02:45.051Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "682bff42fa6c0ab33a7a2919"
+  },
+  "user_id": {
+    "$oid": "68149573efa55695535541b4"
+  },
+  "order_item": [
+    {
+      "product_id": {
+        "$oid": "681494bfa7e83a5c84565bad"
+      },
+      "quantity": 12,
+      "price": 150000
+    },
+    {
+      "product_id": {
+        "$oid": "681494caa7e83a5c84565baf"
+      },
+      "quantity": 1,
+      "price": 250000
+    }
+  ],
+  "total_price": 15000000,
+  "order_status": "pending",
+  "address": {
+    "province": "Hanoi",
+    "district": "Cau Giay",
+    "ward": "Dich Vong Hau",
+    "name": "Nguyen Thi Mai",
+    "phone_number": "0912345678",
+    "detailed_address": "123 Ho Tung Mau, Hanoi"
+  },
+  "payment_method": "cod",
+  "createdAt": {
+    "$date": "2025-05-20T04:04:18.470Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-20T04:04:18.470Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "682bff4f7bf5c49f3128638b"
+  },
+  "user_id": {
+    "$oid": "68149573efa55695535541b4"
+  },
+  "order_item": [
+    {
+      "product_id": {
+        "$oid": "681494bfa7e83a5c84565bad"
+      },
+      "quantity": 12,
+      "price": 150000
+    },
+    {
+      "product_id": {
+        "$oid": "681494caa7e83a5c84565baf"
+      },
+      "quantity": 1,
+      "price": 250000
+    }
+  ],
+  "total_price": 15000000,
+  "order_status": "pending",
+  "address": {
+    "province": "Hanoi",
+    "district": "Cau Giay",
+    "ward": "Dich Vong Hau",
+    "name": "Nguyen Thi Mai",
+    "phone_number": "0912345678",
+    "detailed_address": "123 Ho Tung Mau, Hanoi"
+  },
+  "payment_method": "cod",
+  "createdAt": {
+    "$date": "2025-05-20T04:04:31.736Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-20T04:04:31.736Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "682c3d9419e56517f0c106a2"
+  },
+  "user_id": {
+    "$oid": "6821a22f8ce982d1e5e8e2d2"
+  },
+  "order_item": [
+    {
+      "product_id": {
+        "$oid": "6818843b5b95b4fce96bb3da"
+      },
+      "quantity": 5,
+      "price": 6500000
+    }
+  ],
+  "total_price": 32530000,
+  "order_status": "cancelled",
+  "address": {
+    "province": "Thành phố Đà Nẵng",
+    "district": "Huyện Hòa Vang",
+    "ward": "Xã Hòa Bắc",
+    "name": "Customer 774",
+    "phone_number": "+84325211389",
+    "detailed_address": "521 đường 79"
+  },
+  "payment_method": "momo",
+  "createdAt": {
+    "$date": "2025-05-20T08:30:12.043Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-20T11:47:24.091Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "682c4b9c219da0a11b03acfe"
+  },
+  "user_id": {
+    "$oid": "6821a22f8ce982d1e5e8e2d2"
+  },
+  "order_item": [
+    {
+      "product_id": {
+        "$oid": "6818843b5b95b4fce96bb3da"
+      },
+      "quantity": 20,
+      "price": 6500000
+    }
+  ],
+  "total_price": 130030000,
+  "order_status": "shipped",
+  "address": {
+    "province": "Thành phố Hồ Chí Minh",
+    "district": "2",
+    "ward": "An Khánh",
+    "name": "Customer 710",
+    "phone_number": "+84446393169",
+    "detailed_address": "32 đường 55"
+  },
+  "payment_method": "zalopay",
+  "createdAt": {
+    "$date": "2025-05-20T09:30:04.021Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-20T09:54:45.535Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "682c6ea0d6c2625cf49c5a24"
+  },
+  "user_id": {
+    "$oid": "6821a22f8ce982d1e5e8e2d2"
+  },
+  "order_item": [
+    {
+      "product_id": {
+        "$oid": "6818a759d99ee6a665f4ea83"
+      },
+      "quantity": 1,
+      "price": 900000
+    }
+  ],
+  "total_price": 930000,
+  "order_status": "pending",
+  "address": {
+    "province": "Thành phố Đà Nẵng",
+    "district": " Hòa Vang",
+    "ward": "Hòa Bắc",
+    "name": "Customer 916",
+    "phone_number": "+84711988818",
+    "detailed_address": "891 đường 48"
+  },
+  "payment_method": "momo",
+  "createdAt": {
+    "$date": "2025-05-20T11:59:28.277Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-20T11:59:28.277Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "682c7192f002bdd364ba95bb"
+  },
+  "user_id": {
+    "$oid": "6821a22f8ce982d1e5e8e2d2"
+  },
+  "order_item": [
+    {
+      "product_id": {
+        "$oid": "6818a759d99ee6a665f4ea83"
+      },
+      "quantity": 3,
+      "price": 900000
+    }
+  ],
+  "total_price": 2730000,
+  "order_status": "shipped",
+  "address": {
+    "province": "Thành phố Hồ Chí Minh",
+    "district": "Quận 1",
+    "ward": "Nguyễn Thái Bình",
+    "name": "Customer 402",
+    "phone_number": "+84863923434",
+    "detailed_address": "820 đường 76"
+  },
+  "payment_method": "cod",
+  "createdAt": {
+    "$date": "2025-05-20T12:12:02.778Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-20T12:22:48.013Z"
+  },
+  "__v": 0
+}]

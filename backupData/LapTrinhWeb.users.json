@@ -1,0 +1,898 @@
+[{
+  "_id": {
+    "$oid": "68149573efa55695535541b4"
+  },
+  "email": "john.doe@example.com",
+  "password": "$2b$10$W646ZyLbJXU1R2YxhS5xI.DNXbSbcG/jBoaXysRzyPTDseh4AM3f.",
+  "is_active": true,
+  "username": "JohnDoe",
+  "phone_number": "0987654321",
+  "address": [
+    {
+      "province": "Thành phố Hồ Chí Minh",
+      "district": "Quận 12",
+      "ward": "Phường Thạnh Xuân",
+      "name": "Hung Van Thuy",
+      "phone_number": "1122334455",
+      "detailed_address": "Nguyen Van Chieu 123",
+      "_id": {
+        "$oid": "6832c068c50e02a3da8e461c"
+      }
+    }
+  ],
+  "cart": [
+    {
+      "product_id": {
+        "$oid": "6818a759d99ee6a665f4ea83"
+      },
+      "quantity": 1
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-05-01T00:00:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-26T08:34:20.688Z"
+  },
+  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/John_Doe%2C_born_John_Nommensen_Duchac.jpg/1200px-John_Doe%2C_born_John_Nommensen_Duchac.jpg",
+  "notification": [
+    {
+      "message": "test notification 3",
+      "read": false,
+      "_id": {
+        "$oid": "6829dec0a2f1a388b9dcd0ec"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T13:21:04.094Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T13:21:04.094Z"
+      }
+    },
+    {
+      "message": "test notification 3",
+      "read": false,
+      "_id": {
+        "$oid": "6829debca2f1a388b9dcd0cd"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T13:21:00.729Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T13:21:00.729Z"
+      }
+    },
+    {
+      "message": "test notification 3",
+      "read": false,
+      "_id": {
+        "$oid": "6829ddbea2f1a388b9dcd04b"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T13:16:46.444Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T13:16:46.444Z"
+      }
+    },
+    {
+      "message": "test notification 3",
+      "read": false,
+      "_id": {
+        "$oid": "6829dc95a2f1a388b9dccf6a"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T13:11:49.019Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T13:11:49.019Z"
+      }
+    },
+    {
+      "message": "test notification 3",
+      "read": false,
+      "_id": {
+        "$oid": "6829dc8da2f1a388b9dcceee"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T13:11:41.484Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T13:11:41.484Z"
+      }
+    },
+    {
+      "message": "test notification 3",
+      "read": false,
+      "_id": {
+        "$oid": "6829dc88a2f1a388b9dcced3"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T13:11:36.151Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T13:11:36.151Z"
+      }
+    },
+    {
+      "message": "test notification 3",
+      "read": false,
+      "_id": {
+        "$oid": "6829dc7ea2f1a388b9dcce89"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T13:11:26.332Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T13:11:26.332Z"
+      }
+    },
+    {
+      "message": "test notification 3",
+      "read": false,
+      "_id": {
+        "$oid": "6829dc29a2f1a388b9dccde8"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T13:10:01.579Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T13:10:01.579Z"
+      }
+    },
+    {
+      "message": "test notification 3",
+      "read": false,
+      "_id": {
+        "$oid": "6829da02a2f1a388b9dccc86"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T13:00:50.581Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T13:00:50.581Z"
+      }
+    },
+    {
+      "message": "test notification 3",
+      "read": false,
+      "_id": {
+        "$oid": "6829d95fa2f1a388b9dccc45"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T12:58:07.118Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T12:58:07.118Z"
+      }
+    },
+    {
+      "message": "test notification 3",
+      "read": false,
+      "_id": {
+        "$oid": "6829d7c1a2f1a388b9dcc996"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T12:51:13.962Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T12:51:13.962Z"
+      }
+    },
+    {
+      "message": "test notification 3",
+      "read": false,
+      "_id": {
+        "$oid": "6829d780a2f1a388b9dcc903"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T12:50:08.821Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T12:50:08.821Z"
+      }
+    },
+    {
+      "message": "test notification 3",
+      "read": false,
+      "_id": {
+        "$oid": "6829d768a2f1a388b9dcc8ef"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T12:49:44.422Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T12:49:44.422Z"
+      }
+    },
+    {
+      "message": "test notification 3",
+      "read": false,
+      "_id": {
+        "$oid": "6829d64aa2f1a388b9dcc8dc"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T12:44:58.340Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T12:44:58.340Z"
+      }
+    },
+    {
+      "message": "test notification 3",
+      "read": false,
+      "_id": {
+        "$oid": "6829d626a2f1a388b9dcc8ca"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T12:44:22.554Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T12:44:22.554Z"
+      }
+    },
+    {
+      "message": "test notification 3",
+      "read": false,
+      "_id": {
+        "$oid": "6829d61fa2f1a388b9dcc8b9"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T12:44:15.493Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T12:44:15.493Z"
+      }
+    },
+    {
+      "message": "test notification 3",
+      "read": false,
+      "_id": {
+        "$oid": "6829d5bca2f1a388b9dcc8a9"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T12:42:36.812Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T12:42:36.812Z"
+      }
+    },
+    {
+      "message": "test notification 3",
+      "read": false,
+      "_id": {
+        "$oid": "6829d587a2f1a388b9dcc89a"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T12:41:43.903Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T12:41:43.903Z"
+      }
+    },
+    {
+      "message": "test notification 3",
+      "read": false,
+      "_id": {
+        "$oid": "6829d36d12aa5acc8d6a9b28"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T12:32:45.793Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T12:32:45.793Z"
+      }
+    },
+    {
+      "message": "test notification 2",
+      "read": false,
+      "_id": {
+        "$oid": "6829d36712aa5acc8d6a9b1b"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T12:32:39.131Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T12:32:39.131Z"
+      }
+    },
+    {
+      "message": "test notification 2",
+      "read": false,
+      "_id": {
+        "$oid": "6829d32712aa5acc8d6a9ae3"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T12:31:35.360Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T12:31:35.360Z"
+      }
+    },
+    {
+      "message": "test notification 2",
+      "read": false,
+      "_id": {
+        "$oid": "6829d30212aa5acc8d6a9ad8"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T12:30:58.695Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T12:30:58.695Z"
+      }
+    },
+    {
+      "message": "test notification 2",
+      "read": false,
+      "_id": {
+        "$oid": "6829d2ec12aa5acc8d6a9ace"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T12:30:36.051Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T12:30:36.051Z"
+      }
+    },
+    {
+      "message": "test notification 2",
+      "read": false,
+      "_id": {
+        "$oid": "6829d0ba12aa5acc8d6a9ab3"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T12:21:14.175Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T12:21:14.175Z"
+      }
+    },
+    {
+      "message": "test notification 2",
+      "read": true,
+      "_id": {
+        "$oid": "6829d0b912aa5acc8d6a9aaa"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T12:21:13.332Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T12:21:26.931Z"
+      }
+    },
+    {
+      "message": "test notification 2",
+      "read": false,
+      "_id": {
+        "$oid": "6829cffb12aa5acc8d6a9a8f"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T12:18:03.534Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T12:18:03.534Z"
+      }
+    },
+    {
+      "message": "test notification 2",
+      "read": false,
+      "_id": {
+        "$oid": "6829cffa12aa5acc8d6a9a88"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T12:18:02.737Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T12:18:02.737Z"
+      }
+    },
+    {
+      "message": "test notification 2",
+      "read": true,
+      "_id": {
+        "$oid": "6829c98996a45b3e53365069"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T11:50:33.928Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T11:56:21.823Z"
+      }
+    },
+    {
+      "message": "test notification",
+      "read": true,
+      "_id": {
+        "$oid": "68298b89ca44aa8cc9966344"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T07:26:01.777Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T12:14:06.766Z"
+      }
+    }
+  ],
+  "__v": 56
+},
+{
+  "_id": {
+    "$oid": "6821a22f8ce982d1e5e8e2d2"
+  },
+  "email": "john.moe@example.com",
+  "password": "$2b$10$rBE0Ed1KOD11k4iUeBW7VOopVV3aNdSQyBxew4aSBiMRJnwc6NhO6",
+  "is_active": true,
+  "username": "johnmoe",
+  "phone_number": "1234567890",
+  "address": [],
+  "cart": [],
+  "createdAt": {
+    "$date": "2025-05-01T00:00:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-20T12:28:56.747Z"
+  },
+  "image": "https://pbs.twimg.com/profile_images/1655021308667744261/AQFo0Wvb_400x400.jpg",
+  "notification": [
+    {
+      "message": "Your order: 682c7192f002bdd364ba95bb, is shipped",
+      "read": false,
+      "_id": {
+        "$oid": "682c74183851befb4e3c6a83"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T12:22:48.078Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T12:22:48.078Z"
+      }
+    },
+    {
+      "message": "Your order: 682c3d9419e56517f0c106a2, is cancelled",
+      "read": false,
+      "_id": {
+        "$oid": "682c6bcc3851befb4e3c6846"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T11:47:24.107Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T11:47:24.107Z"
+      }
+    },
+    {
+      "message": "Your order: 682c3d9419e56517f0c106a2, is shipped",
+      "read": false,
+      "_id": {
+        "$oid": "682c6b923851befb4e3c6825"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T11:46:26.263Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T11:46:26.263Z"
+      }
+    },
+    {
+      "message": "test notification adc",
+      "read": true,
+      "_id": {
+        "$oid": "682c6b1b3851befb4e3c6752"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T11:44:27.770Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T11:44:32.580Z"
+      }
+    },
+    {
+      "message": "test notification ac",
+      "read": false,
+      "_id": {
+        "$oid": "682c67603851befb4e3c660b"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T11:28:32.909Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T11:28:32.909Z"
+      }
+    },
+    {
+      "message": "test notification ss",
+      "read": false,
+      "_id": {
+        "$oid": "682c67543851befb4e3c65d1"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T11:28:20.331Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T11:28:20.331Z"
+      }
+    },
+    {
+      "message": "test notification olasss",
+      "read": false,
+      "_id": {
+        "$oid": "682c672d3851befb4e3c6588"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T11:27:41.672Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T11:27:41.672Z"
+      }
+    },
+    {
+      "message": "test notification olass",
+      "read": false,
+      "_id": {
+        "$oid": "682c67233851befb4e3c656c"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T11:27:31.623Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T11:27:31.623Z"
+      }
+    },
+    {
+      "message": "test notification olass",
+      "read": false,
+      "_id": {
+        "$oid": "682c651d3851befb4e3c6551"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T11:18:53.843Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T11:18:53.843Z"
+      }
+    },
+    {
+      "message": "test notification olas",
+      "read": false,
+      "_id": {
+        "$oid": "682c65193851befb4e3c6537"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T11:18:49.596Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T11:18:49.596Z"
+      }
+    },
+    {
+      "message": "test notification olas",
+      "read": false,
+      "_id": {
+        "$oid": "682c650c3851befb4e3c651e"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T11:18:36.349Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T11:18:36.349Z"
+      }
+    },
+    {
+      "message": "test notification olas",
+      "read": false,
+      "_id": {
+        "$oid": "682c64ae3851befb4e3c64ae"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T11:17:02.027Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T11:17:02.027Z"
+      }
+    },
+    {
+      "message": "test notification ola",
+      "read": false,
+      "_id": {
+        "$oid": "682c63d03851befb4e3c645c"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T11:13:20.815Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T11:13:20.815Z"
+      }
+    },
+    {
+      "message": "test notification alo",
+      "read": false,
+      "_id": {
+        "$oid": "682c63bd3851befb4e3c6446"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T11:13:01.541Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T11:13:01.541Z"
+      }
+    },
+    {
+      "message": "test notification alo",
+      "read": false,
+      "_id": {
+        "$oid": "682c62bc3851befb4e3c6431"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T11:08:44.345Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T11:08:44.345Z"
+      }
+    },
+    {
+      "message": "test notification 102232",
+      "read": false,
+      "_id": {
+        "$oid": "682c62993851befb4e3c641d"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T11:08:09.654Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T11:08:09.654Z"
+      }
+    },
+    {
+      "message": "test notification 102232",
+      "read": false,
+      "_id": {
+        "$oid": "682c62763851befb4e3c640a"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T11:07:34.979Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T11:07:34.979Z"
+      }
+    },
+    {
+      "message": "test notification 102232",
+      "read": false,
+      "_id": {
+        "$oid": "682c62523851befb4e3c63f8"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T11:06:58.443Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T11:06:58.443Z"
+      }
+    },
+    {
+      "message": "test notification 1022",
+      "read": false,
+      "_id": {
+        "$oid": "682c62433851befb4e3c63e7"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T11:06:43.179Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T11:06:43.179Z"
+      }
+    },
+    {
+      "message": "test notification 102",
+      "read": false,
+      "_id": {
+        "$oid": "682c623e3851befb4e3c63d7"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T11:06:38.070Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T11:06:38.070Z"
+      }
+    },
+    {
+      "message": "test notification 102",
+      "read": false,
+      "_id": {
+        "$oid": "682c61513851befb4e3c63b7"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T11:02:41.229Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T11:02:41.229Z"
+      }
+    },
+    {
+      "message": "test notification 10",
+      "read": false,
+      "_id": {
+        "$oid": "682c60883851befb4e3c63a9"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T10:59:20.140Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T10:59:20.140Z"
+      }
+    },
+    {
+      "message": "test notification 2212212",
+      "read": false,
+      "_id": {
+        "$oid": "682c60683851befb4e3c639c"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T10:58:48.540Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T10:58:48.540Z"
+      }
+    },
+    {
+      "message": "test notification 22212",
+      "read": false,
+      "_id": {
+        "$oid": "682c60613851befb4e3c6390"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T10:58:41.679Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T10:58:41.679Z"
+      }
+    },
+    {
+      "message": "test notification 22212",
+      "read": false,
+      "_id": {
+        "$oid": "682c5fc23851befb4e3c6385"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T10:56:02.799Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T10:56:02.799Z"
+      }
+    },
+    {
+      "message": "test notification 22",
+      "read": false,
+      "_id": {
+        "$oid": "682c5fa03851befb4e3c637b"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T10:55:28.213Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T10:55:28.213Z"
+      }
+    },
+    {
+      "message": "test notification 32222",
+      "read": false,
+      "_id": {
+        "$oid": "682c5e783851befb4e3c627e"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T10:50:32.296Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T10:50:32.296Z"
+      }
+    },
+    {
+      "message": "test notification 322",
+      "read": false,
+      "_id": {
+        "$oid": "682c5e6c3851befb4e3c6276"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T10:50:20.832Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T10:50:20.832Z"
+      }
+    },
+    {
+      "message": "test notification 322",
+      "read": false,
+      "_id": {
+        "$oid": "682c5e603851befb4e3c626f"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T10:50:08.827Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T10:50:08.827Z"
+      }
+    },
+    {
+      "message": "test notification 3",
+      "read": false,
+      "_id": {
+        "$oid": "682c5e133851befb4e3c6269"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T10:48:51.810Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T10:48:51.810Z"
+      }
+    },
+    {
+      "message": "Your order: 682c3d9419e56517f0c106a2, is processing",
+      "read": false,
+      "_id": {
+        "$oid": "682c5d823851befb4e3c6264"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T10:46:26.975Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T10:46:26.975Z"
+      }
+    },
+    {
+      "message": "Your order: 682c3d9419e56517f0c106a2, has been cancelled",
+      "read": false,
+      "_id": {
+        "$oid": "682c5d223851befb4e3c6252"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T10:44:50.078Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T10:44:50.078Z"
+      }
+    }
+  ],
+  "__v": 41
+},
+{
+  "_id": {
+    "$oid": "683298651bbe347eb55f89eb"
+  },
+  "email": "john.coe@example.com",
+  "image": "",
+  "password": "$2b$10$rBE0Ed1KOD11k4iUeBW7VOopVV3aNdSQyBxew4aSBiMRJnwc6NhO6",
+  "is_active": true,
+  "username": "JohnCoe",
+  "phone_number": "0987654321",
+  "address": [],
+  "cart": [],
+  "notification": [],
+  "createdAt": {
+    "$date": "2025-05-25T04:11:17.985Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-25T04:11:17.985Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "683409863a200819b5fc1681"
+  },
+  "email": "john.slow@gmail.com",
+  "image": "https://res.cloudinary.com/dzknqq8bi/image/upload/v1748241842/683409863a200819b5fc1681.jpg",
+  "password": "$2b$10$/y62JaNERbfSKR4waCT9nuLUDC.BUV2JsVWAIbjp55tQ7NuqLlawK",
+  "is_active": true,
+  "username": "JohnSlowest",
+  "phone_number": "0987654321",
+  "address": [],
+  "cart": [],
+  "notification": [],
+  "createdAt": {
+    "$date": "2025-05-26T06:26:14.850Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-26T06:44:03.373Z"
+  },
+  "__v": 0
+}]

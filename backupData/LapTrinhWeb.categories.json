@@ -1,0 +1,50 @@
+[{
+  "_id": {
+    "$oid": "680e43ed1fbccac1c1ab85a4"
+  },
+  "category_name": "Smartphones",
+  "discount": 100
+},
+{
+  "_id": {
+    "$oid": "680e43ed1fbccac1c1ab85a6"
+  },
+  "category_name": "Tablets",
+  "discount": 7
+},
+{
+  "_id": {
+    "$oid": "680e43ed1fbccac1c1ab85a7"
+  },
+  "category_name": "Televisions",
+  "discount": 6
+},
+{
+  "_id": {
+    "$oid": "680e43ed1fbccac1c1ab85a8"
+  },
+  "category_name": "Headphones ",
+  "discount": 30
+},
+{
+  "_id": {
+    "$oid": "680e43ed1fbccac1c1ab85a9"
+  },
+  "category_name": "Cameras",
+  "discount": 5
+},
+{
+  "_id": {
+    "$oid": "681871ede975d436de633115"
+  },
+  "category_name": "General",
+  "discount": 0
+},
+{
+  "_id": {
+    "$oid": "681878d3107bf83d2b29212d"
+  },
+  "category_name": "Stylus",
+  "discount": 50,
+  "__v": 0
+}]

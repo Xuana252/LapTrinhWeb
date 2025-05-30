@@ -46,7 +46,9 @@ const ProductRatingTab = ({ id }) => {
 
     await addFeedback(id,payload).then((data) => {
       if (data.feedback) {
+        console.log("feedback", data.feedback);
         setProductFeedBacks((prev) => {
+
           const existingFeedbackIndex = prev.findIndex(
             (feedbackItem) => feedbackItem._id === data.feedback._id
           );

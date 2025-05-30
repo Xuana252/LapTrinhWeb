@@ -1,0 +1,1399 @@
+[{
+  "_id": {
+    "$oid": "68149573efa55695535541b4"
+  },
+  "message_log": [
+    {
+      "message": "sao e",
+      "sender": false,
+      "_id": {
+        "$oid": "6829fd01bf0c645a4a9d790a"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T15:30:09.534Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T15:30:09.534Z"
+      }
+    },
+    {
+      "message": "hello a",
+      "sender": true,
+      "_id": {
+        "$oid": "6829fcfcbf0c645a4a9d785c"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T15:30:04.470Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T15:30:04.470Z"
+      }
+    },
+    {
+      "message": "hello frined",
+      "sender": true,
+      "_id": {
+        "$oid": "6829f33bbf0c645a4a9d32a9"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:48:27.986Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:48:27.986Z"
+      }
+    },
+    {
+      "message": "hello",
+      "sender": true,
+      "_id": {
+        "$oid": "6829f333bf0c645a4a9d31ff"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:48:19.379Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:48:19.379Z"
+      }
+    },
+    {
+      "message": "chaof",
+      "sender": true,
+      "_id": {
+        "$oid": "6829f28cbf0c645a4a9d2f4a"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:45:32.665Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:45:32.665Z"
+      }
+    },
+    {
+      "message": "dwad",
+      "sender": true,
+      "_id": {
+        "$oid": "6829f270bf0c645a4a9d2dc5"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:45:04.425Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:45:04.425Z"
+      }
+    },
+    {
+      "message": "sao seeps",
+      "sender": true,
+      "_id": {
+        "$oid": "6829f1c4bf0c645a4a9d29b6"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:42:12.326Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:42:12.326Z"
+      }
+    },
+    {
+      "message": "helu",
+      "sender": true,
+      "_id": {
+        "$oid": "6829f1bbbf0c645a4a9d2914"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:42:03.634Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:42:03.634Z"
+      }
+    },
+    {
+      "message": "helu",
+      "sender": false,
+      "_id": {
+        "$oid": "6829f1b5bf0c645a4a9d2874"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:41:57.654Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:41:57.654Z"
+      }
+    },
+    {
+      "message": "day",
+      "sender": true,
+      "_id": {
+        "$oid": "6829ef7bbf0c645a4a9d21fe"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:32:27.495Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:32:27.495Z"
+      }
+    },
+    {
+      "message": "gi",
+      "sender": true,
+      "_id": {
+        "$oid": "6829ef78bf0c645a4a9d2162"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:32:24.321Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:32:24.321Z"
+      }
+    },
+    {
+      "message": "ola",
+      "sender": true,
+      "_id": {
+        "$oid": "6829ef5ebf0c645a4a9d1f99"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:31:58.150Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:31:58.150Z"
+      }
+    },
+    {
+      "message": "helu",
+      "sender": true,
+      "_id": {
+        "$oid": "6829ee0ea2f1a388b9dce654"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:26:22.147Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:26:22.147Z"
+      }
+    },
+    {
+      "message": "sao nef",
+      "sender": true,
+      "_id": {
+        "$oid": "6829ece6a2f1a388b9dce4ef"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:21:26.073Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:21:26.073Z"
+      }
+    },
+    {
+      "message": "ola",
+      "sender": true,
+      "_id": {
+        "$oid": "6829ecd6a2f1a388b9dce45b"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:21:10.878Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:21:10.878Z"
+      }
+    },
+    {
+      "message": "alo",
+      "sender": false,
+      "_id": {
+        "$oid": "6829ecd2a2f1a388b9dce3c9"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:21:06.009Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:21:06.009Z"
+      }
+    },
+    {
+      "message": "alo",
+      "sender": true,
+      "_id": {
+        "$oid": "6829ec94a2f1a388b9dce265"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:20:04.595Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:20:04.595Z"
+      }
+    },
+    {
+      "message": "sếp",
+      "sender": false,
+      "_id": {
+        "$oid": "6829ec90a2f1a388b9dce21d"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:20:00.112Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:20:00.112Z"
+      }
+    },
+    {
+      "message": "ừ",
+      "sender": true,
+      "_id": {
+        "$oid": "6829ec88a2f1a388b9dce191"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:19:52.293Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:19:52.293Z"
+      }
+    },
+    {
+      "message": "hello sếp",
+      "sender": true,
+      "_id": {
+        "$oid": "6829ec73a2f1a388b9dce107"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:19:31.552Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:19:31.552Z"
+      }
+    },
+    {
+      "message": "hả",
+      "sender": false,
+      "_id": {
+        "$oid": "6829ec6ea2f1a388b9dce0c2"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:19:26.719Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:19:26.719Z"
+      }
+    },
+    {
+      "message": "helo",
+      "sender": true,
+      "_id": {
+        "$oid": "6829ec69a2f1a388b9dce03c"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:19:21.132Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:19:21.132Z"
+      }
+    },
+    {
+      "message": "sếp tốt",
+      "sender": true,
+      "_id": {
+        "$oid": "6829ebdaa2f1a388b9dcddb5"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:16:58.231Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:16:58.231Z"
+      }
+    },
+    {
+      "message": "sếp sao",
+      "sender": false,
+      "_id": {
+        "$oid": "6829ebcba2f1a388b9dcdd58"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:16:43.851Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:16:43.851Z"
+      }
+    },
+    {
+      "message": "ừ sếp",
+      "sender": true,
+      "_id": {
+        "$oid": "6829ebbfa2f1a388b9dcdc41"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:16:31.927Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:16:31.927Z"
+      }
+    },
+    {
+      "message": "sếp hả",
+      "sender": false,
+      "_id": {
+        "$oid": "6829ebb8a2f1a388b9dcdc01"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:16:24.704Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:16:24.704Z"
+      }
+    },
+    {
+      "message": "hello sếp",
+      "sender": true,
+      "_id": {
+        "$oid": "6829eb94a2f1a388b9dcdb86"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:15:48.744Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:15:48.744Z"
+      }
+    },
+    {
+      "message": "hello john",
+      "sender": false,
+      "_id": {
+        "$oid": "6829eb8fa2f1a388b9dcdb0c"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:15:43.374Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:15:43.374Z"
+      }
+    },
+    {
+      "message": "dưa",
+      "sender": true,
+      "_id": {
+        "$oid": "6829ea90a2f1a388b9dcd8a5"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:11:28.095Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:11:28.095Z"
+      }
+    },
+    {
+      "message": "đawa",
+      "sender": true,
+      "_id": {
+        "$oid": "6829ea8ca2f1a388b9dcd869"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:11:24.121Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:11:24.121Z"
+      }
+    },
+    {
+      "message": "dư",
+      "sender": false,
+      "_id": {
+        "$oid": "6829ea87a2f1a388b9dcd82e"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:11:19.577Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:11:19.577Z"
+      }
+    },
+    {
+      "message": "ali",
+      "sender": true,
+      "_id": {
+        "$oid": "6829ea72a2f1a388b9dcd737"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:10:58.757Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:10:58.757Z"
+      }
+    },
+    {
+      "message": "fwfw",
+      "sender": true,
+      "_id": {
+        "$oid": "6829ea6aa2f1a388b9dcd644"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:10:50.928Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:10:50.928Z"
+      }
+    },
+    {
+      "message": "dư",
+      "sender": true,
+      "_id": {
+        "$oid": "6829ea68a2f1a388b9dcd60c"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:10:48.482Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:10:48.482Z"
+      }
+    },
+    {
+      "message": "dư",
+      "sender": true,
+      "_id": {
+        "$oid": "6829ea2ea2f1a388b9dcd5d4"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:09:50.160Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:09:50.160Z"
+      }
+    },
+    {
+      "message": "s",
+      "sender": false,
+      "_id": {
+        "$oid": "6829ea2ba2f1a388b9dcd59e"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:09:47.691Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:09:47.691Z"
+      }
+    },
+    {
+      "message": "ừ",
+      "sender": false,
+      "_id": {
+        "$oid": "6829ea0aa2f1a388b9dcd4cf"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:09:14.373Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:09:14.373Z"
+      }
+    },
+    {
+      "message": "chúc a thành cồng",
+      "sender": true,
+      "_id": {
+        "$oid": "6829e9f4a2f1a388b9dcd406"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:08:52.164Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:08:52.164Z"
+      }
+    },
+    {
+      "message": "khỏe em",
+      "sender": false,
+      "_id": {
+        "$oid": "6829e908a2f1a388b9dcd3a2"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:04:56.050Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:04:56.050Z"
+      }
+    },
+    {
+      "message": "a khỏe không",
+      "sender": true,
+      "_id": {
+        "$oid": "6829e8daa2f1a388b9dcd2e1"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:04:10.527Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:04:10.527Z"
+      }
+    },
+    {
+      "message": "chào a",
+      "sender": true,
+      "_id": {
+        "$oid": "6829e830a2f1a388b9dcd2b0"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:01:20.114Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:01:20.114Z"
+      }
+    },
+    {
+      "message": "chào john",
+      "sender": false,
+      "_id": {
+        "$oid": "6829e806a2f1a388b9dcd252"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:00:38.149Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:00:38.149Z"
+      }
+    },
+    {
+      "message": "chao a",
+      "sender": true,
+      "_id": {
+        "$oid": "6821f2692de09a155a466e69"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T13:06:49.817Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T13:06:49.817Z"
+      }
+    },
+    {
+      "message": "chào ae",
+      "sender": true,
+      "_id": {
+        "$oid": "6821f1cd2de09a155a466cf3"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T13:04:13.967Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T13:04:13.967Z"
+      }
+    },
+    {
+      "message": "chào a",
+      "sender": true,
+      "_id": {
+        "$oid": "6821f16f2de09a155a466b65"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T13:02:39.438Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T13:02:39.438Z"
+      }
+    },
+    {
+      "message": "chào em",
+      "sender": false,
+      "_id": {
+        "$oid": "6821f1642de09a155a466af8"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T13:02:28.147Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T13:02:28.147Z"
+      }
+    },
+    {
+      "message": "sao e",
+      "sender": false,
+      "_id": {
+        "$oid": "6821f01e2de09a155a4667db"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T12:57:02.088Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T12:57:02.088Z"
+      }
+    },
+    {
+      "message": "alo",
+      "sender": false,
+      "_id": {
+        "$oid": "6821efa02de09a155a4666e4"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T12:54:56.724Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T12:54:56.724Z"
+      }
+    },
+    {
+      "message": "hello",
+      "sender": false,
+      "_id": {
+        "$oid": "6821e09a8c115faffa77bf88"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T11:50:50.109Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T11:50:50.109Z"
+      }
+    },
+    {
+      "message": "hello",
+      "sender": true,
+      "_id": {
+        "$oid": "6821d32be2c19525c1faf7d4"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T10:53:31.046Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T10:53:31.046Z"
+      }
+    },
+    {
+      "message": "chao",
+      "sender": true,
+      "_id": {
+        "$oid": "6821bff1dbd081fd4716fd9b"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T09:31:29.572Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T09:31:29.572Z"
+      }
+    },
+    {
+      "message": "dw",
+      "sender": true,
+      "_id": {
+        "$oid": "6821b94d6a923671c62c1240"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T09:03:09.650Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T09:03:09.650Z"
+      }
+    },
+    {
+      "message": "dw",
+      "sender": false,
+      "_id": {
+        "$oid": "6821b94b6a923671c62c121b"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T09:03:07.066Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T09:03:07.066Z"
+      }
+    },
+    {
+      "message": "sao e",
+      "sender": true,
+      "_id": {
+        "$oid": "6821b9466a923671c62c11f7"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T09:03:02.577Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T09:03:02.577Z"
+      }
+    },
+    {
+      "message": "alo",
+      "sender": false,
+      "_id": {
+        "$oid": "6821b9426a923671c62c11d4"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T09:02:58.534Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T09:02:58.534Z"
+      }
+    },
+    {
+      "message": "jads",
+      "sender": true,
+      "_id": {
+        "$oid": "6821b7df6a923671c62c10f7"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T08:57:03.935Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T08:57:03.935Z"
+      }
+    },
+    {
+      "message": "dw",
+      "sender": true,
+      "_id": {
+        "$oid": "6821b7a16a923671c62c107b"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T08:56:01.633Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T08:56:01.633Z"
+      }
+    },
+    {
+      "message": "sao a",
+      "sender": false,
+      "_id": {
+        "$oid": "6821b72764627a3fd930e32c"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T08:53:59.989Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T08:53:59.989Z"
+      }
+    },
+    {
+      "message": "thoi",
+      "sender": true,
+      "_id": {
+        "$oid": "6821b72264627a3fd930e30d"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T08:53:54.479Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T08:53:54.479Z"
+      }
+    },
+    {
+      "message": "helo",
+      "sender": false,
+      "_id": {
+        "$oid": "6821b71a64627a3fd930e2ef"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T08:53:46.773Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T08:53:46.773Z"
+      }
+    },
+    {
+      "message": "shoip",
+      "sender": true,
+      "_id": {
+        "$oid": "6821b70364627a3fd930e2d2"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T08:53:23.534Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T08:53:23.534Z"
+      }
+    },
+    {
+      "message": "hello",
+      "sender": true,
+      "_id": {
+        "$oid": "6821b6e364627a3fd930e29c"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T08:52:51.674Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T08:52:51.674Z"
+      }
+    },
+    {
+      "message": "sao a",
+      "sender": true,
+      "_id": {
+        "$oid": "6821adca64627a3fd930dc6a"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T08:14:02.756Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T08:14:02.756Z"
+      }
+    },
+    {
+      "message": "chào a",
+      "sender": true,
+      "_id": {
+        "$oid": "6821adb264627a3fd930dc4a"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T08:13:38.768Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T08:13:38.768Z"
+      }
+    },
+    {
+      "message": "sao v e",
+      "sender": false,
+      "_id": {
+        "$oid": "6821a1c764244ca6348b6901"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T07:22:47.261Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T07:22:47.261Z"
+      }
+    },
+    {
+      "message": "ừ",
+      "sender": false,
+      "_id": {
+        "$oid": "6821a1c064244ca6348b68e9"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T07:22:40.213Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T07:22:40.213Z"
+      }
+    },
+    {
+      "message": "chào a",
+      "sender": true,
+      "_id": {
+        "$oid": "6821a1b964244ca6348b68d2"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T07:22:33.744Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T07:22:33.744Z"
+      }
+    },
+    {
+      "message": "chào e",
+      "sender": false,
+      "_id": {
+        "$oid": "6821a1b364244ca6348b68bc"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T07:22:27.895Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T07:22:27.895Z"
+      }
+    },
+    {
+      "message": "ola sếp",
+      "sender": true,
+      "_id": {
+        "$oid": "68219edbcde8afd35ed1df2e"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T07:10:19.172Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T07:10:19.172Z"
+      }
+    },
+    {
+      "message": "alo",
+      "sender": false,
+      "_id": {
+        "$oid": "68219ed6cde8afd35ed1df1a"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T07:10:14.030Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T07:10:14.030Z"
+      }
+    },
+    {
+      "message": "ừ chào sếp",
+      "sender": true,
+      "_id": {
+        "$oid": "68219e8acde8afd35ed1df07"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T07:08:58.487Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T07:08:58.487Z"
+      }
+    },
+    {
+      "message": "hello",
+      "sender": false,
+      "_id": {
+        "$oid": "68219e84cde8afd35ed1def5"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T07:08:52.302Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T07:08:52.302Z"
+      }
+    },
+    {
+      "message": "hello",
+      "sender": true,
+      "_id": {
+        "$oid": "68219d9dcde8afd35ed1dec6"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T07:05:01.372Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T07:05:01.372Z"
+      }
+    },
+    {
+      "message": "dep chai",
+      "sender": true,
+      "_id": {
+        "$oid": "68218fdacde8afd35ed1de78"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T06:06:18.212Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T06:06:18.212Z"
+      }
+    },
+    {
+      "message": "dwadawd w",
+      "sender": true,
+      "_id": {
+        "$oid": "68218f98cde8afd35ed1de45"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T06:05:12.930Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T06:05:12.930Z"
+      }
+    },
+    {
+      "message": "mordawdawd wadwa dawdawd",
+      "sender": true,
+      "_id": {
+        "$oid": "68218f96cde8afd35ed1de37"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T06:05:10.685Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T06:05:10.685Z"
+      }
+    },
+    {
+      "message": "haha",
+      "sender": true,
+      "_id": {
+        "$oid": "68218d91cde8afd35ed1dd6c"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T05:56:33.934Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T05:56:33.934Z"
+      }
+    },
+    {
+      "message": "dww w",
+      "sender": true,
+      "_id": {
+        "$oid": "68218d8dcde8afd35ed1dd60"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T05:56:29.815Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T05:56:29.815Z"
+      }
+    },
+    {
+      "message": "dawd",
+      "sender": true,
+      "_id": {
+        "$oid": "68218d8acde8afd35ed1dd55"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T05:56:26.114Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T05:56:26.114Z"
+      }
+    },
+    {
+      "message": "tin nhan moi nay rat day mong cac ban thong cam nedwdwdw dwdw",
+      "sender": true,
+      "_id": {
+        "$oid": "68218d6bcde8afd35ed1dd4a"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T05:55:55.434Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T05:55:55.434Z"
+      }
+    },
+    {
+      "message": "hello",
+      "sender": true,
+      "_id": {
+        "$oid": "68218c8aa83cc4080d20062d"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T05:52:10.352Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T05:52:10.352Z"
+      }
+    },
+    {
+      "message": "john doe",
+      "sender": true,
+      "_id": {
+        "$oid": "68218c7da83cc4080d200625"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T05:51:57.143Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T05:51:57.143Z"
+      }
+    },
+    {
+      "message": "nghe ro khong tin nhan nay rat dai day shop oi",
+      "sender": true,
+      "_id": {
+        "$oid": "68208cba56d34b36aa93a65f"
+      },
+      "createdAt": {
+        "$date": "2025-05-11T11:40:42.998Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-11T11:40:42.998Z"
+      }
+    },
+    {
+      "message": "hello boyfrienc=d",
+      "sender": true,
+      "_id": {
+        "$oid": "68208c694f565be200a70f09"
+      },
+      "createdAt": {
+        "$date": "2025-05-11T11:39:21.989Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-11T11:39:21.989Z"
+      }
+    },
+    {
+      "message": "xin chao",
+      "sender": true,
+      "_id": {
+        "$oid": "68208a3af4e7aad967f3d0d5"
+      },
+      "createdAt": {
+        "$date": "2025-05-11T11:30:02.902Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-11T11:30:02.902Z"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-05-10T13:41:28.566Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-18T15:30:18.918Z"
+  },
+  "__v": 85,
+  "adminRead": true,
+  "customerRead": true
+},
+{
+  "_id": {
+    "$oid": "6821a22f8ce982d1e5e8e2d2"
+  },
+  "adminRead": true,
+  "customerRead": true,
+  "message_log": [
+    {
+      "message": "ừ a cảm ơn",
+      "sender": false,
+      "_id": {
+        "$oid": "682c75bc3851befb4e3c6c69"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T12:29:48.224Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T12:29:48.224Z"
+      }
+    },
+    {
+      "message": "à a e mới mua đơn á",
+      "sender": true,
+      "_id": {
+        "$oid": "682c75b03851befb4e3c6c3f"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T12:29:36.529Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T12:29:36.529Z"
+      }
+    },
+    {
+      "message": "sao e",
+      "sender": false,
+      "_id": {
+        "$oid": "682c75a33851befb4e3c6c2a"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T12:29:23.413Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T12:29:23.413Z"
+      }
+    },
+    {
+      "message": "alo",
+      "sender": true,
+      "_id": {
+        "$oid": "682c5f063851befb4e3c62fd"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T10:52:54.201Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T10:52:54.201Z"
+      }
+    },
+    {
+      "message": "uwf",
+      "sender": false,
+      "_id": {
+        "$oid": "682c5ebe3851befb4e3c62ea"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T10:51:42.849Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T10:51:42.849Z"
+      }
+    },
+    {
+      "message": "chao a",
+      "sender": true,
+      "_id": {
+        "$oid": "682c5eb73851befb4e3c62c8"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T10:51:35.774Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T10:51:35.774Z"
+      }
+    },
+    {
+      "message": "alo",
+      "sender": false,
+      "_id": {
+        "$oid": "682c5eaf3851befb4e3c62b7"
+      },
+      "createdAt": {
+        "$date": "2025-05-20T10:51:27.907Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-20T10:51:27.907Z"
+      }
+    },
+    {
+      "message": "alo",
+      "sender": true,
+      "_id": {
+        "$oid": "6829eb11a2f1a388b9dcd951"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:13:37.571Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:13:37.571Z"
+      }
+    },
+    {
+      "message": "alo",
+      "sender": false,
+      "_id": {
+        "$oid": "6829eb0ba2f1a388b9dcd935"
+      },
+      "createdAt": {
+        "$date": "2025-05-18T14:13:31.116Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-18T14:13:31.116Z"
+      }
+    },
+    {
+      "message": "alo",
+      "sender": false,
+      "_id": {
+        "$oid": "6821e389c5bec612761a5b65"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T12:03:21.905Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T12:03:21.905Z"
+      }
+    },
+    {
+      "message": "oke a",
+      "sender": true,
+      "_id": {
+        "$oid": "6821e1c28c115faffa77c08c"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T11:55:46.610Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T11:55:46.610Z"
+      }
+    },
+    {
+      "message": "dep chu em",
+      "sender": false,
+      "_id": {
+        "$oid": "6821d7cee2c19525c1fafb87"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T11:13:18.165Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T11:13:18.165Z"
+      }
+    },
+    {
+      "message": "thay ao moi cua em dep khong",
+      "sender": true,
+      "_id": {
+        "$oid": "6821d7c6e2c19525c1fafb74"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T11:13:10.012Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T11:13:10.012Z"
+      }
+    },
+    {
+      "message": "chaof",
+      "sender": true,
+      "_id": {
+        "$oid": "6821d7bbe2c19525c1fafb6a"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T11:12:59.089Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T11:12:59.089Z"
+      }
+    },
+    {
+      "message": "cứu em với",
+      "sender": true,
+      "_id": {
+        "$oid": "6821b97d6a923671c62c125f"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T09:03:57.908Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T09:03:57.908Z"
+      }
+    },
+    {
+      "message": "sao e",
+      "sender": false,
+      "_id": {
+        "$oid": "6821b9766a923671c62c1257"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T09:03:50.433Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T09:03:50.433Z"
+      }
+    },
+    {
+      "message": "sếp",
+      "sender": true,
+      "_id": {
+        "$oid": "6821b96f6a923671c62c124c"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T09:03:43.871Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T09:03:43.871Z"
+      }
+    },
+    {
+      "message": "hello seeps",
+      "sender": true,
+      "_id": {
+        "$oid": "6821a41564627a3fd930d911"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T07:32:37.897Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T07:32:37.897Z"
+      }
+    },
+    {
+      "message": "helo moe",
+      "sender": false,
+      "_id": {
+        "$oid": "6821a40e64627a3fd930d90c"
+      },
+      "createdAt": {
+        "$date": "2025-05-12T07:32:30.921Z"
+      },
+      "updatedAt": {
+        "$date": "2025-05-12T07:32:30.921Z"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-05-12T07:31:03.511Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-20T12:30:02.895Z"
+  },
+  "__v": 19
+},
+{
+  "_id": {
+    "$oid": "683409863a200819b5fc1681"
+  },
+  "adminRead": false,
+  "customerRead": false,
+  "message_log": [],
+  "createdAt": {
+    "$date": "2025-05-26T06:26:15.342Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-26T06:26:15.342Z"
+  },
+  "__v": 0
+}]
