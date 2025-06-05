@@ -65,7 +65,7 @@ export const cancelOrder = async (id) => {
 };
 
 export const postOrder = async (payload) => {
-  if (process.env.DEV_ENV !== "production") return { order_id: "123" };
+  if (process.env.DEV_ENV !== "production") return { order: generateDummyOrderData(), success: true, message: "" };
 
   try {
     const response = await fetch(`${process.env.APP_URL}/orders/`, {

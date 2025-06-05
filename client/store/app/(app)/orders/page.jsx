@@ -139,7 +139,7 @@ const Order = () => {
               <OrderCard key={index} loading={true} />
             ))
           : orders
-              .slice((page - 1) * ORDER_LIMIT, page * ORDER_LIMIT)
+              ?.slice((page - 1) * ORDER_LIMIT, page * ORDER_LIMIT)
               ?.map((item) => <OrderCard key={item._id} order={item} />)}
       </ul>
       <Pagination

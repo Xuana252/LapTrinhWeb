@@ -4,7 +4,7 @@ import { generateDummyProductData, generateDummyProductDetailData } from "@util/
 
 
 export const getAllProduct = async () => {
-  if(process.env.DEV_ENV!=="production") return generateDummyProductData(36)
+  if(process.env.DEV_ENV!=="production") return generateDummyProductData(20)
   try {
     const response = await fetch(
       `${process.env.APP_URL}/products`

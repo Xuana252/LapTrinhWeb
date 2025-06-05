@@ -46,7 +46,7 @@ export const generateDummyCustomersData = (num = 10) => {
       revenue: Math.floor(Math.random() * 30000000 + 10000000),
     });
   }
-  return { data: users, count: Math.floor(Math.random() * 30 + 20) };
+  return { users: users, count: Math.floor(Math.random() * 30 + 20) };
 };
 
 export const generateMockUserData = (months = 6) => {

@@ -264,7 +264,7 @@ const Product = () => {
         />
       </div>
       <ProductRevenueTab id={params.id} />
-      <ProductRatingTab id={params.id} />s
+      <ProductRatingTab id={params.id} />
     </section>
   );
 };

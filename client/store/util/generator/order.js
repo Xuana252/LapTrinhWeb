@@ -84,7 +84,7 @@ export const generateDummyOrdersData = (num = 10) => {
     orders_list.push(generateDummyOrderData());
   }
 
-  return {data:orders_list,count: Math.floor(Math.random() * 30 + 20)};
+  return {orders:orders_list,count: Math.floor(Math.random() * 30 + 20)};
 };
 
 
@@ -156,7 +156,7 @@ export const generateMockRevenueData = (months = 6) => {
         year: date.getFullYear(),
         month: date.getMonth() + 1,
       },
-      count: Math.floor(Math.random() * 200000000) + 100000000,
+      revenue: Math.floor(Math.random() * 200000000) + 100000000,
     };
   });
 
